@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IMainForm.cs" />
+    <Compile Include="Model\TheEuribors.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
