@@ -14,6 +14,8 @@ namespace EuriborSharp.Model
         public decimal ThreeMonths { get; set; }
         public decimal SixMonths { get; set; }
         public decimal TwelveMonths { get; set; }
+        public decimal OneWeek { get; set; }
+        public decimal TwoWeeks { get; set; }
 
         public DateTime Date { get; set; }
     }

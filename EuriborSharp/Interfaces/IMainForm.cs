@@ -9,5 +9,6 @@ namespace EuriborSharp.Interfaces
 
         void ClearAll();
         void AddText(string s, bool append);
+        void Dispose();
     }
 }
