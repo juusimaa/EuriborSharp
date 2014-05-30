@@ -88,10 +88,67 @@ namespace EuriborSharp.Presenters
         {
             var periodPattern = new Regex(@"(\d)(\s\w+\s)");
             var interestPattern = new Regex(@"(\d+,\d+)");
-            var datePattern = new Regex(@"(\d+[.]\d+[.]\d+)");
+            var datePattern = new Regex(@"(\d+[.]\d+[.]\d+)");            
 
             var interestValue = interestPattern.Match(text).Value;
             var timePeriod = periodPattern.Match(text);
+            var date = datePattern.Match(text).Value;
+
+            var period = ParseTimePeriod(timePeriod);
+
+            switch (period)
+            {
+                case Enums.TimePeriods.OneWeek:
+                    current.OneWeek = Convert.ToDecimal(interestValue);
+                    break;
+                case Enums.TimePeriods.TwoWeeks:
+                    current.TwoWeeks = Convert.ToDecimal(interestValue);
+                    break;
+                case Enums.TimePeriods.OneMonth:
+                    current.OneMonth = Convert.ToDecimal(interestValue);
+                    break;
+                case Enums.TimePeriods.ThreeMonths:
+                    current.ThreeMonths = Convert.ToDecimal(interestValue);
+                    break;
+                case Enums.TimePeriods.SixMonths:
+                    current.SixMonths = Convert.ToDecimal(interestValue);
+                    break;
+                case Enums.TimePeriods.TwelveMonths:
+                    current.TwelveMonths = Convert.ToDecimal(interestValue);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("period");
+            };
+
+            current.Date = DateTime.Parse(date);
+        }
+
+        private Enums.TimePeriods ParseTimePeriod(Match value)
+        {
+            var intMatch = Convert.ToInt32(value.Groups[1]);
+            var stringMatch = value.Groups[2].ToString();
+
+            switch (stringMatch)
+            {
+                case "kk":
+                    switch (intMatch)
+                    {
+                        case 3:
+                            return Enums.TimePeriods.ThreeMonths;
+                        case 6:
+                            return Enums.TimePeriods.SixMonths;
+                        case 12:
+                            return Enums.TimePeriods.TwelveMonths;
+                        default:
+                            return Enums.TimePeriods.Default;
+                    };
+                case "vko":
+                    break;
+                default:
+                    return Enums.TimePeriods.Default;
+            };
+
+            return Enums.TimePeriods.Default;
         }
     }
 }
