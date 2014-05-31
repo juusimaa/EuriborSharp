@@ -9,6 +9,9 @@ namespace EuriborSharp.Model
         public static List<Euribors> InterestList { get; set; }
     }
 
+    /// <summary>
+    /// Public class for storing Euribor values from single RSS read. 
+    /// </summary>
     [Serializable]
     public class Euribors
     {
@@ -16,12 +19,8 @@ namespace EuriborSharp.Model
         public decimal ThreeMonths { get; set; }
         public decimal SixMonths { get; set; }
         public decimal TwelveMonths { get; set; }
-<<<<<<< HEAD
-=======
         public decimal OneWeek { get; set; }
         public decimal TwoWeeks { get; set; }
-
->>>>>>> 296e8e2a8e7ee5546da586ca5013b94b41a71abb
         public DateTime Date { get; set; }
 
         public Euribors()

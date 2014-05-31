@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -18,7 +19,7 @@ namespace EuriborSharp.Presenters
         private const string FEED_ADDRESS = @"http://www.suomenpankki.fi/fi/_layouts/BOF/RSS.ashx/tilastot/Korot/fi";
         
         // Flag: Has Dispose already been called? 
-        bool disposed = false;
+        bool _disposed;
         
         private readonly IMainForm _mainForm;
 
@@ -27,6 +28,9 @@ namespace EuriborSharp.Presenters
             _mainForm = new MainForm();
             _mainForm.UpdateClicked += _mainForm_UpdateClicked;
             _mainForm.ClearClicked += _mainForm_ClearClicked;
+
+            TheEuribors.InterestList = new List<Euribors>();
+            Load();
         }
 
         // Public implementation of Dispose pattern callable by consumers. 
@@ -39,7 +43,7 @@ namespace EuriborSharp.Presenters
         // Protected implementation of Dispose pattern. 
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (_disposed)
                 return;
 
             if (disposing)
@@ -51,7 +55,7 @@ namespace EuriborSharp.Presenters
 
             // Free any unmanaged objects here. 
             //
-            disposed = true;
+            _disposed = true;
         }
 
         void _mainForm_ClearClicked(object sender, EventArgs e)
@@ -62,6 +66,7 @@ namespace EuriborSharp.Presenters
         void _mainForm_UpdateClicked(object sender, EventArgs e)
         {
             ReadRssFeed();
+            Save();
         }
 
         public Form GetMainForm()
@@ -79,16 +84,20 @@ namespace EuriborSharp.Presenters
 
                 var current = new Euribors();
 
-                foreach (var item in feed.Items)
-                {                    
-                    var subject = item.Title.Text;
+                foreach (var subject in feed.Items.Select(item => item.Title.Text))
+                {
                     ParseInterestRates(subject, current);
                     _mainForm.AddText(subject + Environment.NewLine, true);
                 }
+
+                var containsCurrentDate = TheEuribors.InterestList.Find(e => e.Date.Equals(current.Date)) != null;
+
+                if (!containsCurrentDate)
+                    TheEuribors.InterestList.Add(current);
             }
         }
 
-        private void ParseInterestRates(string text, Euribors current)
+        private static void ParseInterestRates(string text, Euribors current)
         {
             var periodPattern = new Regex(@"(\d)(\s\w+\s)");
             var interestPattern = new Regex(@"(\d+,\d+)");
@@ -121,16 +130,16 @@ namespace EuriborSharp.Presenters
                     current.TwelveMonths = Convert.ToDecimal(interestValue);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("period");
-            };
+                    break;
+            }
 
-            current.Date = DateTime.Parse(date, new CultureInfo("fi-FI"), System.Globalization.DateTimeStyles.AssumeLocal);
+            current.Date = DateTime.Parse(date, new CultureInfo("fi-FI"), DateTimeStyles.AssumeLocal);
         }
 
-        private Enums.TimePeriods ParseTimePeriod(Match value)
+        private static Enums.TimePeriods ParseTimePeriod(Match value)
         {
-            var intMatch = Convert.ToInt32(value.Groups[1].Value.ToString());
-            var stringMatch = value.Groups[2].Value.ToString().Trim();
+            var intMatch = Convert.ToInt32(value.Groups[1].Value);
+            var stringMatch = value.Groups[2].Value.Trim();
 
             switch (stringMatch)
             {
@@ -147,12 +156,12 @@ namespace EuriborSharp.Presenters
                             return Enums.TimePeriods.TwelveMonths;
                         default:
                             return Enums.TimePeriods.Default;
-                    };
+                    }
                 case "vko":
                     break;
                 default:
                     return Enums.TimePeriods.Default;
-            };
+            }
 
             return Enums.TimePeriods.Default;
         }

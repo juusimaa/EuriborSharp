@@ -11,12 +11,12 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-        private void updateButton_Click(object sender, System.EventArgs e)
+        private void updateButton_Click(object sender, EventArgs e)
         {
             UpdateClicked(this, EventArgs.Empty);
         }
 
-        private void clearButton_Click(object sender, System.EventArgs e)
+        private void clearButton_Click(object sender, EventArgs e)
         {
             ClearClicked(this, EventArgs.Empty);
         }
