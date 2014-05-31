@@ -48,9 +48,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Interfaces\ILogControlPresenter.cs" />
     <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Model\TheEuribors.cs" />
+    <Compile Include="Presenters\LogControlPresenter.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
+    <Compile Include="Views\LogControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\LogControl.Designer.cs">
+      <DependentUpon>LogControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\LogControl.resx">
+      <DependentUpon>LogControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

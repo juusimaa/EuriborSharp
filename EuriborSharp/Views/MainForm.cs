@@ -11,30 +11,11 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-        private void updateButton_Click(object sender, EventArgs e)
-        {
-            UpdateClicked(this, EventArgs.Empty);
-        }
 
-        private void clearButton_Click(object sender, EventArgs e)
-        {
-            ClearClicked(this, EventArgs.Empty);
-        }
 
-        public event EventHandler UpdateClicked;
-        public event EventHandler ClearClicked;
-
-        public void ClearAll()
+        public void AddControl(UserControl control)
         {
-            rssTextBox.Clear();
-        }
-
-        public void AddText(string s, bool append)
-        {
-            if (append)
-                rssTextBox.Text += s;
-            else
-                rssTextBox.Text = s;
+            Controls.Add(control);
         }
     }
 }

@@ -1,14 +1,11 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace EuriborSharp.Interfaces
 {
     interface IMainForm
     {
-        event EventHandler UpdateClicked;
-        event EventHandler ClearClicked;
-
-        void ClearAll();
-        void AddText(string s, bool append);
         void Dispose();
+        void AddControl(UserControl control);
     }
 }

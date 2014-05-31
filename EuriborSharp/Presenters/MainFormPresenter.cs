@@ -18,12 +18,18 @@ namespace EuriborSharp.Presenters
         bool _disposed;
         
         private readonly IMainForm _mainForm;
+        private readonly ILogControlPresenter _logControl;
 
         public MainFormPresenter()
         {
             _mainForm = new MainForm();
-            _mainForm.UpdateClicked += _mainForm_UpdateClicked;
-            _mainForm.ClearClicked += _mainForm_ClearClicked;
+
+            _logControl = new LogControlPresenter();
+            _logControl.UpdateClicked += _logControl_UpdateClicked;
+            _logControl.Init();
+
+            _mainForm.AddControl(_logControl.GetControl());
+
 
             TheEuribors.InterestList = new List<Euribors>();
             TheEuribors.Load();
@@ -54,12 +60,7 @@ namespace EuriborSharp.Presenters
             _disposed = true;
         }
 
-        void _mainForm_ClearClicked(object sender, EventArgs e)
-        {
-            _mainForm.ClearAll();
-        }
-
-        void _mainForm_UpdateClicked(object sender, EventArgs e)
+        void _logControl_UpdateClicked(object sender, EventArgs e)
         {
             ReadRssFeed();
             TheEuribors.Save();
@@ -83,7 +84,7 @@ namespace EuriborSharp.Presenters
                 foreach (var subject in feed.Items.Select(item => item.Title.Text))
                 {
                     TheEuribors.ParseInterestRates(subject, current);
-                    _mainForm.AddText(subject + Environment.NewLine, true);
+                    _logControl.AddText(subject + Environment.NewLine, true);
                 }
 
                 var containsCurrentDate = TheEuribors.InterestList.Find(e => e.Date.Equals(current.Date)) != null;
