@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.ServiceModel.Syndication;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Serialization;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
-using System.Globalization;
 
 namespace EuriborSharp.Presenters
 {
@@ -30,7 +26,7 @@ namespace EuriborSharp.Presenters
             _mainForm.ClearClicked += _mainForm_ClearClicked;
 
             TheEuribors.InterestList = new List<Euribors>();
-            Load();
+            TheEuribors.Load();
         }
 
         // Public implementation of Dispose pattern callable by consumers. 
@@ -66,7 +62,7 @@ namespace EuriborSharp.Presenters
         void _mainForm_UpdateClicked(object sender, EventArgs e)
         {
             ReadRssFeed();
-            Save();
+            TheEuribors.Save();
         }
 
         public Form GetMainForm()
@@ -86,7 +82,7 @@ namespace EuriborSharp.Presenters
 
                 foreach (var subject in feed.Items.Select(item => item.Title.Text))
                 {
-                    ParseInterestRates(subject, current);
+                    TheEuribors.ParseInterestRates(subject, current);
                     _mainForm.AddText(subject + Environment.NewLine, true);
                 }
 
@@ -94,93 +90,6 @@ namespace EuriborSharp.Presenters
 
                 if (!containsCurrentDate)
                     TheEuribors.InterestList.Add(current);
-            }
-        }
-
-        private static void ParseInterestRates(string text, Euribors current)
-        {
-            var periodPattern = new Regex(@"(\d)(\s\w+\s)");
-            var interestPattern = new Regex(@"(\d+,\d+)");
-            var datePattern = new Regex(@"(\d+[.]\d+[.]\d+)");            
-
-            var interestValue = interestPattern.Match(text).Value;
-            var timePeriod = periodPattern.Match(text);
-            var date = datePattern.Match(text).Value;
-
-            var period = ParseTimePeriod(timePeriod);
-
-            switch (period)
-            {
-                case Enums.TimePeriods.OneWeek:
-                    current.OneWeek = Convert.ToDecimal(interestValue);
-                    break;
-                case Enums.TimePeriods.TwoWeeks:
-                    current.TwoWeeks = Convert.ToDecimal(interestValue);
-                    break;
-                case Enums.TimePeriods.OneMonth:
-                    current.OneMonth = Convert.ToDecimal(interestValue);
-                    break;
-                case Enums.TimePeriods.ThreeMonths:
-                    current.ThreeMonths = Convert.ToDecimal(interestValue);
-                    break;
-                case Enums.TimePeriods.SixMonths:
-                    current.SixMonths = Convert.ToDecimal(interestValue);
-                    break;
-                case Enums.TimePeriods.TwelveMonths:
-                    current.TwelveMonths = Convert.ToDecimal(interestValue);
-                    break;
-                default:
-                    break;
-            }
-
-            current.Date = DateTime.Parse(date, new CultureInfo("fi-FI"), DateTimeStyles.AssumeLocal);
-        }
-
-        private static Enums.TimePeriods ParseTimePeriod(Match value)
-        {
-            var intMatch = Convert.ToInt32(value.Groups[1].Value);
-            var stringMatch = value.Groups[2].Value.Trim();
-
-            switch (stringMatch)
-            {
-                case "kk":
-                    switch (intMatch)
-                    {
-                        case 1:
-                            return Enums.TimePeriods.OneMonth;
-                        case 3:
-                            return Enums.TimePeriods.ThreeMonths;
-                        case 6:
-                            return Enums.TimePeriods.SixMonths;
-                        case 12:
-                            return Enums.TimePeriods.TwelveMonths;
-                        default:
-                            return Enums.TimePeriods.Default;
-                    }
-                case "vko":
-                    break;
-                default:
-                    return Enums.TimePeriods.Default;
-            }
-
-            return Enums.TimePeriods.Default;
-        }
-
-        private void Save()
-        {
-            using (var fs = new FileStream("data.xml", FileMode.Append, FileAccess.Write))
-            {
-                var xs = new XmlSerializer(typeof (List<Euribors>));
-                xs.Serialize(fs, TheEuribors.InterestList);
-            }
-        }
-
-        private void Load()
-        {
-            using (var fs = new FileStream("data.xml", FileMode.Open, FileAccess.Read))
-            {
-                var xs = new XmlSerializer(typeof (List<Euribors>));
-                TheEuribors.InterestList = (List<Euribors>)xs.Deserialize(fs);
             }
         }
     }
