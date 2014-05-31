@@ -6,6 +6,7 @@ using System.Xml;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
+using System.Globalization;
 
 namespace EuriborSharp.Presenters
 {
@@ -120,19 +121,21 @@ namespace EuriborSharp.Presenters
                     throw new ArgumentOutOfRangeException("period");
             };
 
-            current.Date = DateTime.Parse(date);
+            current.Date = DateTime.Parse(date, new CultureInfo("fi-FI"), System.Globalization.DateTimeStyles.AssumeLocal);
         }
 
         private Enums.TimePeriods ParseTimePeriod(Match value)
         {
-            var intMatch = Convert.ToInt32(value.Groups[1]);
-            var stringMatch = value.Groups[2].ToString();
+            var intMatch = Convert.ToInt32(value.Groups[1].Value.ToString());
+            var stringMatch = value.Groups[2].Value.ToString().Trim();
 
             switch (stringMatch)
             {
                 case "kk":
                     switch (intMatch)
                     {
+                        case 1:
+                            return Enums.TimePeriods.OneMonth;
                         case 3:
                             return Enums.TimePeriods.ThreeMonths;
                         case 6:
