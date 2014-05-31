@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.ServiceModel.Syndication;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
@@ -67,6 +70,24 @@ namespace EuriborSharp.Presenters
             {
                 Date = DateTime.Parse(datePattern.Match(text).Value)
             };
+        }
+
+        private void Save()
+        {
+            using (var fs = new FileStream("data.xml", FileMode.Append, FileAccess.Write))
+            {
+                var xs = new XmlSerializer(typeof (List<Euribors>));
+                xs.Serialize(fs, TheEuribors.InterestList);
+            }
+        }
+
+        private void Load()
+        {
+            using (var fs = new FileStream("data.xml", FileMode.Open, FileAccess.Read))
+            {
+                var xs = new XmlSerializer(typeof (List<Euribors>));
+                TheEuribors.InterestList = (List<Euribors>)xs.Deserialize(fs);
+            }
         }
     }
 }
