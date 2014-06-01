@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
+using EuriborSharp.Interfaces;
 
 namespace EuriborSharp.Views
 {
-    public partial class LogControl : UserControl
+    public partial class LogControl : UserControl, ILogControl
     {
         public event EventHandler UpdateClicked;
         public event EventHandler ClearClicked;
@@ -20,10 +21,21 @@ namespace EuriborSharp.Views
 
         public void AddText(string s, bool append)
         {
+            if (InvokeRequired)
+            {
+                Invoke((Action) (() => AddText(s, append)));
+                return;
+            }
+
             if (append)
                 rssTextBox.Text += s;
             else
                 rssTextBox.Text = s;
+        }
+
+        public void Init()
+        {
+            Dock = DockStyle.Fill;
         }
 
         private void clearButton_Click_1(object sender, EventArgs e)

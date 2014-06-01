@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Windows.Forms;
@@ -18,21 +19,42 @@ namespace EuriborSharp.Presenters
         bool _disposed;
         
         private readonly IMainForm _mainForm;
-        private readonly ILogControlPresenter _logControl;
+        private readonly ILogControl _logControl;
+        private readonly IGraphControl _graphControl;
+
+        private readonly BackgroundWorker _feedReader;
 
         public MainFormPresenter()
         {
+            _feedReader = new BackgroundWorker {WorkerSupportsCancellation = true};
+            _feedReader.DoWork += _feedReader_DoWork;
+            _feedReader.RunWorkerCompleted += _feedReader_RunWorkerCompleted;
+
             _mainForm = new MainForm();
 
-            _logControl = new LogControlPresenter();
-            _logControl.UpdateClicked += _logControl_UpdateClicked;
+            _logControl = new LogControl();
             _logControl.Init();
+            _logControl.UpdateClicked += _logControl_UpdateClicked;
 
-            _mainForm.AddControl(_logControl.GetControl());
+            _graphControl = new GraphControl();
+            _graphControl.Init();
 
+            _mainForm.AddControl((UserControl)_logControl, "Log");
+            _mainForm.AddControl((UserControl) _graphControl, "Graph");
 
             TheEuribors.InterestList = new List<Euribors>();
             TheEuribors.Load();
+        }
+
+        void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _graphControl.UpdateGraph();
+            TheEuribors.Save();
+        }
+
+        void _feedReader_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ReadRssFeed();
         }
 
         // Public implementation of Dispose pattern callable by consumers. 
@@ -62,8 +84,7 @@ namespace EuriborSharp.Presenters
 
         void _logControl_UpdateClicked(object sender, EventArgs e)
         {
-            ReadRssFeed();
-            TheEuribors.Save();
+            _feedReader.RunWorkerAsync();
         }
 
         public Form GetMainForm()

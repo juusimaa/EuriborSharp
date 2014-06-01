@@ -14,7 +14,7 @@ namespace EuriborSharp.Model
 
         public static void Save()
         {
-            using (var fs = new FileStream("data.xml", FileMode.CreateNew, FileAccess.Write))
+            using (var fs = new FileStream("data.xml", FileMode.Create, FileAccess.Write))
             {
                 var xs = new XmlSerializer(typeof(List<Euribors>));
                 xs.Serialize(fs, InterestList);
@@ -23,10 +23,17 @@ namespace EuriborSharp.Model
 
         public static void Load()
         {
-            using (var fs = new FileStream("data.xml", FileMode.Open, FileAccess.Read))
+            try
             {
-                var xs = new XmlSerializer(typeof(List<Euribors>));
-                InterestList = (List<Euribors>)xs.Deserialize(fs);
+                using (var fs = new FileStream("data.xml", FileMode.Open, FileAccess.Read))
+                {
+                    var xs = new XmlSerializer(typeof (List<Euribors>));
+                    InterestList = (List<Euribors>) xs.Deserialize(fs);
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                // TODO: saved file not found. Ignore?
             }
         }
 

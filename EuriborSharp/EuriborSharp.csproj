@@ -34,6 +34,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OxyPlot">
+      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.312.1\lib\NET40\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.WindowsForms">
+      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.312.1\lib\NET40\OxyPlot.WindowsForms.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
@@ -48,11 +54,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Enums.cs" />
-    <Compile Include="Interfaces\ILogControlPresenter.cs" />
+    <Compile Include="Interfaces\IGraphControl.cs" />
+    <Compile Include="Interfaces\ILogControl.cs" />
     <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Model\TheEuribors.cs" />
-    <Compile Include="Presenters\LogControlPresenter.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
+    <Compile Include="Views\GraphControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\GraphControl.Designer.cs">
+      <DependentUpon>GraphControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\LogControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -67,6 +79,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\GraphControl.resx">
+      <DependentUpon>GraphControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\LogControl.resx">
       <DependentUpon>LogControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +97,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

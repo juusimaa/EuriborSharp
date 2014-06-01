@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Windows.Forms;
 
 namespace EuriborSharp.Interfaces
 {
-    public interface ILogControlPresenter
+    public interface ILogControl
     {
         event EventHandler UpdateClicked;
+        event EventHandler ClearClicked;
 
-        void Init();
         void AddText(string s, bool append);
-        UserControl GetControl();
+        void Init();
     }
 }

@@ -11,11 +11,11 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-
-
-        public void AddControl(UserControl control)
+        public void AddControl(UserControl control, string tabName)
         {
-            Controls.Add(control);
+            var page = new TabPage(tabName);
+            page.Controls.Add(control);
+            mainTabControl.TabPages.Add(page);
         }
     }
 }
