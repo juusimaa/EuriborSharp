@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel.Syndication;
 using System.Windows.Forms;
 using System.Xml;
+using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
@@ -20,12 +21,18 @@ namespace EuriborSharp.Presenters
         
         private readonly IMainForm _mainForm;
         private readonly ILogControl _logControl;
-        private readonly IGraphControl _graphControl;
+        private readonly IGraphControl _graphControl1Month;
+        private readonly IGraphControl _graphControl3Month;
+        private readonly IGraphControl _graphControl6Month;
+        private readonly IGraphControl _graphControl12Month;
 
         private readonly BackgroundWorker _feedReader;
 
         public MainFormPresenter()
         {
+            TheEuribors.InterestList = new List<Euribors>();
+            TheEuribors.Load();
+
             _feedReader = new BackgroundWorker {WorkerSupportsCancellation = true};
             _feedReader.DoWork += _feedReader_DoWork;
             _feedReader.RunWorkerCompleted += _feedReader_RunWorkerCompleted;
@@ -36,19 +43,33 @@ namespace EuriborSharp.Presenters
             _logControl.Init();
             _logControl.UpdateClicked += _logControl_UpdateClicked;
 
-            _graphControl = new GraphControl();
-            _graphControl.Init();
+            _graphControl1Month = new GraphControl();
+            _graphControl1Month.Init(TimePeriods.OneMonth);
+            _graphControl3Month = new GraphControl();
+            _graphControl3Month.Init(TimePeriods.ThreeMonths);
+            _graphControl6Month = new GraphControl();
+            _graphControl6Month.Init(TimePeriods.SixMonths);
+            _graphControl12Month = new GraphControl();
+            _graphControl12Month.Init(TimePeriods.TwelveMonths);
 
             _mainForm.AddControl((UserControl)_logControl, "Log");
-            _mainForm.AddControl((UserControl) _graphControl, "Graph");
+            _mainForm.AddControl((UserControl) _graphControl1Month, TheEuribors.GetInterestName(TimePeriods.OneMonth));
+            _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
+            _mainForm.AddControl((UserControl)_graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
+            _mainForm.AddControl((UserControl)_graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
 
-            TheEuribors.InterestList = new List<Euribors>();
-            TheEuribors.Load();
+            _graphControl1Month.UpdateGraph();
+            _graphControl3Month.UpdateGraph();
+            _graphControl6Month.UpdateGraph();
+            _graphControl12Month.UpdateGraph();
         }
 
         void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _graphControl.UpdateGraph();
+            _graphControl1Month.UpdateGraph();
+            _graphControl3Month.UpdateGraph();
+            _graphControl6Month.UpdateGraph();
+            _graphControl12Month.UpdateGraph();
             TheEuribors.Save();
         }
 

@@ -2,7 +2,7 @@
 {
     interface IGraphControl
     {
-        void Init();
+        void Init(Enums.TimePeriods period);
         void UpdateGraph();
     }
 }
