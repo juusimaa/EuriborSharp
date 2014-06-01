@@ -28,7 +28,7 @@ namespace EuriborSharp.Views
             }
 
             if (append)
-                rssTextBox.Text += s;
+                rssTextBox.AppendText(s);
             else
                 rssTextBox.Text = s;
         }

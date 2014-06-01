@@ -70,7 +70,6 @@ namespace EuriborSharp.Presenters
             _graphControl3Month.UpdateGraph();
             _graphControl6Month.UpdateGraph();
             _graphControl12Month.UpdateGraph();
-            TheEuribors.Save();
         }
 
         void _feedReader_DoWork(object sender, DoWorkEventArgs e)
@@ -115,6 +114,8 @@ namespace EuriborSharp.Presenters
 
         private void ReadRssFeed()
         {
+            _logControl.AddText("Reading " + FEED_ADDRESS + Environment.NewLine, true);
+
             using (var reader = XmlReader.Create(FEED_ADDRESS))
             {
                 var feed = SyndicationFeed.Load(reader);
@@ -132,8 +133,18 @@ namespace EuriborSharp.Presenters
                 var containsCurrentDate = TheEuribors.InterestList.Find(e => e.Date.Equals(current.Date)) != null;
 
                 if (!containsCurrentDate)
+                {
+                    _logControl.AddText("Saving new item to storage." + Environment.NewLine, true);
                     TheEuribors.InterestList.Add(current);
+                    TheEuribors.Save();
+                }
+                else
+                {
+                    _logControl.AddText("No new items found." + Environment.NewLine, true);
+                }
             }
+
+            _logControl.AddText("Ready." + Environment.NewLine + Environment.NewLine, true);
         }
     }
 }

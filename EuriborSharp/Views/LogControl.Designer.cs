@@ -59,6 +59,7 @@
             this.rssTextBox.Location = new System.Drawing.Point(3, 3);
             this.rssTextBox.Multiline = true;
             this.rssTextBox.Name = "rssTextBox";
+            this.rssTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.rssTextBox.Size = new System.Drawing.Size(599, 287);
             this.rssTextBox.TabIndex = 0;
             // 
