@@ -41,12 +41,12 @@ namespace EuriborSharp.Model
 
         public static DateTime GetOldestDate()
         {
-            return InterestList.Min(e => e.Date);
+            return InterestList.Count == 0 ? DateTime.Now : InterestList.Min(e => e.Date);
         }
 
         public static DateTime GetNewestDate()
         {
-            return InterestList.Max(e => e.Date);
+            return InterestList.Count == 0 ? DateTime.Now : InterestList.Max(e => e.Date);
         }
 
         public static decimal GetInterest(Euribors item, TimePeriods period)

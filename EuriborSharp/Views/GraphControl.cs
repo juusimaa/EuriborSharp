@@ -44,7 +44,8 @@ namespace EuriborSharp.Views
             {
                 PlotType = PlotType.XY,
                 Title = "Euribor " + TheEuribors.GetInterestName(pediod),
-                PlotAreaBackground = OxyColors.White
+                PlotAreaBackground = OxyColors.White,
+                RenderingDecorator = rc => new XkcdRenderingDecorator(rc)
             };
 
             _euriborSeries = new LineSeries
@@ -59,14 +60,16 @@ namespace EuriborSharp.Views
                 Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET)),
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                StringFormat = "d.M.yy"
+                StringFormat = "d.M.yy",
+                FontSize = 20
             };
 
             _yAxis = new LinearAxis
             {
                 Unit = "%",
                 MajorGridlineStyle = LineStyle.Solid,
-                MinorGridlineStyle = LineStyle.Dot
+                MinorGridlineStyle = LineStyle.Dot,
+                FontSize = 20
             };
 
             _euriborPlotModel.Series.Add(_euriborSeries);
@@ -94,13 +97,19 @@ namespace EuriborSharp.Views
                 _euriborSeries.Points.Add(dp);
             }
 
+            if (_euriborSeries.Points.Count == 0) return;
+
             // Annotate last point
             var last = _euriborSeries.Points.OrderByDescending(e => e.X).First();
             var pa = new PointAnnotation
             {
                 X = last.X,
                 Y = last.Y,
-                Text = last.Y.ToString(CultureInfo.InvariantCulture)
+                Text = last.Y.ToString(CultureInfo.InvariantCulture),
+                Size = 7,
+                TextColor = OxyColors.Black,
+                Fill = OxyColors.Red,
+                FontSize = 16
             };
             _euriborPlotModel.Annotations.Add(pa);
         }
