@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.ServiceModel.Syndication;
 using System.Windows.Forms;
 using System.Xml;
@@ -116,31 +118,49 @@ namespace EuriborSharp.Presenters
         {
             _logControl.AddText("Reading " + FEED_ADDRESS + Environment.NewLine, true);
 
-            using (var reader = XmlReader.Create(FEED_ADDRESS))
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(FEED_ADDRESS);
+            httpWebRequest.UserAgent = "Googlebot/1.0 (googlebot@googlebot.com http://googlebot.com/)";
+
+            // Use The Default Proxy
+            httpWebRequest.Proxy = WebRequest.DefaultWebProxy;
+
+            // Use The Thread's Credentials (Logged In User's Credentials)
+            if (httpWebRequest.Proxy != null)
+                httpWebRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
+
+            using (var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse())
             {
-                var feed = SyndicationFeed.Load(reader);
-
-                if (feed == null) return;
-
-                var current = new Euribors();
-
-                foreach (var subject in feed.Items.Select(item => item.Title.Text))
+                using (var responseStream = httpWebResponse.GetResponseStream())
                 {
-                    TheEuribors.ParseInterestRates(subject, current);
-                    _logControl.AddText(subject + Environment.NewLine, true);
-                }
+                    Debug.Assert(responseStream != null);
 
-                var containsCurrentDate = TheEuribors.InterestList.Find(e => e.Date.Equals(current.Date)) != null;
+                    using (var xmlReader = XmlReader.Create(responseStream))
+                    {
+                        var feed = SyndicationFeed.Load(xmlReader);
 
-                if (!containsCurrentDate)
-                {
-                    _logControl.AddText("Saving new item to storage." + Environment.NewLine, true);
-                    TheEuribors.InterestList.Add(current);
-                    TheEuribors.Save();
-                }
-                else
-                {
-                    _logControl.AddText("No new items found." + Environment.NewLine, true);
+                        if (feed == null) return;
+
+                        var current = new Euribors();
+
+                        foreach (var subject in feed.Items.Select(item => item.Title.Text))
+                        {
+                            TheEuribors.ParseInterestRates(subject, current);
+                            _logControl.AddText(subject + Environment.NewLine, true);
+                        }
+
+                        var containsCurrentDate = TheEuribors.InterestList.Find(e => e.Date.Equals(current.Date)) != null;
+
+                        if (!containsCurrentDate)
+                        {
+                            _logControl.AddText("Saving new item to storage." + Environment.NewLine, true);
+                            TheEuribors.InterestList.Add(current);
+                            TheEuribors.Save();
+                        }
+                        else
+                        {
+                            _logControl.AddText("No new items found." + Environment.NewLine, true);
+                        }
+                    }
                 }
             }
 
