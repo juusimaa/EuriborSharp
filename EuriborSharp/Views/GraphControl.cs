@@ -16,6 +16,7 @@ namespace EuriborSharp.Views
     public partial class GraphControl : UserControl, IGraphControl
     {
         private const double DATE_AXIS_OFFSET = 2.0;
+        private const double INTEREST_OFFSET = 0.001;
 
         private PlotView _graphPlotView;
         private PlotModel _euriborPlotModel;
@@ -33,13 +34,13 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-        public void Init(TimePeriods pediod)
+        public void Init(TimePeriods period)
         {
             _pointAnnotation = new PointAnnotation();
             _minLineAnnotation = new LineAnnotation();
             _maxLineAnnotation = new LineAnnotation();
 
-            _currentTimePeriod = pediod;
+            _currentTimePeriod = period;
             Dock = DockStyle.Fill;
 
             _graphPlotView = new PlotView
@@ -50,14 +51,17 @@ namespace EuriborSharp.Views
             _euriborPlotModel = new PlotModel
             {
                 PlotType = PlotType.XY,
-                Title = "Euribor " + TheEuribors.GetInterestName(pediod),
+                Title = "Euribor " + TheEuribors.GetInterestName(period),
                 PlotAreaBackground = OxyColors.White,
                 RenderingDecorator = rc => new XkcdRenderingDecorator(rc)
             };
 
             _euriborSeries = new LineSeries
             {
-                MarkerType = MarkerType.Circle
+                MarkerType = MarkerType.Circle,
+                MarkerSize = 7,
+                CanTrackerInterpolatePoints = false,
+                LineStyle = LineStyle.None
             };
 
             _xAxis = new DateTimeAxis
@@ -76,7 +80,9 @@ namespace EuriborSharp.Views
                 Unit = "%",
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                FontSize = 20
+                FontSize = 20,
+                Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) + INTEREST_OFFSET,
+                Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(period)) - INTEREST_OFFSET
             };
 
             _euriborPlotModel.Series.Add(_euriborSeries);
@@ -121,17 +127,15 @@ namespace EuriborSharp.Views
             _pointAnnotation.Y = last.Y;
             _pointAnnotation.Text = last.Y.ToString(CultureInfo.InvariantCulture);
             _pointAnnotation.TextColor = OxyColors.Black;
-            _pointAnnotation.Fill = OxyColors.Red;
-            _pointAnnotation.FontSize = 16.0;
-            _pointAnnotation.Shape = MarkerType.Circle;
-            _pointAnnotation.StrokeThickness = 2;
-            _pointAnnotation.Stroke = OxyColors.Red;
+            _pointAnnotation.Shape = MarkerType.None;
 
             _minLineAnnotation.Type = LineAnnotationType.Horizontal;
             _minLineAnnotation.Y = min;
+            _minLineAnnotation.Text = "Min";
 
             _maxLineAnnotation.Type = LineAnnotationType.Horizontal;
             _maxLineAnnotation.Y = max;
+            _maxLineAnnotation.Text = "Max";
         }
     }
 }

@@ -49,6 +49,52 @@ namespace EuriborSharp.Model
             return InterestList.Count == 0 ? DateTime.Now : InterestList.Max(e => e.Date);
         }
 
+        public static decimal GetMaximumInterest(TimePeriods periods)
+        {
+            if (InterestList.Count == 0) return 5M;
+
+            switch (periods)
+            {
+                case TimePeriods.OneWeek:
+                    return InterestList.Max(e => e.OneWeek);
+                case TimePeriods.TwoWeeks:
+                    return InterestList.Max(e => e.TwoWeeks);
+                case TimePeriods.OneMonth:
+                    return InterestList.Max(e => e.OneMonth);
+                case TimePeriods.ThreeMonths:
+                    return InterestList.Max(e => e.ThreeMonths);
+                case TimePeriods.SixMonths:
+                    return InterestList.Max(e => e.SixMonths);
+                case TimePeriods.TwelveMonths:
+                    return InterestList.Max(e => e.TwelveMonths);
+                default:
+                    throw new ArgumentOutOfRangeException("periods");
+            }
+        }
+
+        public static decimal GetMinimumInterest(TimePeriods periods)
+        {
+            if (InterestList.Count == 0) return 0M;
+
+            switch (periods)
+            {
+                case TimePeriods.OneWeek:
+                    return InterestList.Min(e => e.OneWeek);
+                case TimePeriods.TwoWeeks:
+                    return InterestList.Min(e => e.TwoWeeks);
+                case TimePeriods.OneMonth:
+                    return InterestList.Min(e => e.OneMonth);
+                case TimePeriods.ThreeMonths:
+                    return InterestList.Min(e => e.ThreeMonths);
+                case TimePeriods.SixMonths:
+                    return InterestList.Min(e => e.SixMonths);
+                case TimePeriods.TwelveMonths:
+                    return InterestList.Min(e => e.TwelveMonths);
+                default:
+                    throw new ArgumentOutOfRangeException("periods");
+            }
+        }
+
         public static decimal GetInterest(Euribors item, TimePeriods period)
         {
             switch (period)
