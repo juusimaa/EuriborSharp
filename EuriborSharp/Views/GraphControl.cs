@@ -22,6 +22,9 @@ namespace EuriborSharp.Views
         private LineSeries _euriborSeries;
         private DateTimeAxis _xAxis;
         private LinearAxis _yAxis;
+        private PointAnnotation _pointAnnotation;
+        private LineAnnotation _minLineAnnotation;
+        private LineAnnotation _maxLineAnnotation;
 
         private TimePeriods _currentTimePeriod;
 
@@ -32,6 +35,10 @@ namespace EuriborSharp.Views
 
         public void Init(TimePeriods pediod)
         {
+            _pointAnnotation = new PointAnnotation();
+            _minLineAnnotation = new LineAnnotation();
+            _maxLineAnnotation = new LineAnnotation();
+
             _currentTimePeriod = pediod;
             Dock = DockStyle.Fill;
 
@@ -76,6 +83,10 @@ namespace EuriborSharp.Views
             _euriborPlotModel.Axes.Add(_xAxis);
             _euriborPlotModel.Axes.Add(_yAxis);
 
+            _euriborPlotModel.Annotations.Add(_pointAnnotation);
+            _euriborPlotModel.Annotations.Add(_minLineAnnotation);
+            _euriborPlotModel.Annotations.Add(_maxLineAnnotation);
+
             _graphPlotView.Model = _euriborPlotModel;
 
             graphTableLayoutPanel.Controls.Add(_graphPlotView, 0, 0);
@@ -90,6 +101,8 @@ namespace EuriborSharp.Views
 
         private void AddPointsToSeries()
         {
+            _euriborSeries.Points.Clear();
+
             foreach (var item in TheEuribors.InterestList)
             {
                 var value = TheEuribors.GetInterest(item, _currentTimePeriod);
@@ -99,19 +112,26 @@ namespace EuriborSharp.Views
 
             if (_euriborSeries.Points.Count == 0) return;
 
-            // Annotate last point
+            // Annotations
             var last = _euriborSeries.Points.OrderByDescending(e => e.X).First();
-            var pa = new PointAnnotation
-            {
-                X = last.X,
-                Y = last.Y,
-                Text = last.Y.ToString(CultureInfo.InvariantCulture),
-                Size = 7,
-                TextColor = OxyColors.Black,
-                Fill = OxyColors.Red,
-                FontSize = 16
-            };
-            _euriborPlotModel.Annotations.Add(pa);
+            var max = _euriborSeries.Points.Max(e => e.Y);
+            var min = _euriborSeries.Points.Min(e => e.Y);
+
+            _pointAnnotation.X = last.X;
+            _pointAnnotation.Y = last.Y;
+            _pointAnnotation.Text = last.Y.ToString(CultureInfo.InvariantCulture);
+            _pointAnnotation.TextColor = OxyColors.Black;
+            _pointAnnotation.Fill = OxyColors.Red;
+            _pointAnnotation.FontSize = 16.0;
+            _pointAnnotation.Shape = MarkerType.Circle;
+            _pointAnnotation.StrokeThickness = 2;
+            _pointAnnotation.Stroke = OxyColors.Red;
+
+            _minLineAnnotation.Type = LineAnnotationType.Horizontal;
+            _minLineAnnotation.Y = min;
+
+            _maxLineAnnotation.Type = LineAnnotationType.Horizontal;
+            _maxLineAnnotation.Y = max;
         }
     }
 }
