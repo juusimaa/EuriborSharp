@@ -10,22 +10,23 @@ using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using OxyPlot.WindowsForms;
+using HorizontalAlignment = OxyPlot.HorizontalAlignment;
 
 namespace EuriborSharp.Views
 {
     public partial class GraphControl : UserControl, IGraphControl
     {
         private const double DATE_AXIS_OFFSET = 2.0;
-        private const double INTEREST_OFFSET = 0.001;
+        private const double INTEREST_OFFSET = 0.01;
 
         private PlotView _graphPlotView;
         private PlotModel _euriborPlotModel;
         private LineSeries _euriborSeries;
         private DateTimeAxis _xAxis;
         private LinearAxis _yAxis;
-        private PointAnnotation _pointAnnotation;
         private LineAnnotation _minLineAnnotation;
         private LineAnnotation _maxLineAnnotation;
+        private TextAnnotation _textAnnotation;
 
         private TimePeriods _currentTimePeriod;
 
@@ -36,7 +37,7 @@ namespace EuriborSharp.Views
 
         public void Init(TimePeriods period)
         {
-            _pointAnnotation = new PointAnnotation();
+            _textAnnotation = new TextAnnotation();
             _minLineAnnotation = new LineAnnotation();
             _maxLineAnnotation = new LineAnnotation();
 
@@ -61,7 +62,8 @@ namespace EuriborSharp.Views
                 MarkerType = MarkerType.Circle,
                 MarkerSize = 7,
                 CanTrackerInterpolatePoints = false,
-                LineStyle = LineStyle.None
+                //LineStyle = LineStyle.None
+                Smooth = true
             };
 
             _xAxis = new DateTimeAxis
@@ -89,7 +91,7 @@ namespace EuriborSharp.Views
             _euriborPlotModel.Axes.Add(_xAxis);
             _euriborPlotModel.Axes.Add(_yAxis);
 
-            _euriborPlotModel.Annotations.Add(_pointAnnotation);
+            _euriborPlotModel.Annotations.Add(_textAnnotation);
             _euriborPlotModel.Annotations.Add(_minLineAnnotation);
             _euriborPlotModel.Annotations.Add(_maxLineAnnotation);
 
@@ -123,19 +125,24 @@ namespace EuriborSharp.Views
             var max = _euriborSeries.Points.Max(e => e.Y);
             var min = _euriborSeries.Points.Min(e => e.Y);
 
-            _pointAnnotation.X = last.X;
-            _pointAnnotation.Y = last.Y;
-            _pointAnnotation.Text = last.Y.ToString(CultureInfo.InvariantCulture);
-            _pointAnnotation.TextColor = OxyColors.Black;
-            _pointAnnotation.Shape = MarkerType.None;
+            _textAnnotation.TextPosition = new DataPoint(last.X - 0.5, last.Y + ((max - min) / 2));
+            _textAnnotation.Text = "Current: " + last.Y.ToString(CultureInfo.InvariantCulture);
+            _textAnnotation.TextColor = OxyColors.Black;
+            _textAnnotation.FontSize = 20.0;
+            _textAnnotation.TextHorizontalAlignment = HorizontalAlignment.Center;
+            _textAnnotation.TextVerticalAlignment = VerticalAlignment.Top;
 
             _minLineAnnotation.Type = LineAnnotationType.Horizontal;
             _minLineAnnotation.Y = min;
             _minLineAnnotation.Text = "Min";
+            _minLineAnnotation.FontSize = 20.0;
+            _minLineAnnotation.Color = OxyColors.Blue;
 
             _maxLineAnnotation.Type = LineAnnotationType.Horizontal;
             _maxLineAnnotation.Y = max;
             _maxLineAnnotation.Text = "Max";
+            _maxLineAnnotation.FontSize = 20.0;
+            _maxLineAnnotation.Color = OxyColors.Red;
         }
     }
 }

@@ -37,15 +37,16 @@
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedIndex = 0;
-            this.mainTabControl.Size = new System.Drawing.Size(470, 337);
+            this.mainTabControl.Size = new System.Drawing.Size(784, 662);
             this.mainTabControl.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 337);
+            this.ClientSize = new System.Drawing.Size(784, 662);
             this.Controls.Add(this.mainTabControl);
+            this.MinimumSize = new System.Drawing.Size(800, 700);
             this.Name = "MainForm";
             this.Text = "EuroborSharp";
             this.ResumeLayout(false);
