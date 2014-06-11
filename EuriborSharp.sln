@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuriborSharp", "EuriborSharp\EuriborSharp.csproj", "{6543FB07-BD8D-447E-B956-03B039F35372}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "EuriborSharpSetup", "EuriborSharpSetup\EuriborSharpSetup.vdproj", "{001B324C-6B52-4BC9-B5E9-543F92156913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +15,8 @@ Global
 		{6543FB07-BD8D-447E-B956-03B039F35372}.Debug|x86.Build.0 = Debug|x86
 		{6543FB07-BD8D-447E-B956-03B039F35372}.Release|x86.ActiveCfg = Release|x86
 		{6543FB07-BD8D-447E-B956-03B039F35372}.Release|x86.Build.0 = Release|x86
+		{001B324C-6B52-4BC9-B5E9-543F92156913}.Debug|x86.ActiveCfg = Debug
+		{001B324C-6B52-4BC9-B5E9-543F92156913}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

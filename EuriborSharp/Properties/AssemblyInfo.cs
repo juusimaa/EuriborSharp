@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("EuriborSharp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Jouni Uusimaa")]
 [assembly: AssemblyProduct("EuriborSharp")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2014")]
+[assembly: AssemblyCopyright("Copyright © Jouni Uusimaa")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
