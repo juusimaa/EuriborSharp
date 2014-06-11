@@ -53,12 +53,12 @@ namespace EuriborSharp.Presenters
             _graphControl6Month.Init(TimePeriods.SixMonths);
             _graphControl12Month = new GraphControl();
             _graphControl12Month.Init(TimePeriods.TwelveMonths);
-
-            _mainForm.AddControl((UserControl)_logControl, "Log");
+            
             _mainForm.AddControl((UserControl) _graphControl1Month, TheEuribors.GetInterestName(TimePeriods.OneMonth));
             _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
             _mainForm.AddControl((UserControl)_graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
             _mainForm.AddControl((UserControl)_graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
+            _mainForm.AddControl((UserControl)_logControl, "Log");
 
             _graphControl1Month.UpdateGraph();
             _graphControl3Month.UpdateGraph();
