@@ -17,5 +17,14 @@ namespace EuriborSharp.Views
             page.Controls.Add(control);
             mainTabControl.TabPages.Add(page);
         }
+
+        public void UpdateTitle(string s)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateTitle(s)));
+            }
+            Text = s;
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace EuriborSharp.Interfaces
     {
         void Dispose();
         void AddControl(UserControl control, string tabName);
+        void UpdateTitle(string s);
     }
 }

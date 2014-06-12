@@ -58,24 +58,36 @@ namespace EuriborSharp.Presenters
             _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
             _mainForm.AddControl((UserControl)_graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
             _mainForm.AddControl((UserControl)_graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
+#if DEBUG
             _mainForm.AddControl((UserControl)_logControl, "Log");
+#endif
 
             _graphControl1Month.UpdateGraph();
             _graphControl3Month.UpdateGraph();
             _graphControl6Month.UpdateGraph();
             _graphControl12Month.UpdateGraph();
+
+            _feedReader.RunWorkerAsync();
         }
 
         void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            _graphControl1Month.Init(TimePeriods.OneMonth);
+            _graphControl3Month.Init(TimePeriods.ThreeMonths);
+            _graphControl6Month.Init(TimePeriods.SixMonths);
+            _graphControl12Month.Init(TimePeriods.TwelveMonths);
+
             _graphControl1Month.UpdateGraph();
             _graphControl3Month.UpdateGraph();
             _graphControl6Month.UpdateGraph();
             _graphControl12Month.UpdateGraph();
+
+            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
         }
 
         void _feedReader_DoWork(object sender, DoWorkEventArgs e)
         {
+            _mainForm.UpdateTitle("EuriborSharp - Updatating...");
             ReadRssFeed();
         }
 

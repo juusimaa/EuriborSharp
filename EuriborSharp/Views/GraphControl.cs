@@ -109,6 +109,8 @@ namespace EuriborSharp.Views
 
         private void AddPointsToSeries()
         {
+            if (_euriborSeries == null) return;
+
             _euriborSeries.Points.Clear();
 
             foreach (var item in TheEuribors.InterestList)
