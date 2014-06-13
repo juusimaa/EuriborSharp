@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
+using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Interfaces;
 
 namespace EuriborSharp.Views
 {
     public partial class MainForm : Form, IMainForm
     {
+        public event EventHandler<BooleanEventArg> LineSmoothChanged;
+        public event EventHandler LineStyleNormalSelected;
+        public event EventHandler LineStyleNoneSelected;
         public event EventHandler HelpSelected;
         public event EventHandler ExitSelected;
 
@@ -30,6 +34,11 @@ namespace EuriborSharp.Views
             Text = s;
         }
 
+        public void UpdateSmoothSelection(bool selected)
+        {
+            smoothToolStripMenuItem.Checked = selected;
+        }
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HelpSelected(this, EventArgs.Empty);
@@ -38,6 +47,21 @@ namespace EuriborSharp.Views
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ExitSelected(this, EventArgs.Empty);
+        }
+
+        private void noneToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            LineStyleNoneSelected(this, EventArgs.Empty);
+        }
+
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LineStyleNormalSelected(this, EventArgs.Empty);
+        }
+
+        private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LineSmoothChanged(this, new BooleanEventArg(smoothToolStripMenuItem.Checked));
         }
     }
 }

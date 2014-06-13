@@ -35,7 +35,7 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-        public void Init(TimePeriods period)
+        public void Init(TimePeriods period, bool smoothSelected)
         {
             _textAnnotation = new TextAnnotation();
             _minLineAnnotation = new LineAnnotation();
@@ -63,7 +63,7 @@ namespace EuriborSharp.Views
                 MarkerSize = 7,
                 CanTrackerInterpolatePoints = false,
                 //LineStyle = LineStyle.None
-                Smooth = true
+                Smooth = smoothSelected
             };
 
             _xAxis = new DateTimeAxis
@@ -105,6 +105,12 @@ namespace EuriborSharp.Views
         public void UpdateGraph()
         {
             AddPointsToSeries();
+            _graphPlotView.Refresh();
+        }
+
+        public void UpdateSmoothing(bool b)
+        {
+            _euriborSeries.Smooth = b;
         }
 
         private void AddPointsToSeries()

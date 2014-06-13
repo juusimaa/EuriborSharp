@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustonEventArgs\StringEventArg.cs" />
+    <Compile Include="CustonEventArgs\CustomEventArg.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="EuriborSharpSettings.Designer.cs">
       <AutoGen>True</AutoGen>

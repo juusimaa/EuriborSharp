@@ -7,6 +7,7 @@ using System.Net;
 using System.ServiceModel.Syndication;
 using System.Windows.Forms;
 using System.Xml;
+using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
@@ -19,7 +20,8 @@ namespace EuriborSharp.Presenters
         private const string FEED_ADDRESS = @"http://www.suomenpankki.fi/fi/_layouts/BOF/RSS.ashx/tilastot/Korot/fi";
         
         // Flag: Has Dispose already been called? 
-        bool _disposed;
+        private bool _disposed;
+        private bool _smoothSelected;
         
         private readonly IMainForm _mainForm;
         private readonly ILogControl _logControl;
@@ -42,6 +44,9 @@ namespace EuriborSharp.Presenters
             _mainForm = new MainForm();
             _mainForm.HelpSelected += _mainForm_HelpSelected;
             _mainForm.ExitSelected += _mainForm_ExitSelected;
+            _mainForm.LineSmoothChanged += _mainForm_LineSmoothChanged;
+            _mainForm.LineStyleNoneSelected += _mainForm_LineStyleNoneSelected;
+            _mainForm.LineStyleNormalSelected += _mainForm_LineStyleNormalSelected;
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -49,13 +54,15 @@ namespace EuriborSharp.Presenters
             _logControl.AddressChanged += _logControl_AddressChanged;
 
             _graphControl1Month = new GraphControl();
-            _graphControl1Month.Init(TimePeriods.OneMonth);
+            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine);
             _graphControl3Month = new GraphControl();
-            _graphControl3Month.Init(TimePeriods.ThreeMonths);
+            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine);
             _graphControl6Month = new GraphControl();
-            _graphControl6Month.Init(TimePeriods.SixMonths);
+            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine);
             _graphControl12Month = new GraphControl();
-            _graphControl12Month.Init(TimePeriods.TwelveMonths);
+            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine);
+
+            _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
             
             _mainForm.AddControl((UserControl) _graphControl1Month, TheEuribors.GetInterestName(TimePeriods.OneMonth));
             _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
@@ -73,6 +80,33 @@ namespace EuriborSharp.Presenters
             _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
 
             _feedReader.RunWorkerAsync();
+        }
+
+        void _mainForm_LineStyleNormalSelected(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void _mainForm_LineStyleNoneSelected(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void _mainForm_LineSmoothChanged(object sender, BooleanEventArg e)
+        {
+            _smoothSelected = e.value;
+
+            _graphControl1Month.UpdateSmoothing(e.value);
+            _graphControl1Month.UpdateGraph();
+            _graphControl3Month.UpdateSmoothing(e.value);
+            _graphControl3Month.UpdateGraph();
+            _graphControl6Month.UpdateSmoothing(e.value);
+            _graphControl6Month.UpdateGraph();
+            _graphControl12Month.UpdateSmoothing(e.value);
+            _graphControl12Month.UpdateGraph();
+
+            EuriborSharpSettings.Default.SmoothLine = e.value;
+            EuriborSharpSettings.Default.Save();
         }
 
         void _mainForm_ExitSelected(object sender, EventArgs e)
@@ -94,10 +128,10 @@ namespace EuriborSharp.Presenters
 
         void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _graphControl1Month.Init(TimePeriods.OneMonth);
-            _graphControl3Month.Init(TimePeriods.ThreeMonths);
-            _graphControl6Month.Init(TimePeriods.SixMonths);
-            _graphControl12Month.Init(TimePeriods.TwelveMonths);
+            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine);
+            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine);
+            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine);
+            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine);
 
             _graphControl1Month.UpdateGraph();
             _graphControl3Month.UpdateGraph();

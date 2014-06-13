@@ -41,7 +41,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 85F));
             this.tableLayoutPanel1.Controls.Add(this.clearButton, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.rssTextBox, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.updateButton, 2, 0);
@@ -57,7 +57,7 @@
             // 
             // clearButton
             // 
-            this.clearButton.Location = new System.Drawing.Point(483, 63);
+            this.clearButton.Location = new System.Drawing.Point(523, 63);
             this.clearButton.Name = "clearButton";
             this.clearButton.Size = new System.Drawing.Size(75, 23);
             this.clearButton.TabIndex = 2;
@@ -73,12 +73,12 @@
             this.rssTextBox.Multiline = true;
             this.rssTextBox.Name = "rssTextBox";
             this.rssTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.rssTextBox.Size = new System.Drawing.Size(474, 264);
+            this.rssTextBox.Size = new System.Drawing.Size(514, 264);
             this.rssTextBox.TabIndex = 0;
             // 
             // updateButton
             // 
-            this.updateButton.Location = new System.Drawing.Point(483, 20);
+            this.updateButton.Location = new System.Drawing.Point(523, 20);
             this.updateButton.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.updateButton.Name = "updateButton";
             this.updateButton.Size = new System.Drawing.Size(75, 23);
@@ -94,7 +94,7 @@
             this.addressTextBox.Location = new System.Drawing.Point(3, 20);
             this.addressTextBox.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
             this.addressTextBox.Name = "addressTextBox";
-            this.addressTextBox.Size = new System.Drawing.Size(474, 20);
+            this.addressTextBox.Size = new System.Drawing.Size(514, 20);
             this.addressTextBox.TabIndex = 3;
             this.addressTextBox.TextChanged += new System.EventHandler(this.addressTextBox_TextChanged);
             // 

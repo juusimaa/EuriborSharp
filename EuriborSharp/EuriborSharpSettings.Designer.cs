@@ -34,5 +34,17 @@ namespace EuriborSharp {
                 this["RssFeedAddress"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SmoothLine {
+            get {
+                return ((bool)(this["SmoothLine"]));
+            }
+            set {
+                this["SmoothLine"] = value;
+            }
+        }
     }
 }

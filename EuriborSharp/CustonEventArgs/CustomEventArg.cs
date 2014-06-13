@@ -11,4 +11,14 @@ namespace EuriborSharp.CustonEventArgs
             value = s;
         }
     }
+
+    public class BooleanEventArg : EventArgs
+    {
+        public readonly bool value;
+
+        public BooleanEventArg(bool b)
+        {
+            value = b;
+        }
+    }
 }
