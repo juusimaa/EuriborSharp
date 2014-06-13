@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
+using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Interfaces;
 
 namespace EuriborSharp.Views
 {
     public partial class LogControl : UserControl, ILogControl
     {
+        public event EventHandler<StringEventArg> AddressChanged; 
         public event EventHandler UpdateClicked;
         public event EventHandler ClearClicked;
 
@@ -33,6 +35,11 @@ namespace EuriborSharp.Views
                 rssTextBox.Text = s;
         }
 
+        public void UpdateAddress(string s)
+        {
+            addressTextBox.Text = s;
+        }
+
         public void Init()
         {
             Dock = DockStyle.Fill;
@@ -46,6 +53,11 @@ namespace EuriborSharp.Views
         private void updateButton_Click_1(object sender, EventArgs e)
         {
             UpdateClicked(this, EventArgs.Empty);
+        }
+
+        private void addressTextBox_TextChanged(object sender, EventArgs e)
+        {
+            AddressChanged(this, new StringEventArg(addressTextBox.Text));
         }
     }
 }

@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="EuriborSharp" GeneratedClassName="EuriborSharpSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RssFeedAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.suomenpankki.fi/fi/_layouts/BOF/RSS.ashx/tilastot/Korot/fi</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

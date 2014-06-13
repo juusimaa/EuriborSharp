@@ -44,6 +44,7 @@ namespace EuriborSharp.Presenters
             _logControl = new LogControl();
             _logControl.Init();
             _logControl.UpdateClicked += _logControl_UpdateClicked;
+            _logControl.AddressChanged += _logControl_AddressChanged;
 
             _graphControl1Month = new GraphControl();
             _graphControl1Month.Init(TimePeriods.OneMonth);
@@ -67,7 +68,15 @@ namespace EuriborSharp.Presenters
             _graphControl6Month.UpdateGraph();
             _graphControl12Month.UpdateGraph();
 
+            _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
+
             _feedReader.RunWorkerAsync();
+        }
+
+        static void _logControl_AddressChanged(object sender, CustonEventArgs.StringEventArg e)
+        {
+            EuriborSharpSettings.Default.RssFeedAddress = e.value;
+            EuriborSharpSettings.Default.Save();
         }
 
         void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -128,9 +137,9 @@ namespace EuriborSharp.Presenters
 
         private void ReadRssFeed()
         {
-            _logControl.AddText("Reading " + FEED_ADDRESS + Environment.NewLine, true);
+            _logControl.AddText("Reading " + EuriborSharpSettings.Default.RssFeedAddress + Environment.NewLine, true);
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(FEED_ADDRESS);
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(EuriborSharpSettings.Default.RssFeedAddress);
             httpWebRequest.UserAgent = "Googlebot/1.0 (googlebot@googlebot.com http://googlebot.com/)";
 
             // Use The Default Proxy
