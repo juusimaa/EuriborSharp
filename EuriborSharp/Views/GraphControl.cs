@@ -35,7 +35,7 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-        public void Init(TimePeriods period, bool smoothSelected)
+        public void Init(TimePeriods period, bool smoothSelected, bool xkcd)
         {
             _textAnnotation = new TextAnnotation();
             _minLineAnnotation = new LineAnnotation();
@@ -49,13 +49,25 @@ namespace EuriborSharp.Views
                 Dock = DockStyle.Fill
             };
 
-            _euriborPlotModel = new PlotModel
+            if (xkcd)
             {
-                PlotType = PlotType.XY,
-                Title = "Euribor " + TheEuribors.GetInterestName(period),
-                PlotAreaBackground = OxyColors.White,
-                RenderingDecorator = rc => new XkcdRenderingDecorator(rc)
-            };
+                _euriborPlotModel = new PlotModel
+                {
+                    PlotType = PlotType.XY,
+                    Title = "Euribor " + TheEuribors.GetInterestName(period),
+                    PlotAreaBackground = OxyColors.White,
+                    RenderingDecorator = rc => new XkcdRenderingDecorator(rc)
+                };
+            }
+            else
+            {
+                _euriborPlotModel = new PlotModel
+                {
+                    PlotType = PlotType.XY,
+                    Title = "Euribor " + TheEuribors.GetInterestName(period),
+                    PlotAreaBackground = OxyColors.White
+                };
+            }
 
             _euriborSeries = new LineSeries
             {
@@ -105,6 +117,11 @@ namespace EuriborSharp.Views
         public void UpdateGraph()
         {
             AddPointsToSeries();
+        }
+
+        public void UpdateRenderer(bool xkcdSelected)
+        {
+            _euriborPlotModel.RenderingDecorator = rc => new XkcdRenderingDecorator(rc);
             _graphPlotView.Refresh();
         }
 

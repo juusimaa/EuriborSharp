@@ -6,6 +6,7 @@ namespace EuriborSharp.Interfaces
 {
     interface IMainForm
     {
+        event EventHandler<BooleanEventArg> XkcdChanged;
         event EventHandler<BooleanEventArg> LineSmoothChanged;
         event EventHandler LineStyleNormalSelected;
         event EventHandler LineStyleNoneSelected;

@@ -46,5 +46,17 @@ namespace EuriborSharp {
                 this["SmoothLine"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Xkcd {
+            get {
+                return ((bool)(this["Xkcd"]));
+            }
+            set {
+                this["Xkcd"] = value;
+            }
+        }
     }
 }

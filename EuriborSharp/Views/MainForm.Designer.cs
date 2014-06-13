@@ -32,16 +32,17 @@
             this.mainTabControl = new System.Windows.Forms.TabControl();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lineTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.noneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.smoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.lineTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.smoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xkcdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
@@ -77,6 +78,54 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
+            // 
+            // lineTypeToolStripMenuItem
+            // 
+            this.lineTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noneToolStripMenuItem,
+            this.smoothToolStripMenuItem,
+            this.xkcdToolStripMenuItem});
+            this.lineTypeToolStripMenuItem.Name = "lineTypeToolStripMenuItem";
+            this.lineTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineTypeToolStripMenuItem.Text = "Line";
+            // 
+            // noneToolStripMenuItem
+            // 
+            this.noneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.normalToolStripMenuItem,
+            this.noneToolStripMenuItem1});
+            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
+            this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.noneToolStripMenuItem.Text = "Style";
+            // 
+            // normalToolStripMenuItem
+            // 
+            this.normalToolStripMenuItem.CheckOnClick = true;
+            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.normalToolStripMenuItem.Text = "Normal";
+            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            // 
+            // noneToolStripMenuItem1
+            // 
+            this.noneToolStripMenuItem1.CheckOnClick = true;
+            this.noneToolStripMenuItem1.Name = "noneToolStripMenuItem1";
+            this.noneToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
+            this.noneToolStripMenuItem1.Text = "None";
+            this.noneToolStripMenuItem1.Click += new System.EventHandler(this.noneToolStripMenuItem1_Click);
+            // 
+            // smoothToolStripMenuItem
+            // 
+            this.smoothToolStripMenuItem.CheckOnClick = true;
+            this.smoothToolStripMenuItem.Name = "smoothToolStripMenuItem";
+            this.smoothToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.smoothToolStripMenuItem.Text = "Smooth";
+            this.smoothToolStripMenuItem.Click += new System.EventHandler(this.smoothToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -115,52 +164,13 @@
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(784, 638);
             this.mainTableLayoutPanel.TabIndex = 2;
             // 
-            // lineTypeToolStripMenuItem
+            // xkcdToolStripMenuItem
             // 
-            this.lineTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.noneToolStripMenuItem,
-            this.smoothToolStripMenuItem});
-            this.lineTypeToolStripMenuItem.Name = "lineTypeToolStripMenuItem";
-            this.lineTypeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.lineTypeToolStripMenuItem.Text = "Line";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
-            // 
-            // smoothToolStripMenuItem
-            // 
-            this.smoothToolStripMenuItem.CheckOnClick = true;
-            this.smoothToolStripMenuItem.Name = "smoothToolStripMenuItem";
-            this.smoothToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.smoothToolStripMenuItem.Text = "Smooth";
-            this.smoothToolStripMenuItem.Click += new System.EventHandler(this.smoothToolStripMenuItem_Click);
-            // 
-            // noneToolStripMenuItem
-            // 
-            this.noneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.normalToolStripMenuItem,
-            this.noneToolStripMenuItem1});
-            this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
-            this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.noneToolStripMenuItem.Text = "Style";
-            // 
-            // noneToolStripMenuItem1
-            // 
-            this.noneToolStripMenuItem1.CheckOnClick = true;
-            this.noneToolStripMenuItem1.Name = "noneToolStripMenuItem1";
-            this.noneToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.noneToolStripMenuItem1.Text = "None";
-            this.noneToolStripMenuItem1.Click += new System.EventHandler(this.noneToolStripMenuItem1_Click);
-            // 
-            // normalToolStripMenuItem
-            // 
-            this.normalToolStripMenuItem.CheckOnClick = true;
-            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.normalToolStripMenuItem.Text = "Normal";
-            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            this.xkcdToolStripMenuItem.CheckOnClick = true;
+            this.xkcdToolStripMenuItem.Name = "xkcdToolStripMenuItem";
+            this.xkcdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.xkcdToolStripMenuItem.Text = "Xkcd";
+            this.xkcdToolStripMenuItem.Click += new System.EventHandler(this.xkcdToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -197,6 +207,7 @@
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xkcdToolStripMenuItem;
 
     }
 }

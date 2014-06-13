@@ -7,6 +7,7 @@ namespace EuriborSharp.Views
 {
     public partial class MainForm : Form, IMainForm
     {
+        public event EventHandler<BooleanEventArg> XkcdChanged;
         public event EventHandler<BooleanEventArg> LineSmoothChanged;
         public event EventHandler LineStyleNormalSelected;
         public event EventHandler LineStyleNoneSelected;
@@ -62,6 +63,11 @@ namespace EuriborSharp.Views
         private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LineSmoothChanged(this, new BooleanEventArg(smoothToolStripMenuItem.Checked));
+        }
+
+        private void xkcdToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            XkcdChanged(this, new BooleanEventArg(xkcdToolStripMenuItem.Checked));
         }
     }
 }
