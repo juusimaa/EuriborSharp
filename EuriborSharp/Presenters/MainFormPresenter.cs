@@ -40,6 +40,8 @@ namespace EuriborSharp.Presenters
             _feedReader.RunWorkerCompleted += _feedReader_RunWorkerCompleted;
 
             _mainForm = new MainForm();
+            _mainForm.HelpSelected += _mainForm_HelpSelected;
+            _mainForm.ExitSelected += _mainForm_ExitSelected;
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -71,6 +73,17 @@ namespace EuriborSharp.Presenters
             _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
 
             _feedReader.RunWorkerAsync();
+        }
+
+        void _mainForm_ExitSelected(object sender, EventArgs e)
+        {
+            _feedReader.CancelAsync();
+            _mainForm.Close();
+        }
+
+        void _mainForm_HelpSelected(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         static void _logControl_AddressChanged(object sender, CustonEventArgs.StringEventArg e)

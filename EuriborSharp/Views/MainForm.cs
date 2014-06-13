@@ -6,6 +6,9 @@ namespace EuriborSharp.Views
 {
     public partial class MainForm : Form, IMainForm
     {
+        public event EventHandler HelpSelected;
+        public event EventHandler ExitSelected;
+
         public MainForm()
         {
             InitializeComponent();
@@ -25,6 +28,16 @@ namespace EuriborSharp.Views
                 Invoke(new Action(() => UpdateTitle(s)));
             }
             Text = s;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpSelected(this, EventArgs.Empty);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExitSelected(this, EventArgs.Empty);
         }
     }
 }
