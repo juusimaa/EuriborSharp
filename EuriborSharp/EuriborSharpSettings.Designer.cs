@@ -58,5 +58,29 @@ namespace EuriborSharp {
                 this["Xkcd"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DotLineSelected {
+            get {
+                return ((bool)(this["DotLineSelected"]));
+            }
+            set {
+                this["DotLineSelected"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool NormalLineSelected {
+            get {
+                return ((bool)(this["NormalLineSelected"]));
+            }
+            set {
+                this["NormalLineSelected"] = value;
+            }
+        }
     }
 }

@@ -18,5 +18,7 @@ namespace EuriborSharp.Interfaces
         void AddControl(UserControl control, string tabName);
         void UpdateTitle(string s);
         void UpdateSmoothSelection(bool selected);
+        void UpdateLineStyleSelection(bool normalSelected);
+        void UpdateRendererSelection(bool xkcdSelected);
     }
 }

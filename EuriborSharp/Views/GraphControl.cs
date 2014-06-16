@@ -126,6 +126,18 @@ namespace EuriborSharp.Views
             _euriborSeries.Smooth = b;
         }
 
+        public void SetLineStyleToNormal()
+        {
+            _euriborSeries.LineStyle = LineStyle.Solid;
+            _graphPlotView.Refresh();
+        }
+
+        public void SetLineStyleToDot()
+        {
+            _euriborSeries.LineStyle = LineStyle.Dot;
+            _graphPlotView.Refresh();
+        }
+
         private void AddPointsToSeries()
         {
             if (_euriborSeries == null) return;

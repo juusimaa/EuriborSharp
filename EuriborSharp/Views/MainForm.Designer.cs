@@ -34,15 +34,15 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineTypeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.noneToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalLineStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dotLineStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xkcdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.xkcdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
@@ -92,27 +92,27 @@
             // noneToolStripMenuItem
             // 
             this.noneToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.normalToolStripMenuItem,
-            this.noneToolStripMenuItem1});
+            this.normalLineStyleToolStripMenuItem,
+            this.dotLineStyleToolStripMenuItem});
             this.noneToolStripMenuItem.Name = "noneToolStripMenuItem";
             this.noneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.noneToolStripMenuItem.Text = "Style";
             // 
-            // normalToolStripMenuItem
+            // normalLineStyleToolStripMenuItem
             // 
-            this.normalToolStripMenuItem.CheckOnClick = true;
-            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
-            this.normalToolStripMenuItem.Text = "Normal";
-            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            this.normalLineStyleToolStripMenuItem.CheckOnClick = true;
+            this.normalLineStyleToolStripMenuItem.Name = "normalLineStyleToolStripMenuItem";
+            this.normalLineStyleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.normalLineStyleToolStripMenuItem.Text = "Normal";
+            this.normalLineStyleToolStripMenuItem.Click += new System.EventHandler(this.normalLineStyleToolStripMenuItem_Click);
             // 
-            // noneToolStripMenuItem1
+            // dotLineStyleToolStripMenuItem
             // 
-            this.noneToolStripMenuItem1.CheckOnClick = true;
-            this.noneToolStripMenuItem1.Name = "noneToolStripMenuItem1";
-            this.noneToolStripMenuItem1.Size = new System.Drawing.Size(114, 22);
-            this.noneToolStripMenuItem1.Text = "None";
-            this.noneToolStripMenuItem1.Click += new System.EventHandler(this.noneToolStripMenuItem1_Click);
+            this.dotLineStyleToolStripMenuItem.CheckOnClick = true;
+            this.dotLineStyleToolStripMenuItem.Name = "dotLineStyleToolStripMenuItem";
+            this.dotLineStyleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dotLineStyleToolStripMenuItem.Text = "Dot";
+            this.dotLineStyleToolStripMenuItem.Click += new System.EventHandler(this.dotLineStyleToolStripMenuItem_Click);
             // 
             // smoothToolStripMenuItem
             // 
@@ -121,6 +121,14 @@
             this.smoothToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.smoothToolStripMenuItem.Text = "Smooth";
             this.smoothToolStripMenuItem.Click += new System.EventHandler(this.smoothToolStripMenuItem_Click);
+            // 
+            // xkcdToolStripMenuItem
+            // 
+            this.xkcdToolStripMenuItem.CheckOnClick = true;
+            this.xkcdToolStripMenuItem.Name = "xkcdToolStripMenuItem";
+            this.xkcdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.xkcdToolStripMenuItem.Text = "Xkcd";
+            this.xkcdToolStripMenuItem.Click += new System.EventHandler(this.xkcdToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -164,14 +172,6 @@
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(784, 638);
             this.mainTableLayoutPanel.TabIndex = 2;
             // 
-            // xkcdToolStripMenuItem
-            // 
-            this.xkcdToolStripMenuItem.CheckOnClick = true;
-            this.xkcdToolStripMenuItem.Name = "xkcdToolStripMenuItem";
-            this.xkcdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.xkcdToolStripMenuItem.Text = "Xkcd";
-            this.xkcdToolStripMenuItem.Click += new System.EventHandler(this.xkcdToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -205,8 +205,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem smoothToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dotLineStyleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem normalLineStyleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem xkcdToolStripMenuItem;
 
     }

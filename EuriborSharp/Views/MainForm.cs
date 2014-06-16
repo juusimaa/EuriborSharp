@@ -40,6 +40,17 @@ namespace EuriborSharp.Views
             smoothToolStripMenuItem.Checked = selected;
         }
 
+        public void UpdateLineStyleSelection(bool normalSelected)
+        {
+            normalLineStyleToolStripMenuItem.Checked = normalSelected;
+            dotLineStyleToolStripMenuItem.Checked = !normalSelected;
+        }
+
+        public void UpdateRendererSelection(bool xkcdSelected)
+        {
+            xkcdToolStripMenuItem.Checked = xkcdSelected;
+        }
+
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HelpSelected(this, EventArgs.Empty);
@@ -50,13 +61,15 @@ namespace EuriborSharp.Views
             ExitSelected(this, EventArgs.Empty);
         }
 
-        private void noneToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void dotLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            normalLineStyleToolStripMenuItem.Checked = false;
             LineStyleNoneSelected(this, EventArgs.Empty);
         }
 
-        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        private void normalLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            dotLineStyleToolStripMenuItem.Checked = false;
             LineStyleNormalSelected(this, EventArgs.Empty);
         }
 

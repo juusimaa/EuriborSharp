@@ -222,8 +222,5 @@ namespace EuriborSharp.Model
         public decimal OneWeek { get; set; }
         public decimal TwoWeeks { get; set; }
         public DateTime Date { get; set; }
-
-        public Euribors()
-        {}
     }
 }

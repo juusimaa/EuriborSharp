@@ -17,8 +17,6 @@ namespace EuriborSharp.Presenters
 {
     public class MainFormPresenter : IDisposable
     {
-        private const string FEED_ADDRESS = @"http://www.suomenpankki.fi/fi/_layouts/BOF/RSS.ashx/tilastot/Korot/fi";
-        
         // Flag: Has Dispose already been called? 
         private bool _disposed;
         
@@ -54,15 +52,15 @@ namespace EuriborSharp.Presenters
             _logControl.AddressChanged += _logControl_AddressChanged;
 
             _graphControl1Month = new GraphControl();
-            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl3Month = new GraphControl();
-            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl6Month = new GraphControl();
-            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl12Month = new GraphControl();
-            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
+
+            InitGraphs();
 
             _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
+            _mainForm.UpdateLineStyleSelection(EuriborSharpSettings.Default.NormalLineSelected);
+            _mainForm.UpdateRendererSelection(EuriborSharpSettings.Default.Xkcd);
             
             _mainForm.AddControl((UserControl) _graphControl1Month, TheEuribors.GetInterestName(TimePeriods.OneMonth));
             _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
@@ -72,13 +70,8 @@ namespace EuriborSharp.Presenters
             _mainForm.AddControl((UserControl)_logControl, "Log");
 #endif
 
-            _graphControl1Month.UpdateGraph();
-            _graphControl3Month.UpdateGraph();
-            _graphControl6Month.UpdateGraph();
-            _graphControl12Month.UpdateGraph();
-
+            UpdateGraphView();
             _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
-
             _feedReader.RunWorkerAsync();
         }
 
@@ -86,29 +79,46 @@ namespace EuriborSharp.Presenters
         {
             EuriborSharpSettings.Default.Xkcd = e.value;
             EuriborSharpSettings.Default.Save();
+            InitGraphs();
             UpdateGraphView();
         }
 
         private void UpdateGraphView()
         {
-            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl1Month.UpdateGraph();
-            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl3Month.UpdateGraph();
-            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl6Month.UpdateGraph();
-            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl12Month.UpdateGraph();
+        }
+
+        private void InitGraphs()
+        {
+            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
+            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
+            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
+            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
         }
 
         void _mainForm_LineStyleNormalSelected(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            EuriborSharpSettings.Default.NormalLineSelected = true;
+            EuriborSharpSettings.Default.Save();
+            _graphControl1Month.SetLineStyleToNormal();
+            _graphControl3Month.SetLineStyleToNormal();
+            _graphControl6Month.SetLineStyleToNormal();
+            _graphControl12Month.SetLineStyleToNormal();
+            UpdateGraphView();
         }
 
         void _mainForm_LineStyleNoneSelected(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            EuriborSharpSettings.Default.DotLineSelected = true;
+            EuriborSharpSettings.Default.Save();
+            _graphControl1Month.SetLineStyleToDot();
+            _graphControl3Month.SetLineStyleToDot();
+            _graphControl6Month.SetLineStyleToDot();
+            _graphControl12Month.SetLineStyleToDot();
+            UpdateGraphView();
         }
 
         void _mainForm_LineSmoothChanged(object sender, BooleanEventArg e)
@@ -132,12 +142,12 @@ namespace EuriborSharp.Presenters
             _mainForm.Close();
         }
 
-        void _mainForm_HelpSelected(object sender, EventArgs e)
+        static void _mainForm_HelpSelected(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        static void _logControl_AddressChanged(object sender, CustonEventArgs.StringEventArg e)
+        static void _logControl_AddressChanged(object sender, StringEventArg e)
         {
             EuriborSharpSettings.Default.RssFeedAddress = e.value;
             EuriborSharpSettings.Default.Save();
