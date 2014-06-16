@@ -37,6 +37,8 @@ namespace EuriborSharp.Views
 
         public void Init(TimePeriods period, bool smoothSelected, bool xkcd)
         {
+            if (_graphPlotView != null) _graphPlotView.Dispose();
+            
             _textAnnotation = new TextAnnotation();
             _minLineAnnotation = new LineAnnotation();
             _maxLineAnnotation = new LineAnnotation();
@@ -117,12 +119,6 @@ namespace EuriborSharp.Views
         public void UpdateGraph()
         {
             AddPointsToSeries();
-        }
-
-        public void UpdateRenderer(bool xkcdSelected)
-        {
-            _euriborPlotModel.RenderingDecorator = rc => new XkcdRenderingDecorator(rc);
-            _graphPlotView.Refresh();
         }
 
         public void UpdateSmoothing(bool b)

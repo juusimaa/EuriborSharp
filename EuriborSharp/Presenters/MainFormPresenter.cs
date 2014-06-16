@@ -86,7 +86,7 @@ namespace EuriborSharp.Presenters
         {
             EuriborSharpSettings.Default.Xkcd = e.value;
             EuriborSharpSettings.Default.Save();
-            _graphControl1Month.UpdateRenderer(e.value);
+            UpdateGraphView();
         }
 
         private void UpdateGraphView()
