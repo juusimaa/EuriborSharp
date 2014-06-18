@@ -26,6 +26,7 @@ namespace EuriborSharp.Presenters
         private readonly IGraphControl _graphControl3Month;
         private readonly IGraphControl _graphControl6Month;
         private readonly IGraphControl _graphControl12Month;
+        private readonly IAboutFormPresenter _aboutFormPresenter;
 
         private readonly BackgroundWorker _feedReader;
 
@@ -57,6 +58,8 @@ namespace EuriborSharp.Presenters
             _graphControl12Month = new GraphControl();
 
             InitGraphs();
+
+            _aboutFormPresenter = new AboutFormPresenter();
 
             _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
             _mainForm.UpdateLineStyleSelection(EuriborSharpSettings.Default.NormalLineSelected);
@@ -142,9 +145,9 @@ namespace EuriborSharp.Presenters
             _mainForm.Close();
         }
 
-        static void _mainForm_HelpSelected(object sender, EventArgs e)
+        void _mainForm_HelpSelected(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _aboutFormPresenter.ShowAboutForm();
         }
 
         static void _logControl_AddressChanged(object sender, StringEventArg e)

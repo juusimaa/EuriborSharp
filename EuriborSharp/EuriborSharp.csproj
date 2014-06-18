@@ -63,11 +63,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>EuriborSharpSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IAboutFormPresenter.cs" />
     <Compile Include="Interfaces\IGraphControl.cs" />
     <Compile Include="Interfaces\ILogControl.cs" />
     <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Model\TheEuribors.cs" />
+    <Compile Include="Presenters\AboutFormPresenter.cs" />
     <Compile Include="Presenters\MainFormPresenter.cs" />
+    <Compile Include="Views\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\GraphControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -88,6 +96,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Views\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\GraphControl.resx">
       <DependentUpon>GraphControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,6 +116,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
     <None Include="EuriborSharpSettings.settings">
@@ -124,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="euro-1.ico" />
+    <None Include="euro-1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
