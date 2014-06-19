@@ -82,9 +82,9 @@
             this.componentsLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.componentsLabel.Location = new System.Drawing.Point(3, 97);
             this.componentsLabel.Name = "componentsLabel";
-            this.componentsLabel.Size = new System.Drawing.Size(188, 15);
+            this.componentsLabel.Size = new System.Drawing.Size(159, 15);
             this.componentsLabel.TabIndex = 2;
-            this.componentsLabel.Text = "Open source components used:";
+            this.componentsLabel.Text = "Open Source Components:";
             // 
             // linkLabel1
             // 

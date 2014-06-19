@@ -124,6 +124,7 @@ namespace EuriborSharp.Views
         public void UpdateSmoothing(bool b)
         {
             _euriborSeries.Smooth = b;
+            _graphPlotView.Refresh();
         }
 
         public void SetLineStyleToNormal()

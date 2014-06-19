@@ -126,17 +126,13 @@ namespace EuriborSharp.Presenters
 
         void _mainForm_LineSmoothChanged(object sender, BooleanEventArg e)
         {
-            _graphControl1Month.UpdateSmoothing(e.value);
-            _graphControl1Month.UpdateGraph();
-            _graphControl3Month.UpdateSmoothing(e.value);
-            _graphControl3Month.UpdateGraph();
-            _graphControl6Month.UpdateSmoothing(e.value);
-            _graphControl6Month.UpdateGraph();
-            _graphControl12Month.UpdateSmoothing(e.value);
-            _graphControl12Month.UpdateGraph();
-
             EuriborSharpSettings.Default.SmoothLine = e.value;
             EuriborSharpSettings.Default.Save();
+            _graphControl1Month.UpdateSmoothing(e.value);
+            _graphControl3Month.UpdateSmoothing(e.value);
+            _graphControl6Month.UpdateSmoothing(e.value);
+            _graphControl12Month.UpdateSmoothing(e.value);
+            UpdateGraphView();
         }
 
         void _mainForm_ExitSelected(object sender, EventArgs e)
