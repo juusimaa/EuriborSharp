@@ -26,6 +26,7 @@ namespace EuriborSharp.Presenters
         private readonly IGraphControl _graphControl3Month;
         private readonly IGraphControl _graphControl6Month;
         private readonly IGraphControl _graphControl12Month;
+        private readonly IGraphControl _graphControlAll;
         private readonly IAboutFormPresenter _aboutFormPresenter;
 
         private readonly BackgroundWorker _feedReader;
@@ -56,6 +57,7 @@ namespace EuriborSharp.Presenters
             _graphControl3Month = new GraphControl();
             _graphControl6Month = new GraphControl();
             _graphControl12Month = new GraphControl();
+            _graphControlAll = new GraphControl();
 
             InitGraphs();
 
@@ -69,6 +71,7 @@ namespace EuriborSharp.Presenters
             _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
             _mainForm.AddControl((UserControl)_graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
             _mainForm.AddControl((UserControl)_graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
+            _mainForm.AddControl((UserControl)_graphControlAll, "All");
 #if DEBUG
             _mainForm.AddControl((UserControl)_logControl, "Log");
 #endif
@@ -92,6 +95,7 @@ namespace EuriborSharp.Presenters
             _graphControl3Month.UpdateGraph();
             _graphControl6Month.UpdateGraph();
             _graphControl12Month.UpdateGraph();
+            _graphControlAll.UpdateGraph();
         }
 
         private void InitGraphs()
@@ -100,6 +104,7 @@ namespace EuriborSharp.Presenters
             _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
             _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
+            _graphControlAll.Init(TimePeriods.Default, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.Xkcd);
         }
 
         void _mainForm_LineStyleNormalSelected(object sender, EventArgs e)

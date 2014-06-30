@@ -67,6 +67,8 @@ namespace EuriborSharp.Model
                     return InterestList.Max(e => e.SixMonths);
                 case TimePeriods.TwelveMonths:
                     return InterestList.Max(e => e.TwelveMonths);
+                case TimePeriods.Default:
+                    return InterestList.Max(e => new List<decimal> {e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks}.Max());
                 default:
                     throw new ArgumentOutOfRangeException("periods");
             }
@@ -90,6 +92,8 @@ namespace EuriborSharp.Model
                     return InterestList.Min(e => e.SixMonths);
                 case TimePeriods.TwelveMonths:
                     return InterestList.Min(e => e.TwelveMonths);
+               case TimePeriods.Default:
+                    return InterestList.Min(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Min());
                 default:
                     throw new ArgumentOutOfRangeException("periods");
             }
