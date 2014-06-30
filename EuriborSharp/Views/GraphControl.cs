@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -18,7 +17,7 @@ namespace EuriborSharp.Views
     public partial class GraphControl : UserControl, IGraphControl
     {
         private const double DATE_AXIS_OFFSET = 2.0;
-        private const double INTEREST_MAX_OFFSET = 1.05;
+        private const double INTEREST_MAX_OFFSET = 0.02;
         private const double INTEREST_MIN_OFFSET = 0.02;
 
         private PlotView _graphPlotView;
@@ -65,7 +64,10 @@ namespace EuriborSharp.Views
                     PlotType = PlotType.XY,
                     Title = "Euribor " + TheEuribors.GetInterestName(period),
                     PlotAreaBackground = OxyColors.White,
-                    RenderingDecorator = rc => new XkcdRenderingDecorator(rc)
+                    RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
+                    LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                    LegendBorder = OxyColors.Black,
+                    LegendFontSize = 20
                 };
             }
             else
@@ -74,17 +76,20 @@ namespace EuriborSharp.Views
                 {
                     PlotType = PlotType.XY,
                     Title = "Euribor " + TheEuribors.GetInterestName(period),
-                    PlotAreaBackground = OxyColors.White
+                    PlotAreaBackground = OxyColors.White,
+                    LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                    LegendBorder = OxyColors.Black,
+                    LegendFontSize = 10
                 };
             }
-
 
             _euriborSeriesSixMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
-                Smooth = smoothSelected
+                Smooth = smoothSelected,
+                Title = "6 months"
             };
 
             _euriborSeriesOneMonth = new LineSeries
@@ -92,7 +97,8 @@ namespace EuriborSharp.Views
                 MarkerType = MarkerType.Circle,
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
-                Smooth = smoothSelected
+                Smooth = smoothSelected,
+                Title = "1 month"
             };
 
             _euriborSeriesThreeMonth = new LineSeries
@@ -100,7 +106,8 @@ namespace EuriborSharp.Views
                 MarkerType = MarkerType.Circle,
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
-                Smooth = smoothSelected
+                Smooth = smoothSelected,
+                Title = "3 months"
             };
 
             _euriborSeriesTwelveMonth = new LineSeries
@@ -108,7 +115,8 @@ namespace EuriborSharp.Views
                 MarkerType = MarkerType.Circle,
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
-                Smooth = smoothSelected
+                Smooth = smoothSelected,
+                Title = "12 months"
             };
 
             _xAxis = new DateTimeAxis
@@ -128,7 +136,7 @@ namespace EuriborSharp.Views
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 FontSize = 20,
-                Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) * INTEREST_MAX_OFFSET,
+                Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) + INTEREST_MAX_OFFSET,
                 Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(period)) - INTEREST_MIN_OFFSET
             };
 
@@ -145,6 +153,13 @@ namespace EuriborSharp.Views
                 _euriborPlotModel.Annotations.Add(_textAnnotation);
                 _euriborPlotModel.Annotations.Add(_minLineAnnotation);
                 _euriborPlotModel.Annotations.Add(_maxLineAnnotation);
+                _euriborPlotModel.IsLegendVisible = false;
+            }
+            else
+            {
+                _euriborPlotModel.LegendPlacement = LegendPlacement.Inside;
+                _euriborPlotModel.LegendPosition = LegendPosition.BottomLeft;
+                _euriborPlotModel.IsLegendVisible = true;
             }
 
             _graphPlotView.Model = _euriborPlotModel;
