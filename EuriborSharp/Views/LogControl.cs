@@ -26,13 +26,14 @@ namespace EuriborSharp.Views
             if (InvokeRequired)
             {
                 Invoke((Action) (() => AddText(s, append)));
-                return;
             }
-
-            if (append)
-                rssTextBox.AppendText(s);
             else
-                rssTextBox.Text = s;
+            {
+                if (append)
+                    rssTextBox.AppendText(s);
+                else
+                    rssTextBox.Text = s;
+            }
         }
 
         public void UpdateAddress(string s)

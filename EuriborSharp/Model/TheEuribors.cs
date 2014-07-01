@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using EuriborSharp.Enums;
+using EuriborSharp.Properties;
 
 namespace EuriborSharp.Model
 {
@@ -16,7 +17,7 @@ namespace EuriborSharp.Model
 
         public static void Save()
         {
-            using (var fs = new FileStream("data.xml", FileMode.Create, FileAccess.Write))
+            using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Create, FileAccess.Write))
             {
                 var xs = new XmlSerializer(typeof(List<Euribors>));
                 xs.Serialize(fs, InterestList);
@@ -27,7 +28,7 @@ namespace EuriborSharp.Model
         {
             try
             {
-                using (var fs = new FileStream("data.xml", FileMode.Open, FileAccess.Read))
+                using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Open, FileAccess.Read))
                 {
                     var xs = new XmlSerializer(typeof (List<Euribors>));
                     InterestList = (List<Euribors>) xs.Deserialize(fs);
@@ -67,6 +68,8 @@ namespace EuriborSharp.Model
                     return InterestList.Max(e => e.SixMonths);
                 case TimePeriods.TwelveMonths:
                     return InterestList.Max(e => e.TwelveMonths);
+                case TimePeriods.Default:
+                    return InterestList.Max(e => new List<decimal> {e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks}.Max());
                 default:
                     throw new ArgumentOutOfRangeException("periods");
             }
@@ -90,6 +93,8 @@ namespace EuriborSharp.Model
                     return InterestList.Min(e => e.SixMonths);
                 case TimePeriods.TwelveMonths:
                     return InterestList.Min(e => e.TwelveMonths);
+               case TimePeriods.Default:
+                    return InterestList.Min(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Min());
                 default:
                     throw new ArgumentOutOfRangeException("periods");
             }
@@ -123,19 +128,19 @@ namespace EuriborSharp.Model
             switch (period)
             {
                 case TimePeriods.Default:
-                    return String.Empty;
+                    return Resources.CHART_TITLE_ALL;
                 case TimePeriods.OneWeek:
-                    return "1 week";
+                    return Resources.CHART_TITLE_1W;
                 case TimePeriods.TwoWeeks:
-                    return "2 weeks";
+                    return Resources.CHART_TITLE_2W;
                 case TimePeriods.OneMonth:
-                    return "1 month";
+                    return Resources.CHART_TITLE_1;
                 case TimePeriods.ThreeMonths:
-                    return  "3 months";
+                    return Resources.CHART_TITLE_3;
                 case TimePeriods.SixMonths:
-                    return "6 months";
+                    return Resources.CHART_TITLE_6;
                 case TimePeriods.TwelveMonths:
-                    return "12 months";
+                    return Resources.CHART_TITLE_12;
                 default:
                     throw new ArgumentOutOfRangeException("period");
             }

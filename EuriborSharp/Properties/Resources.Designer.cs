@@ -8,10 +8,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EuriborSharp.Properties
-{
-
-
+namespace EuriborSharp.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,49 +22,222 @@ namespace EuriborSharp.Properties
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources
-    {
-
+    internal class Resources {
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources()
-        {
+        internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager
-        {
-            get
-            {
-                if ((resourceMan == null))
-                {
+        internal static global::System.Resources.ResourceManager ResourceManager {
+            get {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EuriborSharp.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture
-        {
-            get
-            {
+        internal static global::System.Globalization.CultureInfo Culture {
+            get {
                 return resourceCulture;
             }
-            set
-            {
+            set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OxyPlot © 2014 OxyPlot contributors (MIT).
+        /// </summary>
+        internal static string ABOUT_OXY_LABEL {
+            get {
+                return ResourceManager.GetString("ABOUT_OXY_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string ABOUT_TITLE {
+            get {
+                return ResourceManager.GetString("ABOUT_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 1 month.
+        /// </summary>
+        internal static string CHART_TITLE_1 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 12 months.
+        /// </summary>
+        internal static string CHART_TITLE_12 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 1 week.
+        /// </summary>
+        internal static string CHART_TITLE_1W {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_1W", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 2 weeks.
+        /// </summary>
+        internal static string CHART_TITLE_2W {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_2W", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 3 months.
+        /// </summary>
+        internal static string CHART_TITLE_3 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 6 months.
+        /// </summary>
+        internal static string CHART_TITLE_6 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Combined graphs.
+        /// </summary>
+        internal static string CHART_TITLE_ALL {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to data.xml.
+        /// </summary>
+        internal static string DATAFILE_NAME {
+            get {
+                return ResourceManager.GetString("DATAFILE_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap euro_1 {
+            get {
+                object obj = ResourceManager.GetObject("euro_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        internal static string MAX_LABEL {
+            get {
+                return ResourceManager.GetString("MAX_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        internal static string MIN_LABEL {
+            get {
+                return ResourceManager.GetString("MIN_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 month.
+        /// </summary>
+        internal static string ONE_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("ONE_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6 months.
+        /// </summary>
+        internal static string SIX_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("SIX_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 months.
+        /// </summary>
+        internal static string THREE_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("THREE_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 12 months.
+        /// </summary>
+        internal static string TWELVE_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("TWELVE_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string X_AXIS_UNIT {
+            get {
+                return ResourceManager.GetString("X_AXIS_UNIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to %.
+        /// </summary>
+        internal static string Y_AXIS_UNIT {
+            get {
+                return ResourceManager.GetString("Y_AXIS_UNIT", resourceCulture);
             }
         }
     }
