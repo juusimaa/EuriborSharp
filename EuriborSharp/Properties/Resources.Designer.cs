@@ -133,7 +133,7 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Euribors.
+        ///   Looks up a localized string similar to Combined graphs.
         /// </summary>
         internal static string CHART_TITLE_ALL {
             get {

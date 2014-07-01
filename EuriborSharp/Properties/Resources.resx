@@ -142,7 +142,7 @@
     <value>Euribor 6 months</value>
   </data>
   <data name="CHART_TITLE_ALL" xml:space="preserve">
-    <value>Euribors</value>
+    <value>Combined graphs</value>
   </data>
   <data name="DATAFILE_NAME" xml:space="preserve">
     <value>data.xml</value>

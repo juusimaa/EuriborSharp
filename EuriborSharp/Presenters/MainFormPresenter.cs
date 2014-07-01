@@ -71,7 +71,7 @@ namespace EuriborSharp.Presenters
             _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
             _mainForm.AddControl((UserControl)_graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
             _mainForm.AddControl((UserControl)_graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
-            _mainForm.AddControl((UserControl)_graphControlAll, "All");
+            _mainForm.AddControl((UserControl)_graphControlAll, TheEuribors.GetInterestName(TimePeriods.Default));
 #if DEBUG
             _mainForm.AddControl((UserControl)_logControl, "Log");
 #endif
