@@ -61,12 +61,111 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Euribor 1 month.
+        /// </summary>
+        internal static string CHART_TITLE_1 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 12 months.
+        /// </summary>
+        internal static string CHART_TITLE_12 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 1 week.
+        /// </summary>
+        internal static string CHART_TITLE_1W {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_1W", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 2 weeks.
+        /// </summary>
+        internal static string CHART_TITLE_2W {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_2W", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 3 months.
+        /// </summary>
+        internal static string CHART_TITLE_3 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor 6 months.
+        /// </summary>
+        internal static string CHART_TITLE_6 {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribors.
+        /// </summary>
+        internal static string CHART_TITLE_ALL {
+            get {
+                return ResourceManager.GetString("CHART_TITLE_ALL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap euro_1 {
             get {
                 object obj = ResourceManager.GetObject("euro_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1 month.
+        /// </summary>
+        internal static string ONE_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("ONE_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6 months.
+        /// </summary>
+        internal static string SIX_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("SIX_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3 months.
+        /// </summary>
+        internal static string THREE_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("THREE_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 12 months.
+        /// </summary>
+        internal static string TWELVE_MONTH_SERIE_TITLE {
+            get {
+                return ResourceManager.GetString("TWELVE_MONTH_SERIE_TITLE", resourceCulture);
             }
         }
     }

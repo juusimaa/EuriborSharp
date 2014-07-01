@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using EuriborSharp.Enums;
+using EuriborSharp.Properties;
 
 namespace EuriborSharp.Model
 {
@@ -127,19 +128,19 @@ namespace EuriborSharp.Model
             switch (period)
             {
                 case TimePeriods.Default:
-                    return String.Empty;
+                    return Resources.CHART_TITLE_ALL;
                 case TimePeriods.OneWeek:
-                    return "1 week";
+                    return Resources.CHART_TITLE_1W;
                 case TimePeriods.TwoWeeks:
-                    return "2 weeks";
+                    return Resources.CHART_TITLE_2W;
                 case TimePeriods.OneMonth:
-                    return "1 month";
+                    return Resources.CHART_TITLE_1;
                 case TimePeriods.ThreeMonths:
-                    return  "3 months";
+                    return Resources.CHART_TITLE_3;
                 case TimePeriods.SixMonths:
-                    return "6 months";
+                    return Resources.CHART_TITLE_6;
                 case TimePeriods.TwelveMonths:
-                    return "12 months";
+                    return Resources.CHART_TITLE_12;
                 default:
                     throw new ArgumentOutOfRangeException("period");
             }

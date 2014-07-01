@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
+using EuriborSharp.Properties;
 using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Axes;
@@ -62,7 +63,7 @@ namespace EuriborSharp.Views
                 _euriborPlotModel = new PlotModel
                 {
                     PlotType = PlotType.XY,
-                    Title = "Euribor " + TheEuribors.GetInterestName(period),
+                    Title = TheEuribors.GetInterestName(period),
                     PlotAreaBackground = OxyColors.White,
                     RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
                     LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
@@ -75,7 +76,7 @@ namespace EuriborSharp.Views
                 _euriborPlotModel = new PlotModel
                 {
                     PlotType = PlotType.XY,
-                    Title = "Euribor " + TheEuribors.GetInterestName(period),
+                    Title = TheEuribors.GetInterestName(period),
                     PlotAreaBackground = OxyColors.White,
                     LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
                     LegendBorder = OxyColors.Black,
@@ -89,7 +90,7 @@ namespace EuriborSharp.Views
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
-                Title = "6 months"
+                Title = Resources.SIX_MONTH_SERIE_TITLE
             };
 
             _euriborSeriesOneMonth = new LineSeries
@@ -98,7 +99,7 @@ namespace EuriborSharp.Views
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
-                Title = "1 month"
+                Title = Resources.ONE_MONTH_SERIE_TITLE
             };
 
             _euriborSeriesThreeMonth = new LineSeries
@@ -107,7 +108,7 @@ namespace EuriborSharp.Views
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
-                Title = "3 months"
+                Title = Resources.THREE_MONTH_SERIE_TITLE
             };
 
             _euriborSeriesTwelveMonth = new LineSeries
@@ -116,7 +117,7 @@ namespace EuriborSharp.Views
                 MarkerSize = xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
-                Title = "12 months"
+                Title = Resources.TWELVE_MONTH_SERIE_TITLE
             };
 
             _xAxis = new DateTimeAxis
@@ -157,6 +158,11 @@ namespace EuriborSharp.Views
             }
             else
             {
+                _euriborSeriesSixMonth.MarkerType = MarkerType.None;
+                _euriborSeriesOneMonth.MarkerType = MarkerType.None;
+                _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
+                _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
+                
                 _euriborPlotModel.LegendPlacement = LegendPlacement.Inside;
                 _euriborPlotModel.LegendPosition = LegendPosition.BottomLeft;
                 _euriborPlotModel.IsLegendVisible = true;
