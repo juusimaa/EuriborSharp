@@ -17,7 +17,7 @@ namespace EuriborSharp.Model
 
         public static void Save()
         {
-            using (var fs = new FileStream("data.xml", FileMode.Create, FileAccess.Write))
+            using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Create, FileAccess.Write))
             {
                 var xs = new XmlSerializer(typeof(List<Euribors>));
                 xs.Serialize(fs, InterestList);
@@ -28,7 +28,7 @@ namespace EuriborSharp.Model
         {
             try
             {
-                using (var fs = new FileStream("data.xml", FileMode.Open, FileAccess.Read))
+                using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Open, FileAccess.Read))
                 {
                     var xs = new XmlSerializer(typeof (List<Euribors>));
                     InterestList = (List<Euribors>) xs.Deserialize(fs);

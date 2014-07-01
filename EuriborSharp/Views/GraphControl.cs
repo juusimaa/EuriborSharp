@@ -122,7 +122,7 @@ namespace EuriborSharp.Views
 
             _xAxis = new DateTimeAxis
             {
-                Unit = "Date",
+                Unit = Resources.X_AXIS_UNIT,
                 Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET)),
                 Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET)),
                 MajorGridlineStyle = LineStyle.Solid,
@@ -133,7 +133,7 @@ namespace EuriborSharp.Views
 
             _yAxis = new LinearAxis
             {
-                Unit = "%",
+                Unit = Resources.Y_AXIS_UNIT,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 FontSize = 20,
@@ -243,7 +243,7 @@ namespace EuriborSharp.Views
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
 
-            var textForAnnotation = "Current: " + last.Y.ToString(CultureInfo.InvariantCulture);
+            var textForAnnotation = Resources.TEXT_ANNOTATION_LABEL + last.Y.ToString(CultureInfo.InvariantCulture);
             var pointForAnnotation = new DataPoint(last.X - (textForAnnotation.Length / 2.0), last.Y + ((max - min) / 2));
 
             _textAnnotation.TextPosition = pointForAnnotation;
@@ -255,13 +255,13 @@ namespace EuriborSharp.Views
 
             _minLineAnnotation.Type = LineAnnotationType.Horizontal;
             _minLineAnnotation.Y = Convert.ToDouble(TheEuribors.GetMinimumInterest(_currentTimePeriod));
-            _minLineAnnotation.Text = "Min";
+            _minLineAnnotation.Text = Resources.MIN_LABEL;
             _minLineAnnotation.FontSize = 20.0;
             _minLineAnnotation.Color = OxyColors.Blue;
 
             _maxLineAnnotation.Type = LineAnnotationType.Horizontal;
             _maxLineAnnotation.Y = Convert.ToDouble(TheEuribors.GetMaximumInterest(_currentTimePeriod));
-            _maxLineAnnotation.Text = "Max";
+            _maxLineAnnotation.Text = Resources.MAX_LABEL;
             _maxLineAnnotation.FontSize = 20.0;
             _maxLineAnnotation.Color = OxyColors.Red;
         }

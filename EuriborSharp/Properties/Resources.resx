@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ABOUT_OXY_LABEL" xml:space="preserve">
+    <value>OxyPlot © 2014 OxyPlot contributors (MIT)</value>
+  </data>
+  <data name="ABOUT_TITLE" xml:space="preserve">
+    <value>About</value>
+  </data>
   <data name="CHART_TITLE_1" xml:space="preserve">
     <value>Euribor 1 month</value>
   </data>
@@ -138,9 +144,18 @@
   <data name="CHART_TITLE_ALL" xml:space="preserve">
     <value>Euribors</value>
   </data>
+  <data name="DATAFILE_NAME" xml:space="preserve">
+    <value>data.xml</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="euro_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\euro-1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MAX_LABEL" xml:space="preserve">
+    <value>Max</value>
+  </data>
+  <data name="MIN_LABEL" xml:space="preserve">
+    <value>Min</value>
   </data>
   <data name="ONE_MONTH_SERIE_TITLE" xml:space="preserve">
     <value>1 month</value>
@@ -148,10 +163,19 @@
   <data name="SIX_MONTH_SERIE_TITLE" xml:space="preserve">
     <value>6 months</value>
   </data>
+  <data name="TEXT_ANNOTATION_LABEL" xml:space="preserve">
+    <value>Current: </value>
+  </data>
   <data name="THREE_MONTH_SERIE_TITLE" xml:space="preserve">
     <value>3 months</value>
   </data>
   <data name="TWELVE_MONTH_SERIE_TITLE" xml:space="preserve">
     <value>12 months</value>
+  </data>
+  <data name="X_AXIS_UNIT" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Y_AXIS_UNIT" xml:space="preserve">
+    <value>%</value>
   </data>
 </root>

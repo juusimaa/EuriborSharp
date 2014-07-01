@@ -61,6 +61,24 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OxyPlot © 2014 OxyPlot contributors (MIT).
+        /// </summary>
+        internal static string ABOUT_OXY_LABEL {
+            get {
+                return ResourceManager.GetString("ABOUT_OXY_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        internal static string ABOUT_TITLE {
+            get {
+                return ResourceManager.GetString("ABOUT_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Euribor 1 month.
         /// </summary>
         internal static string CHART_TITLE_1 {
@@ -124,12 +142,39 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to data.xml.
+        /// </summary>
+        internal static string DATAFILE_NAME {
+            get {
+                return ResourceManager.GetString("DATAFILE_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap euro_1 {
             get {
                 object obj = ResourceManager.GetObject("euro_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max.
+        /// </summary>
+        internal static string MAX_LABEL {
+            get {
+                return ResourceManager.GetString("MAX_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Min.
+        /// </summary>
+        internal static string MIN_LABEL {
+            get {
+                return ResourceManager.GetString("MIN_LABEL", resourceCulture);
             }
         }
         
@@ -152,6 +197,15 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 3 months.
         /// </summary>
         internal static string THREE_MONTH_SERIE_TITLE {
@@ -166,6 +220,24 @@ namespace EuriborSharp.Properties {
         internal static string TWELVE_MONTH_SERIE_TITLE {
             get {
                 return ResourceManager.GetString("TWELVE_MONTH_SERIE_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        internal static string X_AXIS_UNIT {
+            get {
+                return ResourceManager.GetString("X_AXIS_UNIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to %.
+        /// </summary>
+        internal static string Y_AXIS_UNIT {
+            get {
+                return ResourceManager.GetString("Y_AXIS_UNIT", resourceCulture);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using EuriborSharp.Properties;
 
 namespace EuriborSharp.Views
 {
@@ -10,9 +11,9 @@ namespace EuriborSharp.Views
         public AboutForm()
         {
             InitializeComponent();
-            Text = "About";
+            Text = Resources.ABOUT_TITLE;
 
-            linkLabel1.Text = "OxyPlot © 2014 OxyPlot contributors (MIT)";
+            linkLabel1.Text = Resources.ABOUT_OXY_LABEL;
             linkLabel1.Links.Add(0, 7, "https://oxyplot.codeplex.com");
             linkLabel1.Links.Add(37, 3, "http://oxyplot.codeplex.com/license");
 
