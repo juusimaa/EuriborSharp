@@ -75,15 +75,17 @@ namespace EuriborSharp.Presenters
             _mainForm.AddControl((UserControl)_graphControlAll, TheEuribors.GetInterestName(TimePeriods.Default));
 #if DEBUG
             _mainForm.AddControl((UserControl)_logControl, "Log");
-#endif
-
             _logControl.SetupAutoload(EuriborSharpSettings.Default.Autoload);
-
-            UpdateGraphView();
             _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
             
-            if (EuriborSharpSettings.Default.Autoload)
-                _feedReader.RunWorkerAsync();
+            if (EuriborSharpSettings.Default.Autoload) _feedReader.RunWorkerAsync();
+#else
+            _feedReader.RunWorkerAsync();
+#endif
+
+            
+
+            UpdateGraphView();
         }
 
         static void _logControl_AutoloadChanged(object sender, BooleanEventArg e)
