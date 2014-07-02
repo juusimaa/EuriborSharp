@@ -173,10 +173,7 @@ namespace EuriborSharp.Presenters
         {
             EuriborSharpSettings.Default.SmoothLine = e.value;
             EuriborSharpSettings.Default.Save();
-            _graphControl1Month.UpdateSmoothing(e.value);
-            _graphControl3Month.UpdateSmoothing(e.value);
-            _graphControl6Month.UpdateSmoothing(e.value);
-            _graphControl12Month.UpdateSmoothing(e.value);
+            InitGraphs();
             UpdateGraphView();
             UpdateMainFormMenuItemStatus();
         }
@@ -277,6 +274,9 @@ namespace EuriborSharp.Presenters
                 using (var responseStream = httpWebResponse.GetResponseStream())
                 {
                     Debug.Assert(responseStream != null);
+#if !DEBUG
+                    if (responseStream == null) return;
+#endif
 
                     using (var xmlReader = XmlReader.Create(responseStream))
                     {

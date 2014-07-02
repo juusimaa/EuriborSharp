@@ -265,12 +265,6 @@ namespace EuriborSharp.Views
             }
         }
 
-        public void UpdateSmoothing(bool b)
-        {
-            _euriborSeriesOneMonth.Smooth = b;
-            _graphPlotView.Refresh();
-        }
-
         private void AddPointsToColumnSeries()
         {
             _euriborSeriesOneMonthCol.ItemsSource = TheEuribors.InterestList;
