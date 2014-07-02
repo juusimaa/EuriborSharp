@@ -82,9 +82,6 @@ namespace EuriborSharp.Presenters
 #else
             _feedReader.RunWorkerAsync();
 #endif
-
-            
-
             UpdateGraphView();
         }
 

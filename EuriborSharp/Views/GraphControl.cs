@@ -131,11 +131,6 @@ namespace EuriborSharp.Views
             }
             else
             {
-                _euriborSeriesSixMonth.MarkerType = MarkerType.None;
-                _euriborSeriesOneMonth.MarkerType = MarkerType.None;
-                _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
-                _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
-
                 _euriborPlotModel.LegendPlacement = LegendPlacement.Inside;
                 _euriborPlotModel.LegendPosition = LegendPosition.BottomLeft;
                 _euriborPlotModel.IsLegendVisible = true;
@@ -213,6 +208,14 @@ namespace EuriborSharp.Views
 
             _euriborPlotModel.Axes.Add(_xAxis);
             _euriborPlotModel.Axes.Add(_yAxis);
+
+            if (period == TimePeriods.Default)
+            {
+                _euriborSeriesSixMonth.MarkerType = MarkerType.None;
+                _euriborSeriesOneMonth.MarkerType = MarkerType.None;
+                _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
+                _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
+            }
         }
 
         private void SetupColumnSeries()
@@ -290,10 +293,13 @@ namespace EuriborSharp.Views
         private void AddPointsToColumnSeries()
         {
             _euriborSeriesOneMonthCol.ItemsSource = TheEuribors.InterestList;
+            _euriborSeriesThreeMonthCol.ItemsSource = TheEuribors.InterestList;
 
             switch (_currentTimePeriod)
             {
                 case TimePeriods.Default:
+                    _euriborSeriesOneMonthCol.ValueField = "OneMonth";
+                    _euriborSeriesThreeMonthCol.ValueField = "ThreeMonths";
                     break;
                 case TimePeriods.OneWeek:
                     break;
