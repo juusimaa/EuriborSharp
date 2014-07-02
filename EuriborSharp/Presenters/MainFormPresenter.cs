@@ -1,4 +1,6 @@
-﻿using System;
+﻿#region
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -13,13 +15,16 @@ using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
 
+#endregion
+
 namespace EuriborSharp.Presenters
 {
     public class MainFormPresenter : IDisposable
     {
         // Flag: Has Dispose already been called? 
         private bool _disposed;
-        
+        private bool _valuesReseted;
+
         private readonly IMainForm _mainForm;
         private readonly ILogControl _logControl;
         private readonly IGraphControl _graphControl1Month;
@@ -44,10 +49,9 @@ namespace EuriborSharp.Presenters
             _mainForm.HelpSelected += _mainForm_HelpSelected;
             _mainForm.ExitSelected += _mainForm_ExitSelected;
             _mainForm.LineSmoothChanged += _mainForm_LineSmoothChanged;
-            _mainForm.LineStyleNoneSelected += _mainForm_LineStyleNoneSelected;
-            _mainForm.LineStyleNormalSelected += _mainForm_LineStyleNormalSelected;
-            _mainForm.XkcdChanged += _mainForm_XkcdChanged;
             _mainForm.GraphStyleChanged += _mainForm_GraphStyleChanged;
+            _mainForm.RendererChanged += _mainForm_RendererChanged;
+            _mainForm.DotLineSelected += _mainForm_DotLineSelected;
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -66,18 +70,20 @@ namespace EuriborSharp.Presenters
             _aboutFormPresenter = new AboutFormPresenter();
 
             _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
-            _mainForm.UpdateLineStyleSelection(EuriborSharpSettings.Default.NormalLineSelected);
-            
+            _mainForm.UpdateRenderer(EuriborSharpSettings.Default.SelectedRenderer);
+            _mainForm.UpdateSeriesStyle(EuriborSharpSettings.Default.SelectedGraphStyle);
+            _mainForm.UpdateLineStyle(EuriborSharpSettings.Default.DotLineSelected);
+
             _mainForm.AddControl((UserControl) _graphControl1Month, TheEuribors.GetInterestName(TimePeriods.OneMonth));
-            _mainForm.AddControl((UserControl)_graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
-            _mainForm.AddControl((UserControl)_graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
-            _mainForm.AddControl((UserControl)_graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
-            _mainForm.AddControl((UserControl)_graphControlAll, TheEuribors.GetInterestName(TimePeriods.Default));
+            _mainForm.AddControl((UserControl) _graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
+            _mainForm.AddControl((UserControl) _graphControl6Month, TheEuribors.GetInterestName(TimePeriods.SixMonths));
+            _mainForm.AddControl((UserControl) _graphControl12Month, TheEuribors.GetInterestName(TimePeriods.TwelveMonths));
+            _mainForm.AddControl((UserControl) _graphControlAll, TheEuribors.GetInterestName(TimePeriods.Default));
 #if DEBUG
-            _mainForm.AddControl((UserControl)_logControl, "Log");
+            _mainForm.AddControl((UserControl) _logControl, "Log");
             _logControl.SetupAutoload(EuriborSharpSettings.Default.Autoload);
             _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
-            
+
             if (EuriborSharpSettings.Default.Autoload) _feedReader.RunWorkerAsync();
 #else
             _feedReader.RunWorkerAsync();
@@ -85,23 +91,31 @@ namespace EuriborSharp.Presenters
             UpdateGraphView();
         }
 
-        static void _logControl_AutoloadChanged(object sender, BooleanEventArg e)
+        private void _mainForm_DotLineSelected(object sender, BooleanEventArg e)
         {
-            EuriborSharpSettings.Default.Autoload = e.value;
-            EuriborSharpSettings.Default.Save();
-        }
-
-        void _mainForm_GraphStyleChanged(object sender, GraphStyleEventArgs e)
-        {
-            EuriborSharpSettings.Default.SelectedGraphStyle = e.style;
+            EuriborSharpSettings.Default.DotLineSelected = e.value;
             EuriborSharpSettings.Default.Save();
             InitGraphs();
             UpdateGraphView();
         }
 
-        void _mainForm_XkcdChanged(object sender, BooleanEventArg e)
+       private void _mainForm_RendererChanged(object sender, RendererEventArgs e)
         {
-            EuriborSharpSettings.Default.Xkcd = e.value;
+            EuriborSharpSettings.Default.SelectedRenderer = e.value;
+            EuriborSharpSettings.Default.Save();
+            InitGraphs();
+            UpdateGraphView();
+        }
+
+        private static void _logControl_AutoloadChanged(object sender, BooleanEventArg e)
+        {
+            EuriborSharpSettings.Default.Autoload = e.value;
+            EuriborSharpSettings.Default.Save();
+        }
+
+        private void _mainForm_GraphStyleChanged(object sender, GraphStyleEventArgs e)
+        {
+            EuriborSharpSettings.Default.SelectedGraphStyle = e.style;
             EuriborSharpSettings.Default.Save();
             InitGraphs();
             UpdateGraphView();
@@ -118,36 +132,33 @@ namespace EuriborSharp.Presenters
 
         private void InitGraphs()
         {
-            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControlAll.Init(TimePeriods.Default, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
+            try
+            {
+                _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+                _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+                _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+                _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+                _graphControlAll.Init(TimePeriods.Default, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+            }
+            catch (ArgumentException ex)
+            {
+                _logControl.AddText(ex.Message, true);
+
+                // avoid infinite loop
+                if (_valuesReseted) throw;
+
+                _valuesReseted = true;
+                EuriborSharpSettings.Default.Reset();
+                InitGraphs();
+            }
         }
 
-        void _mainForm_LineStyleNormalSelected(object sender, EventArgs e)
-        {
-            EuriborSharpSettings.Default.NormalLineSelected = true;
-            EuriborSharpSettings.Default.Save();
-            _graphControl1Month.SetLineStyleToNormal();
-            _graphControl3Month.SetLineStyleToNormal();
-            _graphControl6Month.SetLineStyleToNormal();
-            _graphControl12Month.SetLineStyleToNormal();
-            UpdateGraphView();
-        }
-
-        void _mainForm_LineStyleNoneSelected(object sender, EventArgs e)
-        {
-            EuriborSharpSettings.Default.DotLineSelected = true;
-            EuriborSharpSettings.Default.Save();
-            _graphControl1Month.SetLineStyleToDot();
-            _graphControl3Month.SetLineStyleToDot();
-            _graphControl6Month.SetLineStyleToDot();
-            _graphControl12Month.SetLineStyleToDot();
-            UpdateGraphView();
-        }
-
-        void _mainForm_LineSmoothChanged(object sender, BooleanEventArg e)
+        private void _mainForm_LineSmoothChanged(object sender, BooleanEventArg e)
         {
             EuriborSharpSettings.Default.SmoothLine = e.value;
             EuriborSharpSettings.Default.Save();
@@ -158,29 +169,33 @@ namespace EuriborSharp.Presenters
             UpdateGraphView();
         }
 
-        void _mainForm_ExitSelected(object sender, EventArgs e)
+        private void _mainForm_ExitSelected(object sender, EventArgs e)
         {
             _feedReader.CancelAsync();
             _mainForm.Close();
         }
 
-        void _mainForm_HelpSelected(object sender, EventArgs e)
+        private void _mainForm_HelpSelected(object sender, EventArgs e)
         {
             _aboutFormPresenter.ShowAboutForm();
         }
 
-        static void _logControl_AddressChanged(object sender, StringEventArg e)
+        private static void _logControl_AddressChanged(object sender, StringEventArg e)
         {
             EuriborSharpSettings.Default.RssFeedAddress = e.value;
             EuriborSharpSettings.Default.Save();
         }
 
-        void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
-            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle);
+            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
 
             _graphControl1Month.UpdateGraph();
             _graphControl3Month.UpdateGraph();
@@ -190,7 +205,7 @@ namespace EuriborSharp.Presenters
             _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
         }
 
-        void _feedReader_DoWork(object sender, DoWorkEventArgs e)
+        private void _feedReader_DoWork(object sender, DoWorkEventArgs e)
         {
             _mainForm.UpdateTitle("EuriborSharp - Updatating...");
             ReadRssFeed();
@@ -221,7 +236,7 @@ namespace EuriborSharp.Presenters
             _disposed = true;
         }
 
-        void _logControl_UpdateClicked(object sender, EventArgs e)
+        private void _logControl_UpdateClicked(object sender, EventArgs e)
         {
             _feedReader.RunWorkerAsync();
         }
@@ -235,7 +250,7 @@ namespace EuriborSharp.Presenters
         {
             _logControl.AddText("Reading " + EuriborSharpSettings.Default.RssFeedAddress + Environment.NewLine, true);
 
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(EuriborSharpSettings.Default.RssFeedAddress);
+            var httpWebRequest = (HttpWebRequest) WebRequest.Create(EuriborSharpSettings.Default.RssFeedAddress);
             httpWebRequest.UserAgent = "Googlebot/1.0 (googlebot@googlebot.com http://googlebot.com/)";
 
             // Use The Default Proxy
@@ -245,7 +260,7 @@ namespace EuriborSharp.Presenters
             if (httpWebRequest.Proxy != null)
                 httpWebRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
 
-            using (var httpWebResponse = (HttpWebResponse)httpWebRequest.GetResponse())
+            using (var httpWebResponse = (HttpWebResponse) httpWebRequest.GetResponse())
             {
                 using (var responseStream = httpWebResponse.GetResponseStream())
                 {

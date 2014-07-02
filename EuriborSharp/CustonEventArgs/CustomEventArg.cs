@@ -32,4 +32,14 @@ namespace EuriborSharp.CustonEventArgs
             style = g;
         }
     }
+
+    public class RendererEventArgs : EventArgs
+    {
+        public readonly Renderer value;
+
+        public RendererEventArgs(Renderer r)
+        {
+            value = r;
+        }
+    }
 }

@@ -8,11 +8,10 @@ namespace EuriborSharp.Views
 {
     public partial class MainForm : Form, IMainForm
     {
-        public event EventHandler<BooleanEventArg> XkcdChanged;
         public event EventHandler<BooleanEventArg> LineSmoothChanged;
         public event EventHandler<GraphStyleEventArgs> GraphStyleChanged;
-        public event EventHandler LineStyleNormalSelected;
-        public event EventHandler LineStyleNoneSelected;
+        public event EventHandler<RendererEventArgs> RendererChanged;
+        public event EventHandler<BooleanEventArg> DotLineSelected;
         public event EventHandler HelpSelected;
         public event EventHandler ExitSelected;
 
@@ -37,9 +36,27 @@ namespace EuriborSharp.Views
             Text = s;
         }
 
+        public void UpdateLineStyle(bool dotlineSelected)
+        {
+            normalLineStyleToolStripMenuItem.Checked = !dotlineSelected;
+            dotLineStyleToolStripMenuItem.Checked = dotlineSelected;
+        }
+
         public void UpdateSmoothSelection(bool selected)
         {
             smoothToolStripMenuItem.Checked = selected;
+        }
+
+        public void UpdateSeriesStyle(GraphStyle g)
+        {
+            lineToolStripMenuItem.Checked = g == GraphStyle.Line;
+            barToolStripMenuItem.Checked = g == GraphStyle.Bar;
+        }
+
+        public void UpdateRenderer(Renderer r)
+        {
+            normalToolStripMenuItem.Checked = r == Renderer.Normal;
+            xkcdToolStripMenuItem.Checked = r == Renderer.Xkcd;
         }
 
         public void UpdateLineStyleSelection(bool normalSelected)
@@ -61,13 +78,13 @@ namespace EuriborSharp.Views
         private void dotLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             normalLineStyleToolStripMenuItem.Checked = false;
-            LineStyleNoneSelected(this, EventArgs.Empty);
+            DotLineSelected(this, new BooleanEventArg(dotLineStyleToolStripMenuItem.Checked));
         }
 
         private void normalLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dotLineStyleToolStripMenuItem.Checked = false;
-            LineStyleNormalSelected(this, EventArgs.Empty);
+            DotLineSelected(this, new BooleanEventArg(dotLineStyleToolStripMenuItem.Checked));
         }
 
         private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
@@ -85,14 +102,14 @@ namespace EuriborSharp.Views
             GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.Bar));
         }
 
-        private void xkcdLineToolStripMenuItem_Click(object sender, EventArgs e)
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.XkcdLine));
+            RendererChanged(this, new RendererEventArgs(Renderer.Normal));
         }
 
-        private void xkcdBarToolStripMenuItem_Click(object sender, EventArgs e)
+        private void xkcdToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.XkcdBar));
+            RendererChanged(this, new RendererEventArgs(Renderer.Xkcd));
         }
     }
 }

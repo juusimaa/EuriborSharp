@@ -49,18 +49,6 @@ namespace EuriborSharp {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool Xkcd {
-            get {
-                return ((bool)(this["Xkcd"]));
-            }
-            set {
-                this["Xkcd"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool DotLineSelected {
             get {
@@ -85,7 +73,7 @@ namespace EuriborSharp {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("XkcdLine")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Line")]
         public global::EuriborSharp.Enums.GraphStyle SelectedGraphStyle {
             get {
                 return ((global::EuriborSharp.Enums.GraphStyle)(this["SelectedGraphStyle"]));
@@ -104,6 +92,18 @@ namespace EuriborSharp {
             }
             set {
                 this["Autoload"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Xkcd")]
+        public global::EuriborSharp.Enums.Renderer SelectedRenderer {
+            get {
+                return ((global::EuriborSharp.Enums.Renderer)(this["SelectedRenderer"]));
+            }
+            set {
+                this["SelectedRenderer"] = value;
             }
         }
     }

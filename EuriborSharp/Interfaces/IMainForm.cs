@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
 using EuriborSharp.CustonEventArgs;
+using EuriborSharp.Enums;
 
 namespace EuriborSharp.Interfaces
 {
     interface IMainForm
     {
-        event EventHandler<BooleanEventArg> XkcdChanged;
         event EventHandler<BooleanEventArg> LineSmoothChanged;
-        event EventHandler<GraphStyleEventArgs> GraphStyleChanged; 
-        event EventHandler LineStyleNormalSelected;
-        event EventHandler LineStyleNoneSelected;
+        event EventHandler<GraphStyleEventArgs> GraphStyleChanged;
+        event EventHandler<RendererEventArgs> RendererChanged;
+        event EventHandler<BooleanEventArg> DotLineSelected; 
         event EventHandler HelpSelected;
         event EventHandler ExitSelected;
 
@@ -18,7 +18,9 @@ namespace EuriborSharp.Interfaces
         void Dispose();
         void AddControl(UserControl control, string tabName);
         void UpdateTitle(string s);
+        void UpdateLineStyle(bool dotlineSelected);
         void UpdateSmoothSelection(bool selected);
-        void UpdateLineStyleSelection(bool normalSelected);
+        void UpdateSeriesStyle(GraphStyle g);
+        void UpdateRenderer(Renderer r);
     }
 }

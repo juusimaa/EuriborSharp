@@ -8,9 +8,6 @@
     <Setting Name="SmoothLine" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="Xkcd" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="DotLineSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
@@ -18,10 +15,13 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SelectedGraphStyle" Type="EuriborSharp.Enums.GraphStyle" Scope="User">
-      <Value Profile="(Default)">XkcdLine</Value>
+      <Value Profile="(Default)">Line</Value>
     </Setting>
     <Setting Name="Autoload" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SelectedRenderer" Type="EuriborSharp.Enums.Renderer" Scope="User">
+      <Value Profile="(Default)">Xkcd</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -4,10 +4,8 @@ namespace EuriborSharp.Interfaces
 {
     interface IGraphControl
     {
-        void Init(Enums.TimePeriods period, bool smoothSelected, GraphStyle style);
+        void Init(TimePeriods period, bool smoothSelected, GraphStyle style, Renderer renderer, bool dotLine);
         void UpdateGraph();
         void UpdateSmoothing(bool b);
-        void SetLineStyleToNormal();
-        void SetLineStyleToDot();
     }
 }

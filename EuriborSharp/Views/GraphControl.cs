@@ -49,7 +49,7 @@ namespace EuriborSharp.Views
             InitializeComponent();
         }
 
-        public void Init(TimePeriods period, bool smoothSelected, GraphStyle style)
+        public void Init(TimePeriods period, bool smoothSelected, GraphStyle style, Renderer renderer, bool dotLine)
         {
             if (_graphPlotView != null) _graphPlotView.Dispose();
             
@@ -66,56 +66,41 @@ namespace EuriborSharp.Views
                 Dock = DockStyle.Fill
             };
 
+            switch (renderer)
+            {
+                case Renderer.Normal:
+                    _euriborPlotModel = new PlotModel
+                    {
+                        PlotType = PlotType.XY,
+                        Title = TheEuribors.GetInterestName(period),
+                        PlotAreaBackground = OxyColors.White,
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendBorderThickness = 0,
+                        LegendFontSize = 10
+                    };
+                    break;
+                case Renderer.Xkcd:
+                    _euriborPlotModel = new PlotModel
+                    {
+                        PlotType = PlotType.XY,
+                        Title = TheEuribors.GetInterestName(period),
+                        PlotAreaBackground = OxyColors.White,
+                        RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendBorderThickness = 0,
+                        LegendFontSize = 20
+                    };
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("renderer");
+            }
+
             switch (style)
             {
                 case GraphStyle.Line:
-                    _euriborPlotModel = new PlotModel
-                    {
-                        PlotType = PlotType.XY,
-                        Title = TheEuribors.GetInterestName(period),
-                        PlotAreaBackground = OxyColors.White,
-                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
-                        LegendBorderThickness = 0,
-                        LegendFontSize = 10
-                    };
-                    SetupLinearSeries(period, smoothSelected, style);
-                    break;
-                case GraphStyle.XkcdLine:
-                    _euriborPlotModel = new PlotModel
-                    {
-                        PlotType = PlotType.XY,
-                        Title = TheEuribors.GetInterestName(period),
-                        PlotAreaBackground = OxyColors.White,
-                        RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
-                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
-                        LegendBorderThickness = 0,
-                        LegendFontSize = 20
-                    };
-                    SetupLinearSeries(period, smoothSelected, style);
+                    SetupLinearSeries(period, smoothSelected, renderer, dotLine);
                     break;
                 case GraphStyle.Bar:
-                    _euriborPlotModel = new PlotModel
-                    {
-                        PlotType = PlotType.XY,
-                        Title = TheEuribors.GetInterestName(period),
-                        PlotAreaBackground = OxyColors.White,
-                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
-                        LegendBorderThickness = 0,
-                        LegendFontSize = 10
-                    };
-                    SetupColumnSeries();
-                    break;
-                case GraphStyle.XkcdBar:
-                    _euriborPlotModel = new PlotModel
-                    {
-                        PlotType = PlotType.XY,
-                        Title = TheEuribors.GetInterestName(period),
-                        PlotAreaBackground = OxyColors.White,
-                        RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
-                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
-                        LegendBorderThickness = 0,
-                        LegendFontSize = 20
-                    };
                     SetupColumnSeries();
                     break;
                 default:
@@ -142,41 +127,45 @@ namespace EuriborSharp.Views
             graphTableLayoutPanel.SetRowSpan(_graphPlotView, 2);
         }
 
-        private void SetupLinearSeries(TimePeriods period, bool smoothSelected, GraphStyle style)
+        private void SetupLinearSeries(TimePeriods period, bool smoothSelected, Renderer renderer, bool dotLine)
         {
             _euriborSeriesSixMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
+                MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
+                LineStyle = dotLine ? LineStyle.Dot : LineStyle.Solid,
                 Title = Resources.SIX_MONTH_SERIE_TITLE
             };
 
             _euriborSeriesOneMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
+                MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
+                LineStyle = dotLine ? LineStyle.Dot : LineStyle.Solid,
                 Title = Resources.ONE_MONTH_SERIE_TITLE
             };
 
             _euriborSeriesThreeMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
+                MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
+                LineStyle = dotLine ? LineStyle.Dot : LineStyle.Solid,
                 Title = Resources.THREE_MONTH_SERIE_TITLE
             };
 
             _euriborSeriesTwelveMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
+                MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
+                LineStyle = dotLine ? LineStyle.Dot : LineStyle.Solid,
                 Title = Resources.TWELVE_MONTH_SERIE_TITLE
             };
 
@@ -209,13 +198,12 @@ namespace EuriborSharp.Views
             _euriborPlotModel.Axes.Add(_xAxis);
             _euriborPlotModel.Axes.Add(_yAxis);
 
-            if (period == TimePeriods.Default)
-            {
-                _euriborSeriesSixMonth.MarkerType = MarkerType.None;
-                _euriborSeriesOneMonth.MarkerType = MarkerType.None;
-                _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
-                _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
-            }
+            if (period != TimePeriods.Default) return;
+            
+            _euriborSeriesSixMonth.MarkerType = MarkerType.None;
+            _euriborSeriesOneMonth.MarkerType = MarkerType.None;
+            _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
+            _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
         }
 
         private void SetupColumnSeries()
@@ -259,12 +247,10 @@ namespace EuriborSharp.Views
         {
             switch (_currentStyle)
             {
-                case GraphStyle.XkcdLine:
                 case GraphStyle.Line:
                     AddPointsToLinearSeries();
                     break;
                 case GraphStyle.Bar:
-                case GraphStyle.XkcdBar:
                     AddPointsToColumnSeries();
                     break;
                 default:
@@ -275,18 +261,6 @@ namespace EuriborSharp.Views
         public void UpdateSmoothing(bool b)
         {
             _euriborSeriesOneMonth.Smooth = b;
-            _graphPlotView.Refresh();
-        }
-
-        public void SetLineStyleToNormal()
-        {
-            _euriborSeriesOneMonth.LineStyle = LineStyle.Solid;
-            _graphPlotView.Refresh();
-        }
-
-        public void SetLineStyleToDot()
-        {
-            _euriborSeriesOneMonth.LineStyle = LineStyle.Dot;
             _graphPlotView.Refresh();
         }
 
