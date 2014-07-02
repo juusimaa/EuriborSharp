@@ -1,4 +1,6 @@
-﻿namespace EuriborSharp.Enums
+﻿using System;
+
+namespace EuriborSharp.Enums
 {
     public enum TimePeriods
     {
@@ -9,5 +11,14 @@
         ThreeMonths,
         SixMonths,
         TwelveMonths
+    }
+
+    [Serializable]
+    public enum GraphStyle
+    {
+        Line,
+        XkcdLine,
+        Bar,
+        XkcdBar
     }
 }

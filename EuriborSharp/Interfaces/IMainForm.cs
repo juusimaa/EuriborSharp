@@ -8,6 +8,7 @@ namespace EuriborSharp.Interfaces
     {
         event EventHandler<BooleanEventArg> XkcdChanged;
         event EventHandler<BooleanEventArg> LineSmoothChanged;
+        event EventHandler<GraphStyleEventArgs> GraphStyleChanged; 
         event EventHandler LineStyleNormalSelected;
         event EventHandler LineStyleNoneSelected;
         event EventHandler HelpSelected;
@@ -19,6 +20,5 @@ namespace EuriborSharp.Interfaces
         void UpdateTitle(string s);
         void UpdateSmoothSelection(bool selected);
         void UpdateLineStyleSelection(bool normalSelected);
-        void UpdateRendererSelection(bool xkcdSelected);
     }
 }

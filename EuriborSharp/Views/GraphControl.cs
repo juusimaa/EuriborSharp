@@ -28,7 +28,13 @@ namespace EuriborSharp.Views
         private LineSeries _euriborSeriesOneMonth;
         private LineSeries _euriborSeriesThreeMonth;
         private LineSeries _euriborSeriesTwelveMonth;
-        
+
+        private ColumnSeries _euriborSeriesSixMonthBar;
+        private ColumnSeries _euriborSeriesOneMonthBar;
+        private ColumnSeries _euriborSeriesThreeMonthBar;
+        private ColumnSeries _euriborSeriesTwelveMonthBar;
+
+        private CategoryAxis _categoryAxis;
         private DateTimeAxis _xAxis;
         private LinearAxis _yAxis;
         private LineAnnotation _minLineAnnotation;
@@ -36,13 +42,14 @@ namespace EuriborSharp.Views
         private TextAnnotation _textAnnotation;
 
         private TimePeriods _currentTimePeriod;
+        private GraphStyle _currentStyle;
 
         public GraphControl()
         {
             InitializeComponent();
         }
 
-        public void Init(TimePeriods period, bool smoothSelected, bool xkcd)
+        public void Init(TimePeriods period, bool smoothSelected, GraphStyle style)
         {
             if (_graphPlotView != null) _graphPlotView.Dispose();
             
@@ -50,6 +57,7 @@ namespace EuriborSharp.Views
             _minLineAnnotation = new LineAnnotation();
             _maxLineAnnotation = new LineAnnotation();
 
+            _currentStyle = style;
             _currentTimePeriod = period;
             Dock = DockStyle.Fill;
 
@@ -58,36 +66,93 @@ namespace EuriborSharp.Views
                 Dock = DockStyle.Fill
             };
 
-            if (xkcd)
+            switch (style)
             {
-                _euriborPlotModel = new PlotModel
-                {
-                    PlotType = PlotType.XY,
-                    Title = TheEuribors.GetInterestName(period),
-                    PlotAreaBackground = OxyColors.White,
-                    RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
-                    LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
-                    LegendBorder = OxyColors.Black,
-                    LegendFontSize = 20
-                };
+                case GraphStyle.Line:
+                    _euriborPlotModel = new PlotModel
+                    {
+                        PlotType = PlotType.XY,
+                        Title = TheEuribors.GetInterestName(period),
+                        PlotAreaBackground = OxyColors.White,
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendBorderThickness = 0,
+                        LegendFontSize = 10
+                    };
+                    SetupLinearSeries(period, smoothSelected, style);
+                    break;
+                case GraphStyle.XkcdLine:
+                    _euriborPlotModel = new PlotModel
+                    {
+                        PlotType = PlotType.XY,
+                        Title = TheEuribors.GetInterestName(period),
+                        PlotAreaBackground = OxyColors.White,
+                        RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendBorderThickness = 0,
+                        LegendFontSize = 20
+                    };
+                    SetupLinearSeries(period, smoothSelected, style);
+                    break;
+                case GraphStyle.Bar:
+                    _euriborPlotModel = new PlotModel
+                    {
+                        PlotType = PlotType.XY,
+                        Title = TheEuribors.GetInterestName(period),
+                        PlotAreaBackground = OxyColors.White,
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendBorderThickness = 0,
+                        LegendFontSize = 10
+                    };
+                    SetupBarSeries();
+                    break;
+                case GraphStyle.XkcdBar:
+                    _euriborPlotModel = new PlotModel
+                    {
+                        PlotType = PlotType.XY,
+                        Title = TheEuribors.GetInterestName(period),
+                        PlotAreaBackground = OxyColors.White,
+                        RenderingDecorator = rc => new XkcdRenderingDecorator(rc),
+                        LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
+                        LegendBorderThickness = 0,
+                        LegendFontSize = 20
+                    };
+                    SetupBarSeries();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("style");
+            }
+
+            if (_currentTimePeriod != TimePeriods.Default)
+            {
+                _euriborPlotModel.Annotations.Add(_textAnnotation);
+                _euriborPlotModel.Annotations.Add(_minLineAnnotation);
+                _euriborPlotModel.Annotations.Add(_maxLineAnnotation);
+                _euriborPlotModel.IsLegendVisible = false;
             }
             else
             {
-                _euriborPlotModel = new PlotModel
-                {
-                    PlotType = PlotType.XY,
-                    Title = TheEuribors.GetInterestName(period),
-                    PlotAreaBackground = OxyColors.White,
-                    LegendBackground = OxyColor.FromAColor(200, OxyColors.White),
-                    LegendBorder = OxyColors.Black,
-                    LegendFontSize = 10
-                };
+                _euriborSeriesSixMonth.MarkerType = MarkerType.None;
+                _euriborSeriesOneMonth.MarkerType = MarkerType.None;
+                _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
+                _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
+
+                _euriborPlotModel.LegendPlacement = LegendPlacement.Inside;
+                _euriborPlotModel.LegendPosition = LegendPosition.BottomLeft;
+                _euriborPlotModel.IsLegendVisible = true;
             }
 
+            _graphPlotView.Model = _euriborPlotModel;
+            graphTableLayoutPanel.Controls.Add(_graphPlotView, 0, 0);
+            graphTableLayoutPanel.SetColumnSpan(_graphPlotView, 2);
+            graphTableLayoutPanel.SetRowSpan(_graphPlotView, 2);
+        }
+
+        private void SetupLinearSeries(TimePeriods period, bool smoothSelected, GraphStyle style)
+        {
             _euriborSeriesSixMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = xkcd ? 7 : 4,
+                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
                 Title = Resources.SIX_MONTH_SERIE_TITLE
@@ -96,7 +161,7 @@ namespace EuriborSharp.Views
             _euriborSeriesOneMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = xkcd ? 7 : 4,
+                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
                 Title = Resources.ONE_MONTH_SERIE_TITLE
@@ -105,7 +170,7 @@ namespace EuriborSharp.Views
             _euriborSeriesThreeMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = xkcd ? 7 : 4,
+                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
                 Title = Resources.THREE_MONTH_SERIE_TITLE
@@ -114,11 +179,16 @@ namespace EuriborSharp.Views
             _euriborSeriesTwelveMonth = new LineSeries
             {
                 MarkerType = MarkerType.Circle,
-                MarkerSize = xkcd ? 7 : 4,
+                MarkerSize = style == GraphStyle.XkcdLine ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
                 Title = Resources.TWELVE_MONTH_SERIE_TITLE
             };
+
+            _euriborPlotModel.Series.Add(_euriborSeriesTwelveMonth);
+            _euriborPlotModel.Series.Add(_euriborSeriesSixMonth);
+            _euriborPlotModel.Series.Add(_euriborSeriesOneMonth);
+            _euriborPlotModel.Series.Add(_euriborSeriesThreeMonth);
 
             _xAxis = new DateTimeAxis
             {
@@ -141,43 +211,61 @@ namespace EuriborSharp.Views
                 Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(period)) - INTEREST_MIN_OFFSET
             };
 
-            _euriborPlotModel.Series.Add(_euriborSeriesTwelveMonth);
-            _euriborPlotModel.Series.Add(_euriborSeriesSixMonth);
-            _euriborPlotModel.Series.Add(_euriborSeriesOneMonth);
-            _euriborPlotModel.Series.Add(_euriborSeriesThreeMonth);
-
             _euriborPlotModel.Axes.Add(_xAxis);
             _euriborPlotModel.Axes.Add(_yAxis);
+        }
 
-            if (_currentTimePeriod != TimePeriods.Default)
+        private void SetupBarSeries()
+        {
+            _euriborSeriesOneMonthBar = new ColumnSeries
             {
-                _euriborPlotModel.Annotations.Add(_textAnnotation);
-                _euriborPlotModel.Annotations.Add(_minLineAnnotation);
-                _euriborPlotModel.Annotations.Add(_maxLineAnnotation);
-                _euriborPlotModel.IsLegendVisible = false;
-            }
-            else
+                Title = Resources.ONE_MONTH_SERIE_TITLE,
+            };
+
+            _euriborSeriesSixMonthBar = new ColumnSeries
             {
-                _euriborSeriesSixMonth.MarkerType = MarkerType.None;
-                _euriborSeriesOneMonth.MarkerType = MarkerType.None;
-                _euriborSeriesThreeMonth.MarkerType = MarkerType.None;
-                _euriborSeriesTwelveMonth.MarkerType = MarkerType.None;
-                
-                _euriborPlotModel.LegendPlacement = LegendPlacement.Inside;
-                _euriborPlotModel.LegendPosition = LegendPosition.BottomLeft;
-                _euriborPlotModel.IsLegendVisible = true;
-            }
+                Title = Resources.SIX_MONTH_SERIE_TITLE
+            };
 
-            _graphPlotView.Model = _euriborPlotModel;
+            _euriborSeriesThreeMonthBar = new ColumnSeries
+            {
+                Title = Resources.THREE_MONTH_SERIE_TITLE
+            };
 
-            graphTableLayoutPanel.Controls.Add(_graphPlotView, 0, 0);
-            graphTableLayoutPanel.SetColumnSpan(_graphPlotView, 2);
-            graphTableLayoutPanel.SetRowSpan(_graphPlotView, 2);
+            _euriborSeriesTwelveMonthBar = new ColumnSeries
+            {
+                Title = Resources.TWELVE_MONTH_SERIE_TITLE
+            };
+
+            _euriborPlotModel.Series.Add(_euriborSeriesTwelveMonthBar);
+            _euriborPlotModel.Series.Add(_euriborSeriesSixMonthBar);
+            _euriborPlotModel.Series.Add(_euriborSeriesOneMonthBar);
+            _euriborPlotModel.Series.Add(_euriborSeriesThreeMonthBar);
+
+            _categoryAxis = new CategoryAxis
+            {
+                GapWidth = 0,
+                IsAxisVisible = false
+            };
+
+            _euriborPlotModel.Axes.Add(_categoryAxis);
         }
 
         public void UpdateGraph()
         {
-            AddPointsToSeries();
+            switch (_currentStyle)
+            {
+                case GraphStyle.XkcdLine:
+                case GraphStyle.Line:
+                    AddPointsToLinearSeries();
+                    break;
+                case GraphStyle.Bar:
+                case GraphStyle.XkcdBar:
+                    AddPointsToColumnSeries();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void UpdateSmoothing(bool b)
@@ -198,11 +286,44 @@ namespace EuriborSharp.Views
             _graphPlotView.Refresh();
         }
 
-        private void AddPointsToSeries()
+        private void AddPointsToColumnSeries()
         {
-            if (_euriborSeriesOneMonth == null) return;
+            _euriborSeriesOneMonthBar.ItemsSource = TheEuribors.InterestList;
 
+            switch (_currentTimePeriod)
+            {
+                case TimePeriods.Default:
+                    break;
+                case TimePeriods.OneWeek:
+                    break;
+                case TimePeriods.TwoWeeks:
+                    break;
+                case TimePeriods.OneMonth:
+                    _euriborSeriesOneMonthBar.ValueField = "OneMonth";
+                    break;
+                case TimePeriods.ThreeMonths:
+                    _euriborSeriesOneMonthBar.ValueField = "ThreeMonths";
+                    break;
+                case TimePeriods.SixMonths:
+                    _euriborSeriesOneMonthBar.ValueField = "SixMonths";
+                    break;
+                case TimePeriods.TwelveMonths:
+                    _euriborSeriesOneMonthBar.ValueField = "TwelveMonths";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _categoryAxis.ItemsSource = TheEuribors.InterestList;
+            _categoryAxis.LabelField = "Date";
+        }
+
+        private void AddPointsToLinearSeries()
+        {
             _euriborSeriesOneMonth.Points.Clear();
+            _euriborSeriesSixMonth.Points.Clear();
+            _euriborSeriesThreeMonth.Points.Clear();
+            _euriborSeriesTwelveMonth.Points.Clear();
 
             switch (_currentTimePeriod)
             {
@@ -243,7 +364,7 @@ namespace EuriborSharp.Views
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
 
-            var textForAnnotation = Resources.TEXT_ANNOTATION_LABEL + last.Y.ToString(CultureInfo.InvariantCulture);
+            var textForAnnotation = Resources.TEXT_ANNOTATION_LABEL + last.Y.ToString("0.000",CultureInfo.InvariantCulture);
             var pointForAnnotation = new DataPoint(last.X - (textForAnnotation.Length / 2.0), last.Y + ((max - min) / 2));
 
             _textAnnotation.TextPosition = pointForAnnotation;
@@ -252,6 +373,7 @@ namespace EuriborSharp.Views
             _textAnnotation.FontSize = 20.0;
             _textAnnotation.TextHorizontalAlignment = HorizontalAlignment.Center;
             _textAnnotation.TextVerticalAlignment = VerticalAlignment.Top;
+            _textAnnotation.StrokeThickness = 0;
 
             _minLineAnnotation.Type = LineAnnotationType.Horizontal;
             _minLineAnnotation.Y = Convert.ToDouble(TheEuribors.GetMinimumInterest(_currentTimePeriod));

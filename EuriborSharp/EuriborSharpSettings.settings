@@ -17,5 +17,11 @@
     <Setting Name="NormalLineSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="SelectedGraphStyle" Type="EuriborSharp.Enums.GraphStyle" Scope="User">
+      <Value Profile="(Default)">XkcdLine</Value>
+    </Setting>
+    <Setting Name="Autoload" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

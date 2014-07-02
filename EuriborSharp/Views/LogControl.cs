@@ -7,6 +7,7 @@ namespace EuriborSharp.Views
 {
     public partial class LogControl : UserControl, ILogControl
     {
+        public event EventHandler<BooleanEventArg> AutoloadChanged;
         public event EventHandler<StringEventArg> AddressChanged; 
         public event EventHandler UpdateClicked;
         public event EventHandler ClearClicked;
@@ -46,6 +47,11 @@ namespace EuriborSharp.Views
             Dock = DockStyle.Fill;
         }
 
+        public void SetupAutoload(bool enabled)
+        {
+            autoLoadCheck.Checked = enabled;
+        }
+
         private void clearButton_Click_1(object sender, EventArgs e)
         {
             ClearClicked(this, EventArgs.Empty);
@@ -59,6 +65,11 @@ namespace EuriborSharp.Views
         private void addressTextBox_TextChanged(object sender, EventArgs e)
         {
             AddressChanged(this, new StringEventArg(addressTextBox.Text));
+        }
+
+        private void autoLoadCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            AutoloadChanged(this, new BooleanEventArg(autoLoadCheck.Checked));
         }
     }
 }

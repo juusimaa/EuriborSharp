@@ -1,4 +1,5 @@
 ﻿using System;
+using EuriborSharp.Enums;
 
 namespace EuriborSharp.CustonEventArgs
 {
@@ -19,6 +20,16 @@ namespace EuriborSharp.CustonEventArgs
         public BooleanEventArg(bool b)
         {
             value = b;
+        }
+    }
+
+    public class GraphStyleEventArgs : EventArgs
+    {
+        public readonly GraphStyle style;
+
+        public GraphStyleEventArgs(GraphStyle g)
+        {
+            style = g;
         }
     }
 }

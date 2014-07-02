@@ -82,5 +82,29 @@ namespace EuriborSharp {
                 this["NormalLineSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("XkcdLine")]
+        public global::EuriborSharp.Enums.GraphStyle SelectedGraphStyle {
+            get {
+                return ((global::EuriborSharp.Enums.GraphStyle)(this["SelectedGraphStyle"]));
+            }
+            set {
+                this["SelectedGraphStyle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Autoload {
+            get {
+                return ((bool)(this["Autoload"]));
+            }
+            set {
+                this["Autoload"] = value;
+            }
+        }
     }
 }

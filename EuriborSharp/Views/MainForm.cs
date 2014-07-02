@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using EuriborSharp.CustonEventArgs;
+using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 
 namespace EuriborSharp.Views
@@ -9,6 +10,7 @@ namespace EuriborSharp.Views
     {
         public event EventHandler<BooleanEventArg> XkcdChanged;
         public event EventHandler<BooleanEventArg> LineSmoothChanged;
+        public event EventHandler<GraphStyleEventArgs> GraphStyleChanged;
         public event EventHandler LineStyleNormalSelected;
         public event EventHandler LineStyleNoneSelected;
         public event EventHandler HelpSelected;
@@ -46,11 +48,6 @@ namespace EuriborSharp.Views
             dotLineStyleToolStripMenuItem.Checked = !normalSelected;
         }
 
-        public void UpdateRendererSelection(bool xkcdSelected)
-        {
-            xkcdToolStripMenuItem.Checked = xkcdSelected;
-        }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             HelpSelected(this, EventArgs.Empty);
@@ -78,9 +75,24 @@ namespace EuriborSharp.Views
             LineSmoothChanged(this, new BooleanEventArg(smoothToolStripMenuItem.Checked));
         }
 
-        private void xkcdToolStripMenuItem_Click(object sender, EventArgs e)
+        private void lineToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            XkcdChanged(this, new BooleanEventArg(xkcdToolStripMenuItem.Checked));
+            GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.Line));
+        }
+
+        private void barToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.Bar));
+        }
+
+        private void xkcdLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.XkcdLine));
+        }
+
+        private void xkcdBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GraphStyleChanged(this, new GraphStyleEventArgs(GraphStyle.XkcdBar));
         }
     }
 }
