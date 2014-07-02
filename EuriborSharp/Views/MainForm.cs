@@ -77,13 +77,11 @@ namespace EuriborSharp.Views
 
         private void dotLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            normalLineStyleToolStripMenuItem.Checked = false;
             DotLineSelected(this, new BooleanEventArg(dotLineStyleToolStripMenuItem.Checked));
         }
 
         private void normalLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dotLineStyleToolStripMenuItem.Checked = false;
             DotLineSelected(this, new BooleanEventArg(dotLineStyleToolStripMenuItem.Checked));
         }
 

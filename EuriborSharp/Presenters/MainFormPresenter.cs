@@ -97,14 +97,16 @@ namespace EuriborSharp.Presenters
             EuriborSharpSettings.Default.Save();
             InitGraphs();
             UpdateGraphView();
+            UpdateMainFormMenuItemStatus();
         }
 
        private void _mainForm_RendererChanged(object sender, RendererEventArgs e)
         {
-            EuriborSharpSettings.Default.SelectedRenderer = e.value;
-            EuriborSharpSettings.Default.Save();
-            InitGraphs();
-            UpdateGraphView();
+           EuriborSharpSettings.Default.SelectedRenderer = e.value;
+           EuriborSharpSettings.Default.Save();
+           InitGraphs();
+           UpdateGraphView();
+           UpdateMainFormMenuItemStatus();
         }
 
         private static void _logControl_AutoloadChanged(object sender, BooleanEventArg e)
@@ -119,6 +121,15 @@ namespace EuriborSharp.Presenters
             EuriborSharpSettings.Default.Save();
             InitGraphs();
             UpdateGraphView();
+            UpdateMainFormMenuItemStatus();
+        }
+
+        private void UpdateMainFormMenuItemStatus()
+        {
+            _mainForm.UpdateLineStyle(EuriborSharpSettings.Default.DotLineSelected);
+            _mainForm.UpdateRenderer(EuriborSharpSettings.Default.SelectedRenderer);
+            _mainForm.UpdateSeriesStyle(EuriborSharpSettings.Default.SelectedGraphStyle);
+            _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
         }
 
         private void UpdateGraphView()
@@ -167,6 +178,7 @@ namespace EuriborSharp.Presenters
             _graphControl6Month.UpdateSmoothing(e.value);
             _graphControl12Month.UpdateSmoothing(e.value);
             UpdateGraphView();
+            UpdateMainFormMenuItemStatus();
         }
 
         private void _mainForm_ExitSelected(object sender, EventArgs e)

@@ -211,22 +211,29 @@ namespace EuriborSharp.Views
             _euriborSeriesOneMonthCol = new ColumnSeries
             {
                 Title = Resources.ONE_MONTH_SERIE_TITLE,
-                StrokeThickness = 1
+                StrokeThickness = 1,
+                FillColor = OxyColors.Red
             };
 
             _euriborSeriesSixMonthCol = new ColumnSeries
             {
-                Title = Resources.SIX_MONTH_SERIE_TITLE
+                Title = Resources.SIX_MONTH_SERIE_TITLE,
+                StrokeThickness = 1,
+                FillColor = OxyColors.Plum
             };
 
             _euriborSeriesThreeMonthCol = new ColumnSeries
             {
-                Title = Resources.THREE_MONTH_SERIE_TITLE
+                Title = Resources.THREE_MONTH_SERIE_TITLE,
+                StrokeThickness = 1,
+                FillColor = OxyColors.Peru
             };
 
             _euriborSeriesTwelveMonthCol = new ColumnSeries
             {
-                Title = Resources.TWELVE_MONTH_SERIE_TITLE
+                Title = Resources.TWELVE_MONTH_SERIE_TITLE,
+                StrokeThickness = 1,
+                FillColor = OxyColors.Navy
             };
 
             _euriborPlotModel.Series.Add(_euriborSeriesTwelveMonthCol);
@@ -268,12 +275,16 @@ namespace EuriborSharp.Views
         {
             _euriborSeriesOneMonthCol.ItemsSource = TheEuribors.InterestList;
             _euriborSeriesThreeMonthCol.ItemsSource = TheEuribors.InterestList;
+            _euriborSeriesSixMonthCol.ItemsSource = TheEuribors.InterestList;
+            _euriborSeriesTwelveMonthCol.ItemsSource = TheEuribors.InterestList;
 
             switch (_currentTimePeriod)
             {
                 case TimePeriods.Default:
                     _euriborSeriesOneMonthCol.ValueField = "OneMonth";
                     _euriborSeriesThreeMonthCol.ValueField = "ThreeMonths";
+                    _euriborSeriesSixMonthCol.ValueField = "SixMonths";
+                    _euriborSeriesTwelveMonthCol.ValueField = "TwelveMonths";
                     break;
                 case TimePeriods.OneWeek:
                     break;
@@ -283,13 +294,13 @@ namespace EuriborSharp.Views
                     _euriborSeriesOneMonthCol.ValueField = "OneMonth";
                     break;
                 case TimePeriods.ThreeMonths:
-                    _euriborSeriesOneMonthCol.ValueField = "ThreeMonths";
+                    _euriborSeriesThreeMonthCol.ValueField = "ThreeMonths";
                     break;
                 case TimePeriods.SixMonths:
-                    _euriborSeriesOneMonthCol.ValueField = "SixMonths";
+                    _euriborSeriesSixMonthCol.ValueField = "SixMonths";
                     break;
                 case TimePeriods.TwelveMonths:
-                    _euriborSeriesOneMonthCol.ValueField = "TwelveMonths";
+                    _euriborSeriesTwelveMonthCol.ValueField = "TwelveMonths";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
