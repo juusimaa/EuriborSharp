@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using EuriborSharp.Properties;
 
@@ -38,6 +39,29 @@ namespace EuriborSharp.Views
         public void UpdateVersion(string s)
         {
             versionLabel.Text = s;
+        }
+
+        public void UpdateFont(bool xkcdSelected)
+        {
+            Font titleFont;
+            Font copyFont;
+
+            if (xkcdSelected)
+            {
+                titleFont = new Font("Humor Sans", 14F);
+                copyFont = new Font("Humor Sans", 9F);
+            }
+            else
+            {
+                titleFont = new Font("Segoe UI", 14F);
+                copyFont = new Font("Segoe UI", 9F);
+            }
+
+            titleLabel.Font = titleFont;
+            versionLabel.Font = titleFont;
+            copyLabel.Font = copyFont;
+            componentsLabel.Font = copyFont;
+            linkLabel1.Font = copyFont;
         }
     }
 }

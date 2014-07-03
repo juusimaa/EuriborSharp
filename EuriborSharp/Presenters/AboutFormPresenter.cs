@@ -10,16 +10,22 @@ namespace EuriborSharp.Presenters
 {
     class AboutFormPresenter : IAboutFormPresenter
     {
+        private readonly AboutForm _form = new AboutForm { StartPosition = FormStartPosition.CenterParent };
+
         public void ShowAboutForm()
         {
-            var form = new AboutForm {StartPosition = FormStartPosition.CenterParent};
-            form.LinkClicked += form_LinkClicked;
+            _form.LinkClicked += form_LinkClicked;
 
-            form.UpdateTitle(AssemblyTitle);
-            form.UpdateCopyright(AssemblyCopyright);
-            form.UpdateVersion(AssemblyVersion.Major + "." + AssemblyVersion.Minor + " (build " + AssemblyVersion.Build + ")");
+            _form.UpdateTitle(AssemblyTitle);
+            _form.UpdateCopyright(AssemblyCopyright);
+            _form.UpdateVersion(AssemblyVersion.Major + "." + AssemblyVersion.Minor + " (build " + AssemblyVersion.Build + ")");
 
-            form.ShowDialog();
+            _form.ShowDialog();
+        }
+
+        public void UpdateFonts(bool xkcdSelected)
+        {
+            _form.UpdateFont(xkcdSelected);
         }
 
         static void form_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

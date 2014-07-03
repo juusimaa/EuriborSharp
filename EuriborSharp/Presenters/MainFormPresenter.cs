@@ -68,6 +68,7 @@ namespace EuriborSharp.Presenters
             InitGraphs();
 
             _aboutFormPresenter = new AboutFormPresenter();
+            _aboutFormPresenter.UpdateFonts(EuriborSharpSettings.Default.XkcdSelected);
 
             _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
             _mainForm.UpdateRenderer(EuriborSharpSettings.Default.SelectedRenderer);
@@ -110,6 +111,7 @@ namespace EuriborSharp.Presenters
            UpdateGraphView();
            UpdateMainFormMenuItemStatus();
            _mainForm.UpdateGui(EuriborSharpSettings.Default.XkcdSelected);
+           _aboutFormPresenter.UpdateFonts(EuriborSharpSettings.Default.XkcdSelected);
         }
 
         private static void _logControl_AutoloadChanged(object sender, BooleanEventArg e)
