@@ -106,5 +106,17 @@ namespace EuriborSharp {
                 this["SelectedRenderer"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool XkcdSelected {
+            get {
+                return ((bool)(this["XkcdSelected"]));
+            }
+            set {
+                this["XkcdSelected"] = value;
+            }
+        }
     }
 }

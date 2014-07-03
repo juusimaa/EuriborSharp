@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Enums;
@@ -57,6 +58,24 @@ namespace EuriborSharp.Views
         {
             normalToolStripMenuItem.Checked = r == Renderer.Normal;
             xkcdToolStripMenuItem.Checked = r == Renderer.Xkcd;
+        }
+
+        public void UpdateGui(bool xkcdSelected)
+        {
+            Font f;
+
+            if (xkcdSelected)
+            {
+                f = new Font("Humor Sans", 9F);
+
+            }
+            else
+            {
+                f = new Font("Segoe UI", 9F);
+            }
+
+            mainTabControl.Font = f;
+            menuStrip.Font = f;
         }
 
         public void UpdateLineStyleSelection(bool normalSelected)

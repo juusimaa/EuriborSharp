@@ -23,5 +23,8 @@
     <Setting Name="SelectedRenderer" Type="EuriborSharp.Enums.Renderer" Scope="User">
       <Value Profile="(Default)">Xkcd</Value>
     </Setting>
+    <Setting Name="XkcdSelected" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

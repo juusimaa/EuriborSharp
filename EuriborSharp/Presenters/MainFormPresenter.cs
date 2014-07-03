@@ -73,6 +73,7 @@ namespace EuriborSharp.Presenters
             _mainForm.UpdateRenderer(EuriborSharpSettings.Default.SelectedRenderer);
             _mainForm.UpdateSeriesStyle(EuriborSharpSettings.Default.SelectedGraphStyle);
             _mainForm.UpdateLineStyle(EuriborSharpSettings.Default.DotLineSelected);
+            _mainForm.UpdateGui(EuriborSharpSettings.Default.XkcdSelected);
 
             _mainForm.AddControl((UserControl) _graphControl1Month, TheEuribors.GetInterestName(TimePeriods.OneMonth));
             _mainForm.AddControl((UserControl) _graphControl3Month, TheEuribors.GetInterestName(TimePeriods.ThreeMonths));
@@ -101,12 +102,14 @@ namespace EuriborSharp.Presenters
         }
 
        private void _mainForm_RendererChanged(object sender, RendererEventArgs e)
-        {
+       {
+           EuriborSharpSettings.Default.XkcdSelected = (e.value == Renderer.Xkcd);
            EuriborSharpSettings.Default.SelectedRenderer = e.value;
            EuriborSharpSettings.Default.Save();
            InitGraphs();
            UpdateGraphView();
            UpdateMainFormMenuItemStatus();
+           _mainForm.UpdateGui(EuriborSharpSettings.Default.XkcdSelected);
         }
 
         private static void _logControl_AutoloadChanged(object sender, BooleanEventArg e)

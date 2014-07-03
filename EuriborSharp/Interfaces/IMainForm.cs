@@ -45,5 +45,6 @@ namespace EuriborSharp.Interfaces
         void UpdateSmoothSelection(bool selected);
         void UpdateSeriesStyle(GraphStyle g);
         void UpdateRenderer(Renderer r);
+        void UpdateGui(bool xkcdSelected);
     }
 }
