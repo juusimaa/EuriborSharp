@@ -39,7 +39,7 @@ namespace EuriborSharp.Views
         private LinearAxis _yAxis;
         private LineAnnotation _minLineAnnotation;
         private LineAnnotation _maxLineAnnotation;
-        private TextAnnotation _textAnnotation;
+        private TextAnnotation _textAnnotationCurrent;
 
         private TimePeriods _currentTimePeriod;
         private GraphStyle _currentStyle;
@@ -53,10 +53,10 @@ namespace EuriborSharp.Views
         {
             if (_graphPlotView != null) _graphPlotView.Dispose();
             
-            _textAnnotation = new TextAnnotation();
+            _textAnnotationCurrent = new TextAnnotation();
             _minLineAnnotation = new LineAnnotation();
             _maxLineAnnotation = new LineAnnotation();
-
+            
             _currentStyle = style;
             _currentTimePeriod = period;
             Dock = DockStyle.Fill;
@@ -109,7 +109,7 @@ namespace EuriborSharp.Views
 
             if (_currentTimePeriod != TimePeriods.Default)
             {
-                _euriborPlotModel.Annotations.Add(_textAnnotation);
+                _euriborPlotModel.Annotations.Add(_textAnnotationCurrent);
                 _euriborPlotModel.Annotations.Add(_minLineAnnotation);
                 _euriborPlotModel.Annotations.Add(_maxLineAnnotation);
                 _euriborPlotModel.IsLegendVisible = false;
@@ -347,19 +347,22 @@ namespace EuriborSharp.Views
 
             // Annotations
             var last = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).First();
+            var first = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).Last();
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
+            var change = (first.Y - last.Y) / first.Y * 100;
 
-            var textForAnnotation = Resources.TEXT_ANNOTATION_LABEL + last.Y.ToString("0.000",CultureInfo.InvariantCulture);
-            var pointForAnnotation = new DataPoint(last.X - (textForAnnotation.Length / 2.0), last.Y + ((max - min) / 2));
+            var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000",CultureInfo.InvariantCulture);
+            var pointForAnnotationCurrent = new DataPoint(last.X - (textForAnnotationCurrent.Length / 2.0), last.Y + ((max - min) / 2));
+            textForAnnotationCurrent += Environment.NewLine + Resources.TEXT_ANNOTATION_LABEL_CHANGE + change.ToString("0", CultureInfo.InvariantCulture) + " %";
 
-            _textAnnotation.TextPosition = pointForAnnotation;
-            _textAnnotation.Text = textForAnnotation;
-            _textAnnotation.TextColor = OxyColors.Black;
-            _textAnnotation.FontSize = 20.0;
-            _textAnnotation.TextHorizontalAlignment = HorizontalAlignment.Center;
-            _textAnnotation.TextVerticalAlignment = VerticalAlignment.Top;
-            _textAnnotation.StrokeThickness = 0;
+            _textAnnotationCurrent.TextPosition = pointForAnnotationCurrent;
+            _textAnnotationCurrent.Text = textForAnnotationCurrent;
+            _textAnnotationCurrent.TextColor = OxyColors.Black;
+            _textAnnotationCurrent.FontSize = 20.0;
+            _textAnnotationCurrent.TextHorizontalAlignment = HorizontalAlignment.Center;
+            _textAnnotationCurrent.TextVerticalAlignment = VerticalAlignment.Top;
+            _textAnnotationCurrent.StrokeThickness = 0;
 
             _minLineAnnotation.Type = LineAnnotationType.Horizontal;
             _minLineAnnotation.Y = Convert.ToDouble(TheEuribors.GetMinimumInterest(_currentTimePeriod));

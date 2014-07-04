@@ -197,11 +197,38 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL_CHANGE {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_CHANGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current: .
         /// </summary>
-        internal static string TEXT_ANNOTATION_LABEL {
+        internal static string TEXT_ANNOTATION_LABEL_CURRENT {
             get {
-                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL", resourceCulture);
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_CURRENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL_FIRST {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_FIRST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL_LAST {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_LAST", resourceCulture);
             }
         }
         

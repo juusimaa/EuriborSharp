@@ -163,7 +163,7 @@
   <data name="SIX_MONTH_SERIE_TITLE" xml:space="preserve">
     <value>6 months</value>
   </data>
-  <data name="TEXT_ANNOTATION_LABEL" xml:space="preserve">
+  <data name="TEXT_ANNOTATION_LABEL_CURRENT" xml:space="preserve">
     <value>Current: </value>
   </data>
   <data name="THREE_MONTH_SERIE_TITLE" xml:space="preserve">
@@ -177,5 +177,14 @@
   </data>
   <data name="Y_AXIS_UNIT" xml:space="preserve">
     <value>%</value>
+  </data>
+  <data name="TEXT_ANNOTATION_LABEL_FIRST" xml:space="preserve">
+    <value>First: </value>
+  </data>
+  <data name="TEXT_ANNOTATION_LABEL_LAST" xml:space="preserve">
+    <value>Last: </value>
+  </data>
+  <data name="TEXT_ANNOTATION_LABEL_CHANGE" xml:space="preserve">
+    <value>Change: </value>
   </data>
 </root>
