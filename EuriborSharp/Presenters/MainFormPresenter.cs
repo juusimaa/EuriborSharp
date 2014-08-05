@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.ServiceModel.Syndication;
@@ -13,6 +14,7 @@ using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
+using EuriborSharp.Properties;
 using EuriborSharp.Views;
 
 #endregion
@@ -35,12 +37,12 @@ namespace EuriborSharp.Presenters
         private readonly IAboutFormPresenter _aboutFormPresenter;
 
         private readonly BackgroundWorker _feedReader;
+        private readonly BackgroundWorker _downloader;
 
         public MainFormPresenter()
         {
             TheEuribors.InterestList = new List<Euribors>();
-            TheEuribors.Load();
-
+            
             _feedReader = new BackgroundWorker {WorkerSupportsCancellation = true};
             _feedReader.DoWork += _feedReader_DoWork;
             _feedReader.RunWorkerCompleted += _feedReader_RunWorkerCompleted;
@@ -91,6 +93,28 @@ namespace EuriborSharp.Presenters
             _feedReader.RunWorkerAsync();
 #endif
             UpdateGraphView();
+
+            _downloader = new BackgroundWorker();
+            _downloader.DoWork += _downloader_DoWork;
+            _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
+            _downloader.RunWorkerAsync();
+        }
+
+        void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            TheEuribors.Load();
+            UpdateGraphView();
+        }
+
+        static void _downloader_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var downloader = new WebClient();
+
+            foreach (var item in TheEuribors.UrlList)
+            {
+                if (!File.Exists(item.Key))
+                    downloader.DownloadFile(new Uri(item.Value), item.Key);
+            }
         }
 
         private void _mainForm_DotLineSelected(object sender, BooleanEventArg e)

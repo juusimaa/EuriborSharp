@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Forms.VisualStyles;
 using System.Xml.Serialization;
 using EuriborSharp.Enums;
 using EuriborSharp.Properties;
@@ -13,6 +14,15 @@ namespace EuriborSharp.Model
     [Serializable]
     public static class TheEuribors
     {
+        public static Dictionary<string, string> UrlList = new Dictionary<string, string>
+        {
+            { "hist_EURIBOR_2014.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv" },
+            { "hist_EURIBOR_2013.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2013.csv"},
+            { "hist_EURIBOR_2012.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2012.csv"},
+            { "hist_EURIBOR_2011.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2011.csv"},
+            { "hist_EURIBOR_2010.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2010.csv" }
+        }; 
+
         public static List<Euribors> InterestList { get; set; }
 
         public static void Save()
@@ -28,15 +38,42 @@ namespace EuriborSharp.Model
         {
             try
             {
-                using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Open, FileAccess.Read))
+                foreach (var item in UrlList)
                 {
-                    var xs = new XmlSerializer(typeof (List<Euribors>));
-                    InterestList = (List<Euribors>) xs.Deserialize(fs);
+                    using (var sr = new StreamReader(item.Key))
+                    {
+                        string line;
+
+                        var dates = new List<string>();
+                        var oneMonthValues = new List<string>();
+
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            if (line.StartsWith(","))
+                                dates = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            else if (line.StartsWith("1m"))
+                                oneMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                        }
+
+                        oneMonthValues.RemoveAt(0);
+
+                        for (var index = 0; index < dates.Count; index++)
+                        {
+                            var e = new Euribors
+                            {
+                                Date = DateTime.Parse(dates[index]),
+                                OneMonth = Convert.ToDecimal(oneMonthValues[index], CultureInfo.InvariantCulture)
+                            };
+                            InterestList.Add(e);
+                        }
+                    }
                 }
+
+                InterestList.Sort((item1, item2) => item1.Date.CompareTo(item2.Date));
             }
             catch (FileNotFoundException)
             {
-                // TODO: saved file not found. Ignore?
+                // TODO: file not found. Ignore?
             }
         }
 

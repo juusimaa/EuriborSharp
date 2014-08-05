@@ -131,7 +131,7 @@ namespace EuriborSharp.Views
         {
             _euriborSeriesSixMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -141,7 +141,7 @@ namespace EuriborSharp.Views
 
             _euriborSeriesOneMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -151,7 +151,7 @@ namespace EuriborSharp.Views
 
             _euriborSeriesThreeMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -161,7 +161,7 @@ namespace EuriborSharp.Views
 
             _euriborSeriesTwelveMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -263,6 +263,12 @@ namespace EuriborSharp.Views
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
+            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
+
+            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(TimePeriods.OneMonth)) + INTEREST_MAX_OFFSET;
+            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(TimePeriods.OneMonth)) - INTEREST_MIN_OFFSET;
         }
 
         private void AddPointsToColumnSeries()
