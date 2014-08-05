@@ -14,7 +14,6 @@ using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
-using EuriborSharp.Properties;
 using EuriborSharp.Views;
 
 #endregion
@@ -37,7 +36,6 @@ namespace EuriborSharp.Presenters
         private readonly IAboutFormPresenter _aboutFormPresenter;
 
         private readonly BackgroundWorker _feedReader;
-        private readonly BackgroundWorker _downloader;
 
         public MainFormPresenter()
         {
@@ -92,12 +90,10 @@ namespace EuriborSharp.Presenters
 #else
             _feedReader.RunWorkerAsync();
 #endif
-            UpdateGraphView();
-
-            _downloader = new BackgroundWorker();
-            _downloader.DoWork += _downloader_DoWork;
-            _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
-            _downloader.RunWorkerAsync();
+            var downloader = new BackgroundWorker();
+            downloader.DoWork += _downloader_DoWork;
+            downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
+            downloader.RunWorkerAsync();
         }
 
         void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -112,7 +108,7 @@ namespace EuriborSharp.Presenters
 
             foreach (var item in TheEuribors.UrlList)
             {
-                if (!File.Exists(item.Key))
+                if (!File.Exists(item.Key) || item.Key.Contains("2014"))
                     downloader.DownloadFile(new Uri(item.Value), item.Key);
             }
         }
@@ -163,10 +159,10 @@ namespace EuriborSharp.Presenters
 
         private void UpdateGraphView()
         {
-            _graphControl1Month.UpdateGraph();
-            _graphControl3Month.UpdateGraph();
-            _graphControl6Month.UpdateGraph();
-            _graphControl12Month.UpdateGraph();
+            _graphControl1Month.UpdateGraph(TimePeriods.OneMonth);
+            _graphControl3Month.UpdateGraph(TimePeriods.ThreeMonths);
+            _graphControl6Month.UpdateGraph(TimePeriods.SixMonths);
+            _graphControl12Month.UpdateGraph(TimePeriods.TwelveMonths);
             _graphControlAll.UpdateGraph();
         }
 

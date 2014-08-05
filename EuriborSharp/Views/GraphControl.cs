@@ -267,8 +267,29 @@ namespace EuriborSharp.Views
             _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
             _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
 
-            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(TimePeriods.OneMonth)) + INTEREST_MAX_OFFSET;
-            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(TimePeriods.OneMonth)) - INTEREST_MIN_OFFSET;
+            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest()) + INTEREST_MAX_OFFSET;
+            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest()) - INTEREST_MIN_OFFSET;
+        }
+
+        public void UpdateGraph(TimePeriods period)
+        {
+            switch (_currentStyle)
+            {
+                case GraphStyle.Line:
+                    AddPointsToLinearSeries();
+                    break;
+                case GraphStyle.Bar:
+                    AddPointsToColumnSeries();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
+            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
+
+            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) + INTEREST_MAX_OFFSET;
+            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(period)) - INTEREST_MIN_OFFSET;
         }
 
         private void AddPointsToColumnSeries()

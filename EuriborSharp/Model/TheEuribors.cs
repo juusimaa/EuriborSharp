@@ -4,7 +4,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Forms.VisualStyles;
 using System.Xml.Serialization;
 using EuriborSharp.Enums;
 using EuriborSharp.Properties;
@@ -46,6 +45,9 @@ namespace EuriborSharp.Model
 
                         var dates = new List<string>();
                         var oneMonthValues = new List<string>();
+                        var threeMonthValues = new List<string>();
+                        var sixMonthValues = new List<string>();
+                        var twelveMonthValues = new List<string>();
 
                         while ((line = sr.ReadLine()) != null)
                         {
@@ -53,16 +55,30 @@ namespace EuriborSharp.Model
                                 dates = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("1m"))
                                 oneMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            else if (line.StartsWith("3m"))
+                                threeMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            else if (line.StartsWith("6m"))
+                                sixMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                            else if (line.StartsWith("12m"))
+                                twelveMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                         }
 
+                        // remove first item (label)
                         oneMonthValues.RemoveAt(0);
+                        threeMonthValues.RemoveAt(0);
+                        sixMonthValues.RemoveAt(0);
+                        twelveMonthValues.RemoveAt(0);
 
                         for (var index = 0; index < dates.Count; index++)
                         {
                             var e = new Euribors
                             {
                                 Date = DateTime.Parse(dates[index]),
-                                OneMonth = Convert.ToDecimal(oneMonthValues[index], CultureInfo.InvariantCulture)
+                                OneMonth = Convert.ToDecimal(oneMonthValues[index], CultureInfo.InvariantCulture),
+                                ThreeMonths = Convert.ToDecimal(threeMonthValues[index], CultureInfo.InvariantCulture),
+                                SixMonths = Convert.ToDecimal(sixMonthValues[index], CultureInfo.InvariantCulture),
+                                TwelveMonths = Convert.ToDecimal(twelveMonthValues[index], CultureInfo.InvariantCulture)
+                                
                             };
                             InterestList.Add(e);
                         }
@@ -85,6 +101,11 @@ namespace EuriborSharp.Model
         public static DateTime GetNewestDate()
         {
             return InterestList.Count == 0 ? DateTime.Now : InterestList.Max(e => e.Date);
+        }
+
+        public static decimal GetMaximumInterest()
+        {
+            return InterestList.Max(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Max());
         }
 
         public static decimal GetMaximumInterest(TimePeriods periods)
@@ -135,6 +156,11 @@ namespace EuriborSharp.Model
                 default:
                     throw new ArgumentOutOfRangeException("periods");
             }
+        }
+
+        public static decimal GetMinimumInterest()
+        {
+            return InterestList.Min(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Min());
         }
 
         public static decimal GetInterest(Euribors item, TimePeriods period)

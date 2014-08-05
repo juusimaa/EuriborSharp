@@ -15,7 +15,12 @@ namespace EuriborSharp.Interfaces
         void Init(TimePeriods period, bool smoothSelected, GraphStyle style, Renderer renderer, bool dotLine);
         
         /// <summary>
-        /// Updated plot data series.
+        /// Updated selected plot data series.
+        /// </summary>
+        void UpdateGraph(TimePeriods period);
+
+        /// <summary>
+        /// Updated all plot data series.
         /// </summary>
         void UpdateGraph();
     }
