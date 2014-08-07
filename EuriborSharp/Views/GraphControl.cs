@@ -20,6 +20,7 @@ namespace EuriborSharp.Views
         private const double DATE_AXIS_OFFSET = 2.0;
         private const double INTEREST_MAX_OFFSET = 0.02;
         private const double INTEREST_MIN_OFFSET = 0.02;
+        private const double TEXT_ANNOTATION_OFFSET = 200.0;
 
         private PlotView _graphPlotView;
         private PlotModel _euriborPlotModel;
@@ -374,14 +375,11 @@ namespace EuriborSharp.Views
 
             // Annotations
             var last = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).First();
-            var first = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).Last();
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
-            var change = (first.Y - last.Y) / first.Y * 100;
 
             var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000",CultureInfo.InvariantCulture);
-            var pointForAnnotationCurrent = new DataPoint(last.X - (textForAnnotationCurrent.Length / 2.0), last.Y + ((max - min) / 2));
-            textForAnnotationCurrent += Environment.NewLine + Resources.TEXT_ANNOTATION_LABEL_CHANGE + change.ToString("0", CultureInfo.InvariantCulture) + " %";
+            var pointForAnnotationCurrent = new DataPoint(last.X - TEXT_ANNOTATION_OFFSET, last.Y + ((max - min) / 2));
 
             _textAnnotationCurrent.TextPosition = pointForAnnotationCurrent;
             _textAnnotationCurrent.Text = textForAnnotationCurrent;

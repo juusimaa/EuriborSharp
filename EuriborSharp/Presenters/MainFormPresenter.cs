@@ -100,10 +100,14 @@ namespace EuriborSharp.Presenters
         {
             TheEuribors.Load();
             UpdateGraphView();
+
+            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
         }
 
-        static void _downloader_DoWork(object sender, DoWorkEventArgs e)
+        void _downloader_DoWork(object sender, DoWorkEventArgs e)
         {
+            _mainForm.UpdateTitle("EuriborSharp - Updatating...");
+
             var downloader = new WebClient();
 
             foreach (var item in TheEuribors.UrlList)
