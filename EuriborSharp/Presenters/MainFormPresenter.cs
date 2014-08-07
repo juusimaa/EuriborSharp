@@ -99,9 +99,8 @@ namespace EuriborSharp.Presenters
         void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             TheEuribors.Load();
-            UpdateGraphView();
-
             _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            UpdateGraphView();
         }
 
         void _downloader_DoWork(object sender, DoWorkEventArgs e)

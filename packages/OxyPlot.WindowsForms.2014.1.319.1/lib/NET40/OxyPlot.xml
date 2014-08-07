@@ -7803,15 +7803,6 @@
             <param name="interpolate">interpolate if set to <c>true</c> .</param>
             <returns>A TrackerHitResult for the current hit.</returns>
         </member>
-        <member name="M:OxyPlot.Series.ScatterSeries`1.IsValidPoint(`0,OxyPlot.Axes.Axis,OxyPlot.Axes.Axis)">
-            <summary>
-            Determines whether the specified point is valid.
-            </summary>
-            <param name="pt">The point.</param>
-            <param name="xaxis">The x axis.</param>
-            <param name="yaxis">The y axis.</param>
-            <returns><c>true</c> if the point is valid; otherwise, <c>false</c> .</returns>
-        </member>
         <member name="M:OxyPlot.Series.ScatterSeries`1.Render(OxyPlot.IRenderContext,OxyPlot.PlotModel)">
             <summary>
             Renders the series on the specified rendering context.

@@ -18,8 +18,8 @@ namespace EuriborSharp.Views
     public partial class GraphControl : UserControl, IGraphControl
     {
         private const double DATE_AXIS_OFFSET = 2.0;
-        private const double INTEREST_MAX_OFFSET = 0.02;
-        private const double INTEREST_MIN_OFFSET = 0.02;
+        private const double INTEREST_MAX_OFFSET = 0.2;
+        private const double INTEREST_MIN_OFFSET = 0.2;
         private const double TEXT_ANNOTATION_OFFSET = 200.0;
 
         private PlotView _graphPlotView;
