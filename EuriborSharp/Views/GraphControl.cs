@@ -375,10 +375,12 @@ namespace EuriborSharp.Views
 
             // Annotations
             var last = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).First();
+            var lastDate = TheEuribors.InterestList.OrderBy(e => e.Date).Last();
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
 
-            var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000",CultureInfo.InvariantCulture);
+            var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000", CultureInfo.InvariantCulture) + 
+                "\n(" + lastDate.Date.ToShortDateString() + ")";
             var pointForAnnotationCurrent = new DataPoint(last.X - TEXT_ANNOTATION_OFFSET, last.Y + ((max - min) / 2));
 
             _textAnnotationCurrent.TextPosition = pointForAnnotationCurrent;

@@ -34,16 +34,15 @@ namespace EuriborSharp.Presenters
         private readonly IGraphControl _graphControl12Month;
         private readonly IGraphControl _graphControlAll;
         private readonly IAboutFormPresenter _aboutFormPresenter;
-
-        private readonly BackgroundWorker _feedReader;
+        private readonly BackgroundWorker _downloader;
 
         public MainFormPresenter()
         {
             TheEuribors.InterestList = new List<Euribors>();
-            
-            _feedReader = new BackgroundWorker {WorkerSupportsCancellation = true};
-            _feedReader.DoWork += _feedReader_DoWork;
-            _feedReader.RunWorkerCompleted += _feedReader_RunWorkerCompleted;
+
+            _downloader = new BackgroundWorker {WorkerSupportsCancellation = true};
+            _downloader.DoWork += _downloader_DoWork;
+            _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
 
             _mainForm = new MainForm();
             _mainForm.HelpSelected += _mainForm_HelpSelected;
@@ -84,22 +83,19 @@ namespace EuriborSharp.Presenters
 #if DEBUG
             _mainForm.AddControl((UserControl) _logControl, "Log");
             _logControl.SetupAutoload(EuriborSharpSettings.Default.Autoload);
-            _logControl.UpdateAddress(EuriborSharpSettings.Default.RssFeedAddress);
+            _logControl.UpdateAddress(EuriborSharpSettings.Default.EuriborDefaultUrl);
 
-            if (EuriborSharpSettings.Default.Autoload) _feedReader.RunWorkerAsync();
+            if (EuriborSharpSettings.Default.Autoload) _downloader.RunWorkerAsync();
 #else
-            _feedReader.RunWorkerAsync();
+            _downloader.RunWorkerAsync();
 #endif
-            var downloader = new BackgroundWorker();
-            downloader.DoWork += _downloader_DoWork;
-            downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
-            downloader.RunWorkerAsync();
         }
 
         void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             TheEuribors.Load();
             _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            InitGraphs();
             UpdateGraphView();
         }
 
@@ -112,7 +108,10 @@ namespace EuriborSharp.Presenters
             foreach (var item in TheEuribors.UrlList)
             {
                 if (!File.Exists(item.Key) || item.Key.Contains("2014"))
+                {
                     downloader.DownloadFile(new Uri(item.Value), item.Key);
+                    _logControl.AddText("Downloading " + item.Value + Environment.NewLine, true);
+                }
             }
         }
 
@@ -208,7 +207,7 @@ namespace EuriborSharp.Presenters
 
         private void _mainForm_ExitSelected(object sender, EventArgs e)
         {
-            _feedReader.CancelAsync();
+            _downloader.CancelAsync();
             _mainForm.Close();
         }
 
@@ -275,7 +274,7 @@ namespace EuriborSharp.Presenters
 
         private void _logControl_UpdateClicked(object sender, EventArgs e)
         {
-            _feedReader.RunWorkerAsync();
+            _downloader.RunWorkerAsync();
         }
 
         public Form GetMainForm()
