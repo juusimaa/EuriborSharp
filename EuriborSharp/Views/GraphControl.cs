@@ -18,8 +18,9 @@ namespace EuriborSharp.Views
     public partial class GraphControl : UserControl, IGraphControl
     {
         private const double DATE_AXIS_OFFSET = 2.0;
-        private const double INTEREST_MAX_OFFSET = 0.02;
-        private const double INTEREST_MIN_OFFSET = 0.02;
+        private const double INTEREST_MAX_OFFSET = 0.2;
+        private const double INTEREST_MIN_OFFSET = 0.2;
+        private const double TEXT_ANNOTATION_OFFSET = 200.0;
 
         private PlotView _graphPlotView;
         private PlotModel _euriborPlotModel;
@@ -131,7 +132,7 @@ namespace EuriborSharp.Views
         {
             _euriborSeriesSixMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -141,7 +142,7 @@ namespace EuriborSharp.Views
 
             _euriborSeriesOneMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -151,7 +152,7 @@ namespace EuriborSharp.Views
 
             _euriborSeriesThreeMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -161,7 +162,7 @@ namespace EuriborSharp.Views
 
             _euriborSeriesTwelveMonth = new LineSeries
             {
-                MarkerType = MarkerType.Circle,
+                MarkerType = MarkerType.None,
                 MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
                 Smooth = smoothSelected,
@@ -263,6 +264,33 @@ namespace EuriborSharp.Views
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
+            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
+
+            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest()) + INTEREST_MAX_OFFSET;
+            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest()) - INTEREST_MIN_OFFSET;
+        }
+
+        public void UpdateGraph(TimePeriods period)
+        {
+            switch (_currentStyle)
+            {
+                case GraphStyle.Line:
+                    AddPointsToLinearSeries();
+                    break;
+                case GraphStyle.Bar:
+                    AddPointsToColumnSeries();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
+            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
+
+            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) + INTEREST_MAX_OFFSET;
+            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(period)) - INTEREST_MIN_OFFSET;
         }
 
         private void AddPointsToColumnSeries()
@@ -347,14 +375,13 @@ namespace EuriborSharp.Views
 
             // Annotations
             var last = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).First();
-            var first = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).Last();
+            var lastDate = TheEuribors.InterestList.OrderBy(e => e.Date).Last();
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
-            var change = (first.Y - last.Y) / first.Y * 100;
 
-            var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000",CultureInfo.InvariantCulture);
-            var pointForAnnotationCurrent = new DataPoint(last.X - (textForAnnotationCurrent.Length / 2.0), last.Y + ((max - min) / 2));
-            textForAnnotationCurrent += Environment.NewLine + Resources.TEXT_ANNOTATION_LABEL_CHANGE + change.ToString("0", CultureInfo.InvariantCulture) + " %";
+            var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000", CultureInfo.InvariantCulture) + 
+                "\n(" + lastDate.Date.ToShortDateString() + ")";
+            var pointForAnnotationCurrent = new DataPoint(last.X - TEXT_ANNOTATION_OFFSET, last.Y + ((max - min) / 2));
 
             _textAnnotationCurrent.TextPosition = pointForAnnotationCurrent;
             _textAnnotationCurrent.Text = textForAnnotationCurrent;

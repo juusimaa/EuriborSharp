@@ -26,5 +26,8 @@
     <Setting Name="XkcdSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="EuriborDefaultUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

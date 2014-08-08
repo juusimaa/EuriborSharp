@@ -118,5 +118,18 @@ namespace EuriborSharp {
                 this["XkcdSelected"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURI" +
+            "BOR_2014.csv")]
+        public string EuriborDefaultUrl {
+            get {
+                return ((string)(this["EuriborDefaultUrl"]));
+            }
+            set {
+                this["EuriborDefaultUrl"] = value;
+            }
+        }
     }
 }
