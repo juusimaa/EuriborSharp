@@ -61,6 +61,15 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MoreLINQ © 2014 Jon Skeel et al. (Apache 2).
+        /// </summary>
+        internal static string ABOUT_MORELINQ_LABEL {
+            get {
+                return ResourceManager.GetString("ABOUT_MORELINQ_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OxyPlot © 2014 OxyPlot contributors (MIT).
         /// </summary>
         internal static string ABOUT_OXY_LABEL {

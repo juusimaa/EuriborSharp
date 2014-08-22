@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using EuriborSharp.Enums;
 using EuriborSharp.Properties;
+using MoreLinq;
 
 namespace EuriborSharp.Model
 {
@@ -22,8 +23,17 @@ namespace EuriborSharp.Model
             { "hist_EURIBOR_2010.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2010.csv" }
         }; 
 
+        // TODO: remove old InterestList
         public static List<Euribors> InterestList { get; set; }
 
+        public static List<NewEuriborClass> NewInterestList { get; private set; }
+
+        static TheEuribors()
+        {
+            NewInterestList = new List<NewEuriborClass>();
+        }
+
+        [Obsolete]
         public static void Save()
         {
             using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Create, FileAccess.Write))
@@ -56,11 +66,11 @@ namespace EuriborSharp.Model
                             else if (line.StartsWith("1m"))
                                 oneMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("3m"))
-                                threeMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                threeMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("6m"))
-                                sixMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                sixMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("12m"))
-                                twelveMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                twelveMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
                         }
 
                         // remove first item (label)
@@ -71,6 +81,12 @@ namespace EuriborSharp.Model
 
                         for (var index = 0; index < dates.Count; index++)
                         {
+                            var d = DateTime.Parse(dates[index]);
+                            NewInterestList.Add(new NewEuriborClass(TimePeriods.OneMonth, d, Convert.ToDecimal(oneMonthValues[index], CultureInfo.InvariantCulture)));
+                            NewInterestList.Add(new NewEuriborClass(TimePeriods.ThreeMonths, d, Convert.ToDecimal(threeMonthValues[index], CultureInfo.InvariantCulture)));
+                            NewInterestList.Add(new NewEuriborClass(TimePeriods.SixMonths, d, Convert.ToDecimal(sixMonthValues[index], CultureInfo.InvariantCulture)));
+                            NewInterestList.Add(new NewEuriborClass(TimePeriods.TwelveMonths, d, Convert.ToDecimal(twelveMonthValues[index], CultureInfo.InvariantCulture)));
+
                             var e = new Euribors
                             {
                                 Date = DateTime.Parse(dates[index]),
@@ -91,6 +107,11 @@ namespace EuriborSharp.Model
             {
                 // TODO: file not found. Ignore?
             }
+        }
+
+        public static NewEuriborClass GetMinValue(TimePeriods t)
+        {
+            return NewInterestList.Where(e => e.TimePeriod == t).MinBy(m => m.EuriborValue);
         }
 
         public static DateTime GetOldestDate()
@@ -209,6 +230,7 @@ namespace EuriborSharp.Model
             }
         }
 
+        [Obsolete]
         public static void ParseInterestRates(string text, Euribors current)
         {
             var periodPattern = new Regex(@"(\d+)(\s\w+\s)");
@@ -246,6 +268,7 @@ namespace EuriborSharp.Model
             current.Date = DateTime.Parse(date, new CultureInfo("fi-FI"), DateTimeStyles.AssumeLocal);
         }
 
+        [Obsolete]
         private static TimePeriods ParseTimePeriod(Match value)
         {
             var intMatch = Convert.ToInt32(value.Groups[1].Value);
@@ -290,5 +313,19 @@ namespace EuriborSharp.Model
         public decimal OneWeek { get; set; }
         public decimal TwoWeeks { get; set; }
         public DateTime Date { get; set; }
+    }
+
+    public class NewEuriborClass
+    {
+        public TimePeriods TimePeriod { get; set; }
+        public DateTime Date { get; set; }
+        public decimal EuriborValue { get; set; }
+
+        public NewEuriborClass(TimePeriods t, DateTime d, decimal e)
+        {
+            TimePeriod = t;
+            Date = d;
+            EuriborValue = e;
+        }
     }
 }

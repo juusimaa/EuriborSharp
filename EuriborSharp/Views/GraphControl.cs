@@ -353,7 +353,7 @@ namespace EuriborSharp.Views
                         _euriborSeriesTwelveMonth.Points.Add(dpTwelveMonth);
                         _euriborSeriesSixMonth.Points.Add(dpSixMonths);
                     }
-                    break;
+                    return;
                 case TimePeriods.OneWeek:
                 case TimePeriods.TwoWeeks:
                 case TimePeriods.OneMonth:
@@ -391,9 +391,11 @@ namespace EuriborSharp.Views
             _textAnnotationCurrent.TextVerticalAlignment = VerticalAlignment.Top;
             _textAnnotationCurrent.StrokeThickness = 0;
 
+            var euriborMin = TheEuribors.GetMinValue(_currentTimePeriod);
             _minLineAnnotation.Type = LineAnnotationType.Horizontal;
+            _minLineAnnotation.X = (max - min) / 2;
             _minLineAnnotation.Y = Convert.ToDouble(TheEuribors.GetMinimumInterest(_currentTimePeriod));
-            _minLineAnnotation.Text = Resources.MIN_LABEL;
+            _minLineAnnotation.Text = Resources.MIN_LABEL + ": " + euriborMin.EuriborValue + " (" + euriborMin.Date.ToShortDateString() + ")";
             _minLineAnnotation.FontSize = 20.0;
             _minLineAnnotation.Color = OxyColors.Blue;
 

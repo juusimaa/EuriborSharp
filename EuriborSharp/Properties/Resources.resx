@@ -187,4 +187,7 @@
   <data name="TEXT_ANNOTATION_LABEL_CHANGE" xml:space="preserve">
     <value>Change: </value>
   </data>
+  <data name="ABOUT_MORELINQ_LABEL" xml:space="preserve">
+    <value>MoreLINQ © 2014 Jon Skeel et al. (Apache 2)</value>
+  </data>
 </root>

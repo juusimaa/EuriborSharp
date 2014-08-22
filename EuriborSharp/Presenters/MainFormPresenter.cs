@@ -282,6 +282,7 @@ namespace EuriborSharp.Presenters
             return (Form) _mainForm;
         }
 
+        [Obsolete]
         private void ReadRssFeed()
         {
             _logControl.AddText("Reading " + EuriborSharpSettings.Default.RssFeedAddress + Environment.NewLine, true);

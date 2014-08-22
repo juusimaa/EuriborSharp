@@ -14,11 +14,20 @@ namespace EuriborSharp.Views
             InitializeComponent();
             Text = Resources.ABOUT_TITLE;
 
-            linkLabel1.Text = Resources.ABOUT_OXY_LABEL;
-            linkLabel1.Links.Add(0, 7, "https://oxyplot.codeplex.com");
-            linkLabel1.Links.Add(37, 3, "http://oxyplot.codeplex.com/license");
+            oxyLinkLabel.Text = Resources.ABOUT_OXY_LABEL;
+            oxyLinkLabel.Links.Add(0, 7, "https://oxyplot.codeplex.com");
+            oxyLinkLabel.Links.Add(37, 3, "http://oxyplot.codeplex.com/license");
+            oxyLinkLabel.LinkClicked += linkLabel1_LinkClicked;
 
-            linkLabel1.LinkClicked += linkLabel1_LinkClicked;
+            moreLinqLinkLabel.Text = Resources.ABOUT_MORELINQ_LABEL;
+            moreLinqLinkLabel.Links.Add(0, 8, "http://code.google.com/p/morelinq/");
+            moreLinqLinkLabel.Links.Add(34, 8, "http://www.apache.org/licenses/LICENSE-2.0");
+            moreLinqLinkLabel.LinkClicked += moreLinqLinkLabel_LinkClicked;
+        }
+
+        void moreLinqLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            LinkClicked(this, e);
         }
 
         void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -61,7 +70,8 @@ namespace EuriborSharp.Views
             versionLabel.Font = titleFont;
             copyLabel.Font = copyFont;
             componentsLabel.Font = copyFont;
-            linkLabel1.Font = copyFont;
+            oxyLinkLabel.Font = copyFont;
+            moreLinqLinkLabel.Font = copyFont;
         }
     }
 }
