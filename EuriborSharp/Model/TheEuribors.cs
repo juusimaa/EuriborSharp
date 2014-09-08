@@ -109,6 +109,11 @@ namespace EuriborSharp.Model
             }
         }
 
+        public static NewEuriborClass GetMaxValue(TimePeriods t)
+        {
+            return NewInterestList.Where(e => e.TimePeriod == t).MaxBy(m => m.EuriborValue);
+        }
+
         public static NewEuriborClass GetMinValue(TimePeriods t)
         {
             return NewInterestList.Where(e => e.TimePeriod == t).MinBy(m => m.EuriborValue);

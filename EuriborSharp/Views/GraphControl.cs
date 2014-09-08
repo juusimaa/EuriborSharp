@@ -11,7 +11,7 @@ using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using OxyPlot.WindowsForms;
-using HorizontalAlignment = OxyPlot.HorizontalAlignment;
+using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
 
 namespace EuriborSharp.Views
 {
@@ -387,7 +387,7 @@ namespace EuriborSharp.Views
             _textAnnotationCurrent.Text = textForAnnotationCurrent;
             _textAnnotationCurrent.TextColor = OxyColors.Black;
             _textAnnotationCurrent.FontSize = 20.0;
-            _textAnnotationCurrent.TextHorizontalAlignment = HorizontalAlignment.Center;
+            _textAnnotationCurrent.TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center;
             _textAnnotationCurrent.TextVerticalAlignment = VerticalAlignment.Top;
             _textAnnotationCurrent.StrokeThickness = 0;
 
@@ -399,9 +399,10 @@ namespace EuriborSharp.Views
             _minLineAnnotation.FontSize = 20.0;
             _minLineAnnotation.Color = OxyColors.Blue;
 
+            var euriborMax = TheEuribors.GetMaxValue(_currentTimePeriod);
             _maxLineAnnotation.Type = LineAnnotationType.Horizontal;
             _maxLineAnnotation.Y = Convert.ToDouble(TheEuribors.GetMaximumInterest(_currentTimePeriod));
-            _maxLineAnnotation.Text = Resources.MAX_LABEL;
+            _maxLineAnnotation.Text = Resources.MAX_LABEL + ": " + euriborMax.EuriborValue + " (" + euriborMax.Date.ToShortDateString() + ")";
             _maxLineAnnotation.FontSize = 20.0;
             _maxLineAnnotation.Color = OxyColors.Red;
         }
