@@ -1,15 +1,10 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.ServiceModel.Syndication;
 using System.Windows.Forms;
-using System.Xml;
 using EuriborSharp.CustonEventArgs;
 using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
@@ -38,8 +33,6 @@ namespace EuriborSharp.Presenters
 
         public MainFormPresenter()
         {
-            TheEuribors.InterestList = new List<Euribors>();
-
             _downloader = new BackgroundWorker {WorkerSupportsCancellation = true};
             _downloader.DoWork += _downloader_DoWork;
             _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
@@ -93,8 +86,8 @@ namespace EuriborSharp.Presenters
 
         void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            TheEuribors.Load();
             _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            TheEuribors.ParseValues();
             InitGraphs();
             UpdateGraphView();
         }
@@ -105,7 +98,7 @@ namespace EuriborSharp.Presenters
 
             var downloader = new WebClient();
 
-            foreach (var item in TheEuribors.UrlList)
+            foreach (var item in TheEuribors.urlList)
             {
                 if (!File.Exists(item.Key) || item.Key.Contains("2014"))
                 {
@@ -165,7 +158,6 @@ namespace EuriborSharp.Presenters
             _graphControl3Month.UpdateGraph(TimePeriods.ThreeMonths);
             _graphControl6Month.UpdateGraph(TimePeriods.SixMonths);
             _graphControl12Month.UpdateGraph(TimePeriods.TwelveMonths);
-            _graphControlAll.UpdateGraph();
         }
 
         private void InitGraphs()
@@ -179,8 +171,6 @@ namespace EuriborSharp.Presenters
                 _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
                     EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
                 _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
-                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
-                _graphControlAll.Init(TimePeriods.Default, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
                     EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
             }
             catch (ArgumentException ex)
@@ -222,31 +212,6 @@ namespace EuriborSharp.Presenters
             EuriborSharpSettings.Default.Save();
         }
 
-        private void _feedReader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            _graphControl1Month.Init(TimePeriods.OneMonth, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
-                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
-            _graphControl3Month.Init(TimePeriods.ThreeMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
-                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
-            _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
-                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
-            _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
-                EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
-
-            _graphControl1Month.UpdateGraph();
-            _graphControl3Month.UpdateGraph();
-            _graphControl6Month.UpdateGraph();
-            _graphControl12Month.UpdateGraph();
-
-            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
-        }
-
-        private void _feedReader_DoWork(object sender, DoWorkEventArgs e)
-        {
-            _mainForm.UpdateTitle("EuriborSharp - Updatating...");
-            ReadRssFeed();
-        }
-
         // Public implementation of Dispose pattern callable by consumers. 
         public void Dispose()
         {
@@ -280,62 +245,6 @@ namespace EuriborSharp.Presenters
         public Form GetMainForm()
         {
             return (Form) _mainForm;
-        }
-
-        private void ReadRssFeed()
-        {
-            _logControl.AddText("Reading " + EuriborSharpSettings.Default.RssFeedAddress + Environment.NewLine, true);
-
-            var httpWebRequest = (HttpWebRequest) WebRequest.Create(EuriborSharpSettings.Default.RssFeedAddress);
-            httpWebRequest.UserAgent = "Googlebot/1.0 (googlebot@googlebot.com http://googlebot.com/)";
-
-            // Use The Default Proxy
-            httpWebRequest.Proxy = WebRequest.DefaultWebProxy;
-
-            // Use The Thread's Credentials (Logged In User's Credentials)
-            if (httpWebRequest.Proxy != null)
-                httpWebRequest.Proxy.Credentials = CredentialCache.DefaultCredentials;
-
-            using (var httpWebResponse = (HttpWebResponse) httpWebRequest.GetResponse())
-            {
-                using (var responseStream = httpWebResponse.GetResponseStream())
-                {
-                    Debug.Assert(responseStream != null);
-#if !DEBUG
-                    if (responseStream == null) return;
-#endif
-
-                    using (var xmlReader = XmlReader.Create(responseStream))
-                    {
-                        var feed = SyndicationFeed.Load(xmlReader);
-
-                        if (feed == null) return;
-
-                        var current = new Euribors();
-
-                        foreach (var subject in feed.Items.Select(item => item.Title.Text))
-                        {
-                            TheEuribors.ParseInterestRates(subject, current);
-                            _logControl.AddText(subject + Environment.NewLine, true);
-                        }
-
-                        var containsCurrentDate = TheEuribors.InterestList.Find(e => e.Date.Equals(current.Date)) != null;
-
-                        if (!containsCurrentDate)
-                        {
-                            _logControl.AddText("Saving new item to storage." + Environment.NewLine, true);
-                            TheEuribors.InterestList.Add(current);
-                            TheEuribors.Save();
-                        }
-                        else
-                        {
-                            _logControl.AddText("No new items found." + Environment.NewLine, true);
-                        }
-                    }
-                }
-            }
-
-            _logControl.AddText("Ready." + Environment.NewLine + Environment.NewLine, true);
         }
     }
 }
