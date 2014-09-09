@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Xml.Serialization;
 using EuriborSharp.Enums;
 using EuriborSharp.Properties;
 using MoreLinq;
+using OxyPlot.Reporting;
 
 namespace EuriborSharp.Model
 {
@@ -34,17 +36,7 @@ namespace EuriborSharp.Model
             InterestList = new List<Euribors>();
         }
 
-        [Obsolete]
-        public static void Save()
-        {
-            using (var fs = new FileStream(Resources.DATAFILE_NAME, FileMode.Create, FileAccess.Write))
-            {
-                var xs = new XmlSerializer(typeof(List<Euribors>));
-                xs.Serialize(fs, InterestList);
-            }
-        }
-
-        public static void Load()
+        public static void ParseValues()
         {
             try
             {
@@ -88,21 +80,22 @@ namespace EuriborSharp.Model
                             NewInterestList.Add(new NewEuriborClass(TimePeriods.SixMonths, d, Convert.ToDecimal(sixMonthValues[index], CultureInfo.InvariantCulture)));
                             NewInterestList.Add(new NewEuriborClass(TimePeriods.TwelveMonths, d, Convert.ToDecimal(twelveMonthValues[index], CultureInfo.InvariantCulture)));
 
-                            var e = new Euribors
-                            {
-                                Date = DateTime.Parse(dates[index]),
-                                OneMonth = Convert.ToDecimal(oneMonthValues[index], CultureInfo.InvariantCulture),
-                                ThreeMonths = Convert.ToDecimal(threeMonthValues[index], CultureInfo.InvariantCulture),
-                                SixMonths = Convert.ToDecimal(sixMonthValues[index], CultureInfo.InvariantCulture),
-                                TwelveMonths = Convert.ToDecimal(twelveMonthValues[index], CultureInfo.InvariantCulture)
+                            //var e = new Euribors
+                            //{
+                            //    Date = DateTime.Parse(dates[index]),
+                            //    OneMonth = Convert.ToDecimal(oneMonthValues[index], CultureInfo.InvariantCulture),
+                            //    ThreeMonths = Convert.ToDecimal(threeMonthValues[index], CultureInfo.InvariantCulture),
+                            //    SixMonths = Convert.ToDecimal(sixMonthValues[index], CultureInfo.InvariantCulture),
+                            //    TwelveMonths = Convert.ToDecimal(twelveMonthValues[index], CultureInfo.InvariantCulture)
                                 
-                            };
-                            InterestList.Add(e);
+                            //};
+                            //InterestList.Add(e);
                         }
                     }
                 }
 
-                InterestList.Sort((item1, item2) => item1.Date.CompareTo(item2.Date));
+                NewInterestList.Sort((item1, item2) => item1.Date.CompareTo(item2.Date));
+                //InterestList.Sort((item1, item2) => item1.Date.CompareTo(item2.Date));
             }
             catch (FileNotFoundException)
             {
@@ -122,72 +115,80 @@ namespace EuriborSharp.Model
 
         public static DateTime GetOldestDate()
         {
-            return InterestList.Count == 0 ? DateTime.Now : InterestList.Min(e => e.Date);
+            return NewInterestList.Count == 0 ? DateTime.Now : NewInterestList.Min(e => e.Date);
         }
 
         public static DateTime GetNewestDate()
         {
-            return InterestList.Count == 0 ? DateTime.Now : InterestList.Max(e => e.Date);
+            return NewInterestList.Count == 0 ? DateTime.Now : NewInterestList.Max(e => e.Date);
         }
 
         public static decimal GetMaximumInterest()
         {
-            return InterestList.Max(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Max());
+            return NewInterestList.Max(e => e.EuriborValue);
         }
 
         public static decimal GetMaximumInterest(TimePeriods periods)
         {
-            if (InterestList.Count == 0) return 5M;
+            return NewInterestList.Count == 0
+                ? 0M
+                : NewInterestList.Where(e => e.TimePeriod == periods).MaxBy(r => r.EuriborValue).EuriborValue;
 
-            switch (periods)
-            {
-                case TimePeriods.OneWeek:
-                    return InterestList.Max(e => e.OneWeek);
-                case TimePeriods.TwoWeeks:
-                    return InterestList.Max(e => e.TwoWeeks);
-                case TimePeriods.OneMonth:
-                    return InterestList.Max(e => e.OneMonth);
-                case TimePeriods.ThreeMonths:
-                    return InterestList.Max(e => e.ThreeMonths);
-                case TimePeriods.SixMonths:
-                    return InterestList.Max(e => e.SixMonths);
-                case TimePeriods.TwelveMonths:
-                    return InterestList.Max(e => e.TwelveMonths);
-                case TimePeriods.Default:
-                    return InterestList.Max(e => new List<decimal> {e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks}.Max());
-                default:
-                    throw new ArgumentOutOfRangeException("periods");
-            }
+            //if (InterestList.Count == 0) return 5M;
+
+            //switch (periods)
+            //{
+            //    case TimePeriods.OneWeek:
+            //        return InterestList.Max(e => e.OneWeek);
+            //    case TimePeriods.TwoWeeks:
+            //        return InterestList.Max(e => e.TwoWeeks);
+            //    case TimePeriods.OneMonth:
+            //        return InterestList.Max(e => e.OneMonth);
+            //    case TimePeriods.ThreeMonths:
+            //        return InterestList.Max(e => e.ThreeMonths);
+            //    case TimePeriods.SixMonths:
+            //        return InterestList.Max(e => e.SixMonths);
+            //    case TimePeriods.TwelveMonths:
+            //        return InterestList.Max(e => e.TwelveMonths);
+            //    case TimePeriods.Default:
+            //        return InterestList.Max(e => new List<decimal> {e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks}.Max());
+            //    default:
+            //        throw new ArgumentOutOfRangeException("periods");
+            //}
         }
 
         public static decimal GetMinimumInterest(TimePeriods periods)
         {
-            if (InterestList.Count == 0) return 0M;
+            return NewInterestList.Count == 0 ? 
+                0M : 
+                NewInterestList.Where(e => e.TimePeriod == periods).MinBy(r => r.EuriborValue).EuriborValue;
 
-            switch (periods)
-            {
-                case TimePeriods.OneWeek:
-                    return InterestList.Min(e => e.OneWeek);
-                case TimePeriods.TwoWeeks:
-                    return InterestList.Min(e => e.TwoWeeks);
-                case TimePeriods.OneMonth:
-                    return InterestList.Min(e => e.OneMonth);
-                case TimePeriods.ThreeMonths:
-                    return InterestList.Min(e => e.ThreeMonths);
-                case TimePeriods.SixMonths:
-                    return InterestList.Min(e => e.SixMonths);
-                case TimePeriods.TwelveMonths:
-                    return InterestList.Min(e => e.TwelveMonths);
-               case TimePeriods.Default:
-                    return InterestList.Min(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Min());
-                default:
-                    throw new ArgumentOutOfRangeException("periods");
-            }
+            //if (InterestList.Count == 0) return 0M;
+
+            //switch (periods)
+            //{
+            //    case TimePeriods.OneWeek:
+            //        return InterestList.Min(e => e.OneWeek);
+            //    case TimePeriods.TwoWeeks:
+            //        return InterestList.Min(e => e.TwoWeeks);
+            //    case TimePeriods.OneMonth:
+            //        return InterestList.Min(e => e.OneMonth);
+            //    case TimePeriods.ThreeMonths:
+            //        return InterestList.Min(e => e.ThreeMonths);
+            //    case TimePeriods.SixMonths:
+            //        return InterestList.Min(e => e.SixMonths);
+            //    case TimePeriods.TwelveMonths:
+            //        return InterestList.Min(e => e.TwelveMonths);
+            //   case TimePeriods.Default:
+            //        return InterestList.Min(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Min());
+            //    default:
+            //        throw new ArgumentOutOfRangeException("periods");
+            //}
         }
 
         public static decimal GetMinimumInterest()
         {
-            return InterestList.Min(e => new List<decimal> { e.OneMonth, e.OneWeek, e.SixMonths, e.ThreeMonths, e.TwelveMonths, e.TwoWeeks }.Min());
+            return NewInterestList.Min(e => e.EuriborValue);
         }
 
         public static decimal GetInterest(Euribors item, TimePeriods period)

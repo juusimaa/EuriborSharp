@@ -47,6 +47,8 @@ namespace EuriborSharp.Views
         public GraphControl()
         {
             InitializeComponent();
+
+            _euriborSeriesOneMonth = new LineSeries();
         }
 
         public void Init(TimePeriods period, bool smoothSelected, GraphStyle style, Renderer renderer, bool dotLine)
@@ -334,9 +336,9 @@ namespace EuriborSharp.Views
         private void AddPointsToLinearSeries()
         {
             _euriborSeriesOneMonth.Points.Clear();
-            _euriborSeriesSixMonth.Points.Clear();
-            _euriborSeriesThreeMonth.Points.Clear();
-            _euriborSeriesTwelveMonth.Points.Clear();
+            //_euriborSeriesSixMonth.Points.Clear();
+            //_euriborSeriesThreeMonth.Points.Clear();
+            //_euriborSeriesTwelveMonth.Points.Clear();
 
             foreach (var item in TheEuribors.NewInterestList.Where(e => e.TimePeriod == _currentTimePeriod))
             {
