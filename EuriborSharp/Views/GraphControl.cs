@@ -11,7 +11,6 @@ using OxyPlot.Annotations;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using OxyPlot.WindowsForms;
-using HorizontalAlignment = System.Windows.Forms.HorizontalAlignment;
 
 namespace EuriborSharp.Views
 {
