@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
@@ -159,7 +158,6 @@ namespace EuriborSharp.Presenters
             _graphControl3Month.UpdateGraph(TimePeriods.ThreeMonths);
             _graphControl6Month.UpdateGraph(TimePeriods.SixMonths);
             _graphControl12Month.UpdateGraph(TimePeriods.TwelveMonths);
-            //_graphControlAll.UpdateGraph();
         }
 
         private void InitGraphs()
@@ -174,8 +172,6 @@ namespace EuriborSharp.Presenters
                     EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
                 _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
                     EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
-                //_graphControlAll.Init(TimePeriods.Default, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
-                //    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
             }
             catch (ArgumentException ex)
             {
