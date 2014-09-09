@@ -17,7 +17,7 @@ namespace EuriborSharp.Views
 {
     public partial class GraphControl : UserControl, IGraphControl
     {
-        private const double DATE_AXIS_OFFSET = 2.0;
+        private const double DATE_AXIS_OFFSET = 20.0;
         private const double INTEREST_MAX_OFFSET = 0.2;
         private const double INTEREST_MIN_OFFSET = 0.2;
         private const double TEXT_ANNOTATION_OFFSET = 200.0;
@@ -178,7 +178,7 @@ namespace EuriborSharp.Views
             _xAxis = new DateTimeAxis
             {
                 Unit = Resources.X_AXIS_UNIT,
-                Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET)),
+                Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate()),
                 Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET)),
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
@@ -265,7 +265,7 @@ namespace EuriborSharp.Views
                     throw new ArgumentOutOfRangeException();
             }
 
-            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate());
             _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
 
             _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest()) + INTEREST_MAX_OFFSET;
@@ -286,7 +286,7 @@ namespace EuriborSharp.Views
                     throw new ArgumentOutOfRangeException();
             }
 
-            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate().AddDays(-DATE_AXIS_OFFSET));
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate());
             _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
 
             _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) + INTEREST_MAX_OFFSET;
