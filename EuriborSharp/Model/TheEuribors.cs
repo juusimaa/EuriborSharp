@@ -31,6 +31,7 @@ namespace EuriborSharp.Model
         static TheEuribors()
         {
             NewInterestList = new List<NewEuriborClass>();
+            InterestList = new List<Euribors>();
         }
 
         [Obsolete]

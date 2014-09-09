@@ -34,8 +34,6 @@ namespace EuriborSharp.Presenters
 
         public MainFormPresenter()
         {
-            TheEuribors.InterestList = new List<Euribors>();
-
             _downloader = new BackgroundWorker {WorkerSupportsCancellation = true};
             _downloader.DoWork += _downloader_DoWork;
             _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;

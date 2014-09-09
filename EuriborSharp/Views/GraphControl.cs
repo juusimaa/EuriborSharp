@@ -294,10 +294,10 @@ namespace EuriborSharp.Views
 
         private void AddPointsToColumnSeries()
         {
-            _euriborSeriesOneMonthCol.ItemsSource = TheEuribors.InterestList;
-            _euriborSeriesThreeMonthCol.ItemsSource = TheEuribors.InterestList;
-            _euriborSeriesSixMonthCol.ItemsSource = TheEuribors.InterestList;
-            _euriborSeriesTwelveMonthCol.ItemsSource = TheEuribors.InterestList;
+            _euriborSeriesOneMonthCol.ItemsSource = TheEuribors.NewInterestList;
+            _euriborSeriesThreeMonthCol.ItemsSource = TheEuribors.NewInterestList;
+            _euriborSeriesSixMonthCol.ItemsSource = TheEuribors.NewInterestList;
+            _euriborSeriesTwelveMonthCol.ItemsSource = TheEuribors.NewInterestList;
 
             switch (_currentTimePeriod)
             {
@@ -327,7 +327,7 @@ namespace EuriborSharp.Views
                     throw new ArgumentOutOfRangeException();
             }
 
-            _categoryAxis.ItemsSource = TheEuribors.InterestList;
+            _categoryAxis.ItemsSource = TheEuribors.NewInterestList;
             _categoryAxis.LabelField = "Date";
         }
 
@@ -338,43 +338,17 @@ namespace EuriborSharp.Views
             _euriborSeriesThreeMonth.Points.Clear();
             _euriborSeriesTwelveMonth.Points.Clear();
 
-            switch (_currentTimePeriod)
+            foreach (var item in TheEuribors.NewInterestList.Where(e => e.TimePeriod == _currentTimePeriod))
             {
-                case TimePeriods.Default:
-                    foreach (var item in TheEuribors.InterestList)
-                    {
-                        var dpOneMonth = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.OneMonth));
-                        var dpThreeMonths = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.ThreeMonths));
-                        var dpTwelveMonth = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.TwelveMonths));
-                        var dpSixMonths = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.SixMonths));
-                        _euriborSeriesOneMonth.Points.Add(dpOneMonth);
-                        _euriborSeriesThreeMonth.Points.Add(dpThreeMonths);
-                        _euriborSeriesTwelveMonth.Points.Add(dpTwelveMonth);
-                        _euriborSeriesSixMonth.Points.Add(dpSixMonths);
-                    }
-                    return;
-                case TimePeriods.OneWeek:
-                case TimePeriods.TwoWeeks:
-                case TimePeriods.OneMonth:
-                case TimePeriods.ThreeMonths:
-                case TimePeriods.SixMonths:
-                case TimePeriods.TwelveMonths:
-                    foreach (var item in TheEuribors.InterestList)
-                    {
-                        var value = TheEuribors.GetInterest(item, _currentTimePeriod);
-                        var dp = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(value));
-                        _euriborSeriesOneMonth.Points.Add(dp);
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                var p = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue));
+                _euriborSeriesOneMonth.Points.Add(p);
             }
 
             if (_euriborSeriesOneMonth.Points.Count == 0) return;
 
             // Annotations
             var last = _euriborSeriesOneMonth.Points.OrderByDescending(e => e.X).First();
-            var lastDate = TheEuribors.InterestList.OrderBy(e => e.Date).Last();
+            var lastDate = TheEuribors.NewInterestList.OrderBy(e => e.Date).Last();
             var max = _euriborSeriesOneMonth.Points.Max(e => e.Y);
             var min = _euriborSeriesOneMonth.Points.Min(e => e.Y);
 
