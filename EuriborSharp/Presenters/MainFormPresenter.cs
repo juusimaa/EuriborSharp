@@ -158,6 +158,7 @@ namespace EuriborSharp.Presenters
             _graphControl3Month.UpdateGraph(TimePeriods.ThreeMonths);
             _graphControl6Month.UpdateGraph(TimePeriods.SixMonths);
             _graphControl12Month.UpdateGraph(TimePeriods.TwelveMonths);
+            _graphControlAll.UpdateGraph(TimePeriods.Default);
         }
 
         private void InitGraphs()
@@ -171,6 +172,8 @@ namespace EuriborSharp.Presenters
                 _graphControl6Month.Init(TimePeriods.SixMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
                     EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
                 _graphControl12Month.Init(TimePeriods.TwelveMonths, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
+                    EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
+                _graphControlAll.Init(TimePeriods.Default, EuriborSharpSettings.Default.SmoothLine, EuriborSharpSettings.Default.SelectedGraphStyle,
                     EuriborSharpSettings.Default.SelectedRenderer, EuriborSharpSettings.Default.DotLineSelected);
             }
             catch (ArgumentException ex)

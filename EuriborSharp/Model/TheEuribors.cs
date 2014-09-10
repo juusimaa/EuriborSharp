@@ -85,11 +85,19 @@ namespace EuriborSharp.Model
 
         public static NewEuriborClass GetMaxValue(TimePeriods t)
         {
+            if (t == TimePeriods.Default)
+            {
+                return NewInterestList.MaxBy(m => m.EuriborValue);
+            }
             return NewInterestList.Where(e => e.TimePeriod == t).MaxBy(m => m.EuriborValue);
         }
 
         public static NewEuriborClass GetMinValue(TimePeriods t)
         {
+            if (t == TimePeriods.Default)
+            {
+                return NewInterestList.MinBy(m => m.EuriborValue);
+            }
             return NewInterestList.Where(e => e.TimePeriod == t).MinBy(m => m.EuriborValue);
         }
 
@@ -110,6 +118,13 @@ namespace EuriborSharp.Model
 
         public static decimal GetMaximumInterest(TimePeriods periods)
         {
+            if (periods == TimePeriods.Default)
+            {
+                return NewInterestList.Count == 0
+                    ? 0M
+                    : NewInterestList.MaxBy(r => r.EuriborValue).EuriborValue;
+            }
+
             return NewInterestList.Count == 0
                 ? 0M
                 : NewInterestList.Where(e => e.TimePeriod == periods).MaxBy(r => r.EuriborValue).EuriborValue;
@@ -117,6 +132,13 @@ namespace EuriborSharp.Model
 
         public static decimal GetMinimumInterest(TimePeriods periods)
         {
+            if (periods == TimePeriods.Default)
+            {
+                return NewInterestList.Count == 0
+                    ? 0M
+                    : NewInterestList.MinBy(r => r.EuriborValue).EuriborValue;
+            }
+
             return NewInterestList.Count == 0 ? 
                 0M : 
                 NewInterestList.Where(e => e.TimePeriod == periods).MinBy(r => r.EuriborValue).EuriborValue;

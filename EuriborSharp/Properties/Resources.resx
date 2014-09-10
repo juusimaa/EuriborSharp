@@ -190,4 +190,10 @@
   <data name="ABOUT_MORELINQ_LABEL" xml:space="preserve">
     <value>MoreLINQ © 2014 Jon Skeel et al. (Apache 2)</value>
   </data>
+  <data name="X_AXIS_TITLE" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Y_AXIS_TITLE" xml:space="preserve">
+    <value>Euribor</value>
+  </data>
 </root>

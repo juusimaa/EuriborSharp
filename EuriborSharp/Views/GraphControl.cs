@@ -26,6 +26,11 @@ namespace EuriborSharp.Views
 
         private LineSeries _euriborLinearSeries;
 
+        private LineSeries _combined1mSerie;
+        private LineSeries _combined3mSerie;
+        private LineSeries _combined6mSerie;
+        private LineSeries _combined12mSerie;
+
         private ColumnSeries _euriborSeriesSixMonthCol;
         private ColumnSeries _euriborSeriesOneMonthCol;
         private ColumnSeries _euriborSeriesThreeMonthCol;
@@ -97,7 +102,7 @@ namespace EuriborSharp.Views
             switch (style)
             {
                 case GraphStyle.Line:
-                    SetupLinearSeries(period, smoothSelected, renderer, dotLine);
+                    SetupAxesAndLinearSeries(period, smoothSelected, renderer, dotLine);
                     break;
                 case GraphStyle.Bar:
                     SetupColumnSeries();
@@ -126,22 +131,96 @@ namespace EuriborSharp.Views
             graphTableLayoutPanel.SetRowSpan(_graphPlotView, 2);
         }
 
-        private void SetupLinearSeries(TimePeriods period, bool smoothSelected, Renderer renderer, bool dotLine)
+        private void SetupLinearSeries(Renderer r, bool d, bool s)
         {
+            var title = String.Empty;
+
+            switch (_currentTimePeriod)
+            {
+                case TimePeriods.Default:
+                    break;
+                case TimePeriods.OneMonth:
+                    title = Resources.ONE_MONTH_SERIE_TITLE;
+                    break;
+                case TimePeriods.ThreeMonths:
+                    title = Resources.THREE_MONTH_SERIE_TITLE;
+                    break;
+                case TimePeriods.SixMonths:
+                    title = Resources.SIX_MONTH_SERIE_TITLE;
+                    break;
+                case TimePeriods.TwelveMonths:
+                    title = Resources.TWELVE_MONTH_SERIE_TITLE;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             _euriborLinearSeries = new LineSeries
             {
                 MarkerType = MarkerType.None,
-                MarkerSize = renderer == Renderer.Xkcd ? 7 : 4,
+                MarkerSize = r == Renderer.Xkcd ? 7 : 4,
                 CanTrackerInterpolatePoints = false,
-                Smooth = smoothSelected,
-                LineStyle = dotLine ? LineStyle.Dot : LineStyle.Solid,
+                Smooth = s,
+                LineStyle = d ? LineStyle.Dot : LineStyle.Solid,
+                Title = title
+            };
+            _combined1mSerie = new LineSeries
+            {
+                MarkerType = MarkerType.None,
+                MarkerSize = r == Renderer.Xkcd ? 5 : 2,
+                CanTrackerInterpolatePoints = false,
+                Smooth = s,
+                LineStyle = d ? LineStyle.Dot : LineStyle.Solid,
                 Title = Resources.ONE_MONTH_SERIE_TITLE
             };
+            _combined3mSerie = new LineSeries
+            {
+                MarkerType = MarkerType.None,
+                MarkerSize = r == Renderer.Xkcd ? 5 : 2,
+                CanTrackerInterpolatePoints = false,
+                Smooth = s,
+                LineStyle = d ? LineStyle.Dot : LineStyle.Solid,
+                Title = Resources.THREE_MONTH_SERIE_TITLE
+            };
+            _combined6mSerie = new LineSeries
+            {
+                MarkerType = MarkerType.None,
+                MarkerSize = r == Renderer.Xkcd ? 5 : 2,
+                CanTrackerInterpolatePoints = false,
+                Smooth = s,
+                LineStyle = d ? LineStyle.Dot : LineStyle.Solid,
+                Title = Resources.SIX_MONTH_SERIE_TITLE
+            };
+            _combined12mSerie = new LineSeries
+            {
+                MarkerType = MarkerType.None,
+                MarkerSize = r == Renderer.Xkcd ? 5 : 2,
+                CanTrackerInterpolatePoints = false,
+                Smooth = s,
+                LineStyle = d ? LineStyle.Dot : LineStyle.Solid,
+                Title = Resources.TWELVE_MONTH_SERIE_TITLE
+            };
+        }
 
-            _euriborPlotModel.Series.Add(_euriborLinearSeries);
+        private void SetupAxesAndLinearSeries(TimePeriods period, bool smoothSelected, Renderer renderer, bool dotLine)
+        {
+            SetupLinearSeries(renderer, dotLine, smoothSelected);
+
+            if (_currentTimePeriod != TimePeriods.Default)
+            {
+                _euriborPlotModel.Series.Add(_euriborLinearSeries);
+            }
+            else
+            {
+                _euriborPlotModel.Series.Add(_combined1mSerie);
+                _euriborPlotModel.Series.Add(_combined3mSerie);
+                _euriborPlotModel.Series.Add(_combined6mSerie);
+                _euriborPlotModel.Series.Add(_combined12mSerie);
+            }
 
             _xAxis = new DateTimeAxis
             {
+                Title = Resources.X_AXIS_TITLE,
                 Unit = Resources.X_AXIS_UNIT,
                 Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate()),
                 Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET)),
@@ -153,6 +232,7 @@ namespace EuriborSharp.Views
 
             _yAxis = new LinearAxis
             {
+                Title =  Resources.Y_AXIS_TITLE,
                 Unit = Resources.Y_AXIS_UNIT,
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
@@ -163,10 +243,6 @@ namespace EuriborSharp.Views
 
             _euriborPlotModel.Axes.Add(_xAxis);
             _euriborPlotModel.Axes.Add(_yAxis);
-
-            if (period != TimePeriods.Default) return;
-
-            _euriborLinearSeries.MarkerType = MarkerType.None;
         }
 
         private void SetupColumnSeries()
@@ -297,11 +373,36 @@ namespace EuriborSharp.Views
         private void AddPointsToLinearSeries()
         {
             _euriborLinearSeries.Points.Clear();
+            _combined1mSerie.Points.Clear();
+            _combined3mSerie.Points.Clear();
+            _combined6mSerie.Points.Clear();
+            _combined12mSerie.Points.Clear();
 
-            foreach (var item in TheEuribors.NewInterestList.Where(e => e.TimePeriod == _currentTimePeriod))
+            if (_currentTimePeriod == TimePeriods.Default)
             {
-                var p = new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue));
-                _euriborLinearSeries.Points.Add(p);
+                foreach (var p in TheEuribors.NewInterestList.Where(e => e.TimePeriod == TimePeriods.OneMonth).Select(item => new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue))))
+                {
+                    _combined1mSerie.Points.Add(p);
+                }
+                foreach (var p in TheEuribors.NewInterestList.Where(e => e.TimePeriod == TimePeriods.ThreeMonths).Select(item => new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue))))
+                {
+                    _combined3mSerie.Points.Add(p);
+                }
+                foreach (var p in TheEuribors.NewInterestList.Where(e => e.TimePeriod == TimePeriods.SixMonths).Select(item => new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue))))
+                {
+                    _combined6mSerie.Points.Add(p);
+                }
+                foreach (var p in TheEuribors.NewInterestList.Where(e => e.TimePeriod == TimePeriods.TwelveMonths).Select(item => new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue))))
+                {
+                    _combined12mSerie.Points.Add(p);
+                }
+            }
+            else
+            {
+                foreach (var p in TheEuribors.NewInterestList.Where(e => e.TimePeriod == _currentTimePeriod).Select(item => new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue))))
+                {
+                    _euriborLinearSeries.Points.Add(p);
+                }
             }
 
             if (_euriborLinearSeries.Points.Count == 0) return;

@@ -262,9 +262,27 @@ namespace EuriborSharp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
+        internal static string X_AXIS_TITLE {
+            get {
+                return ResourceManager.GetString("X_AXIS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
         internal static string X_AXIS_UNIT {
             get {
                 return ResourceManager.GetString("X_AXIS_UNIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor.
+        /// </summary>
+        internal static string Y_AXIS_TITLE {
+            get {
+                return ResourceManager.GetString("Y_AXIS_TITLE", resourceCulture);
             }
         }
         
