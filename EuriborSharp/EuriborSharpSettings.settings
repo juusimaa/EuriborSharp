@@ -8,14 +8,26 @@
     <Setting Name="SmoothLine" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="Xkcd" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="DotLineSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="NormalLineSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SelectedGraphStyle" Type="EuriborSharp.Enums.GraphStyle" Scope="User">
+      <Value Profile="(Default)">Line</Value>
+    </Setting>
+    <Setting Name="Autoload" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SelectedRenderer" Type="EuriborSharp.Enums.Renderer" Scope="User">
+      <Value Profile="(Default)">Xkcd</Value>
+    </Setting>
+    <Setting Name="XkcdSelected" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EuriborDefaultUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv</Value>
     </Setting>
   </Settings>
 </SettingsFile>

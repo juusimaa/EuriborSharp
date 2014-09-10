@@ -5,6 +5,7 @@ namespace EuriborSharp.Interfaces
 {
     public interface ILogControl
     {
+        event EventHandler<BooleanEventArg> AutoloadChanged; 
         event EventHandler<StringEventArg> AddressChanged; 
         event EventHandler UpdateClicked;
         event EventHandler ClearClicked;
@@ -12,5 +13,6 @@ namespace EuriborSharp.Interfaces
         void AddText(string s, bool append);
         void UpdateAddress(string s);
         void Init();
+        void SetupAutoload(bool enabled);
     }
 }

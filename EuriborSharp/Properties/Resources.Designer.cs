@@ -61,6 +61,15 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MoreLINQ © 2014 Jon Skeel et al. (Apache 2).
+        /// </summary>
+        internal static string ABOUT_MORELINQ_LABEL {
+            get {
+                return ResourceManager.GetString("ABOUT_MORELINQ_LABEL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OxyPlot © 2014 OxyPlot contributors (MIT).
         /// </summary>
         internal static string ABOUT_OXY_LABEL {
@@ -197,11 +206,38 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL_CHANGE {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_CHANGE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current: .
         /// </summary>
-        internal static string TEXT_ANNOTATION_LABEL {
+        internal static string TEXT_ANNOTATION_LABEL_CURRENT {
             get {
-                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL", resourceCulture);
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_CURRENT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL_FIRST {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_FIRST", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last: .
+        /// </summary>
+        internal static string TEXT_ANNOTATION_LABEL_LAST {
+            get {
+                return ResourceManager.GetString("TEXT_ANNOTATION_LABEL_LAST", resourceCulture);
             }
         }
         
@@ -226,9 +262,27 @@ namespace EuriborSharp.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
+        internal static string X_AXIS_TITLE {
+            get {
+                return ResourceManager.GetString("X_AXIS_TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
         internal static string X_AXIS_UNIT {
             get {
                 return ResourceManager.GetString("X_AXIS_UNIT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Euribor.
+        /// </summary>
+        internal static string Y_AXIS_TITLE {
+            get {
+                return ResourceManager.GetString("Y_AXIS_TITLE", resourceCulture);
             }
         }
         

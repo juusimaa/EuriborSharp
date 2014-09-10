@@ -37,11 +37,14 @@
     <ApplicationIcon>euro-1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MoreLinq">
+      <HintPath>..\packages\morelinq.1.1.0\lib\net35\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="OxyPlot">
-      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.318.1\lib\NET40\OxyPlot.dll</HintPath>
+      <HintPath>..\packages\OxyPlot.Core.2014.1.444\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
     </Reference>
     <Reference Include="OxyPlot.WindowsForms">
-      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.318.1\lib\NET40\OxyPlot.WindowsForms.dll</HintPath>
+      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.444\lib\net40\OxyPlot.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -137,6 +140,9 @@
   <ItemGroup>
     <Content Include="euro-1.ico" />
     <None Include="euro-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
