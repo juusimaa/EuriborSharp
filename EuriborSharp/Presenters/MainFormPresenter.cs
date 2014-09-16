@@ -76,20 +76,30 @@ namespace EuriborSharp.Presenters
 #if DEBUG
             _mainForm.AddControl((UserControl) _logControl, "Log");
             _logControl.SetupAutoload(EuriborSharpSettings.Default.Autoload);
-            _logControl.UpdateAddress(EuriborSharpSettings.Default.EuriborDefaultUrl);
+            _logControl.UpdateAddress(EuriborSharpSettings.Default.EuriborDefaultUrl);            
 
             if (EuriborSharpSettings.Default.Autoload) _downloader.RunWorkerAsync();
 #else
-            _downloader.RunWorkerAsync();
+            if (TheEuribors.NeedUpdatating())
+                _downloader.RunWorkerAsync();
+            else
+                UpdateCompleted();
 #endif
         }
 
-        void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        void UpdateCompleted()
         {
-            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            _mainForm.UpdateTitle("EuriborSharp - Updatated " + TheEuribors.GetLastUpdateTime().ToShortDateString() +
+                "@" + TheEuribors.GetLastUpdateTime().ToShortTimeString());
             TheEuribors.ParseValues();
             InitGraphs();
             UpdateGraphView();
+        }
+        
+        void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            UpdateCompleted();
         }
 
         void _downloader_DoWork(object sender, DoWorkEventArgs e)
