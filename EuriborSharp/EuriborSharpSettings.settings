@@ -21,13 +21,16 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="SelectedRenderer" Type="EuriborSharp.Enums.Renderer" Scope="User">
-      <Value Profile="(Default)">Xkcd</Value>
+      <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="XkcdSelected" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EuriborDefaultUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv</Value>
+    </Setting>
+    <Setting Name="UpdateInterval" Type="System.TimeSpan" Scope="User">
+      <Value Profile="(Default)">12:00:00</Value>
     </Setting>
   </Settings>
 </SettingsFile>

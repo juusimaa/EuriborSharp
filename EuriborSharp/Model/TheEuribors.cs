@@ -12,8 +12,6 @@ namespace EuriborSharp.Model
     [Serializable]
     public static class TheEuribors
     {
-        public const int UPDATE_INTERVAL_IN_DAYS = 1;
-
         public static Dictionary<string, string> urlList = new Dictionary<string, string>
         {
             { "hist_EURIBOR_2014.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv" },
@@ -36,9 +34,9 @@ namespace EuriborSharp.Model
         /// <returns>Returns true is newest history data is older than UPDATE_INTERVAL_IN_DAYS. Otherwise returns false.</returns>
         public static bool NeedUpdatating()
         {
-            var latest = DateTime.Now -  File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+            var latest = DateTime.Now - File.GetLastWriteTime("hist_EURIBOR_2014.csv");
 
-            return (latest.TotalDays > UPDATE_INTERVAL_IN_DAYS);
+            return (latest > EuriborSharpSettings.Default.UpdateInterval);
         }
 
         public static DateTime GetLastUpdateTime()

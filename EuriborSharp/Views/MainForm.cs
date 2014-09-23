@@ -13,6 +13,8 @@ namespace EuriborSharp.Views
         public event EventHandler<GraphStyleEventArgs> GraphStyleChanged;
         public event EventHandler<RendererEventArgs> RendererChanged;
         public event EventHandler<BooleanEventArg> DotLineSelected;
+        public event EventHandler<EventArgs> UpdateRequested;
+        public event EventHandler<TimeSpaneEventArgs> UpdateIntervalChanged;
         public event EventHandler HelpSelected;
         public event EventHandler ExitSelected;
 
@@ -78,6 +80,28 @@ namespace EuriborSharp.Views
             menuStrip.Font = f;
         }
 
+        public void UpdateIntervalSelection(double hours)
+        {
+            switch (Convert.ToInt32(hours))
+            {
+                case 24:
+                    oneDayToolStripMenuItem.Checked = true;
+                    twelveHoursToolStripMenuItem.Checked = false;
+                    sixHoursToolStripMenuItem.Checked = false;
+                    break;
+                case 12:
+                    oneDayToolStripMenuItem.Checked = false;
+                    twelveHoursToolStripMenuItem.Checked = true;
+                    sixHoursToolStripMenuItem.Checked = false;
+                    break;
+                case 6:
+                    oneDayToolStripMenuItem.Checked = false;
+                    twelveHoursToolStripMenuItem.Checked = false;
+                    sixHoursToolStripMenuItem.Checked = true;
+                    break;
+            }
+        }
+
         public void UpdateLineStyleSelection(bool normalSelected)
         {
             normalLineStyleToolStripMenuItem.Checked = normalSelected;
@@ -127,6 +151,39 @@ namespace EuriborSharp.Views
         private void xkcdToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RendererChanged(this, new RendererEventArgs(Renderer.Xkcd));
+        }
+
+        private void oneDayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            twelveHoursToolStripMenuItem.Checked = false;
+            sixHoursToolStripMenuItem.Checked = false;
+
+            if (UpdateIntervalChanged != null)
+                UpdateIntervalChanged(this, new TimeSpaneEventArgs(new TimeSpan(1, 0, 0, 0)));
+        }
+
+        private void twelveHoursToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            oneDayToolStripMenuItem.Checked = false;
+            sixHoursToolStripMenuItem.Checked = false;
+
+            if (UpdateIntervalChanged != null)
+                UpdateIntervalChanged(this, new TimeSpaneEventArgs(new TimeSpan(12, 0, 0)));
+        }
+
+        private void sixHoursToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            oneDayToolStripMenuItem.Checked = false;
+            twelveHoursToolStripMenuItem.Checked = false;
+
+            if (UpdateIntervalChanged != null)
+                UpdateIntervalChanged(this, new TimeSpaneEventArgs(new TimeSpan(6, 0, 0)));
+        }
+
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (UpdateRequested != null)
+                UpdateRequested(this, EventArgs.Empty);
         }
     }
 }

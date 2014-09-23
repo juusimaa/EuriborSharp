@@ -44,6 +44,8 @@ namespace EuriborSharp.Presenters
             _mainForm.GraphStyleChanged += _mainForm_GraphStyleChanged;
             _mainForm.RendererChanged += _mainForm_RendererChanged;
             _mainForm.DotLineSelected += _mainForm_DotLineSelected;
+            _mainForm.UpdateIntervalChanged += _mainForm_UpdateIntervalChanged;
+            _mainForm.UpdateRequested += _mainForm_UpdateRequested;
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -62,6 +64,7 @@ namespace EuriborSharp.Presenters
             _aboutFormPresenter = new AboutFormPresenter();
             _aboutFormPresenter.UpdateFonts(EuriborSharpSettings.Default.XkcdSelected);
 
+            _mainForm.UpdateIntervalSelection(EuriborSharpSettings.Default.UpdateInterval.TotalHours);
             _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
             _mainForm.UpdateRenderer(EuriborSharpSettings.Default.SelectedRenderer);
             _mainForm.UpdateSeriesStyle(EuriborSharpSettings.Default.SelectedGraphStyle);
@@ -85,6 +88,17 @@ namespace EuriborSharp.Presenters
             else
                 UpdateCompleted();
 #endif
+        }
+
+        void _mainForm_UpdateRequested(object sender, EventArgs e)
+        {
+            _downloader.RunWorkerAsync();
+        }
+
+        static void _mainForm_UpdateIntervalChanged(object sender, TimeSpaneEventArgs e)
+        {
+            EuriborSharpSettings.Default.UpdateInterval = e.value;
+            EuriborSharpSettings.Default.Save();
         }
 
         void UpdateCompleted()
