@@ -97,7 +97,7 @@ namespace EuriborSharp {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Xkcd")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
         public global::EuriborSharp.Enums.Renderer SelectedRenderer {
             get {
                 return ((global::EuriborSharp.Enums.Renderer)(this["SelectedRenderer"]));
@@ -109,7 +109,7 @@ namespace EuriborSharp {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool XkcdSelected {
             get {
                 return ((bool)(this["XkcdSelected"]));
@@ -129,6 +129,18 @@ namespace EuriborSharp {
             }
             set {
                 this["EuriborDefaultUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("12:00:00")]
+        public global::System.TimeSpan UpdateInterval {
+            get {
+                return ((global::System.TimeSpan)(this["UpdateInterval"]));
+            }
+            set {
+                this["UpdateInterval"] = value;
             }
         }
     }

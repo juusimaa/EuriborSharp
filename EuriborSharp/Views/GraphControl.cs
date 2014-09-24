@@ -226,7 +226,7 @@ namespace EuriborSharp.Views
                 Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET)),
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
-                StringFormat = "d.M.yy",
+                StringFormat = Resources.X_AXIS_UNIT,
                 FontSize = 20
             };
 

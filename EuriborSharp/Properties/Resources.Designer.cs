@@ -61,7 +61,7 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MoreLINQ © 2014 Jon Skeel et al. (Apache 2).
+        ///   Looks up a localized string similar to MoreLINQ © 2014 Jon Skeet et al. (Apache 2).
         /// </summary>
         internal static string ABOUT_MORELINQ_LABEL {
             get {
@@ -269,7 +269,7 @@ namespace EuriborSharp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date.
+        ///   Looks up a localized string similar to d.M.yy.
         /// </summary>
         internal static string X_AXIS_UNIT {
             get {

@@ -23,6 +23,16 @@ namespace EuriborSharp.CustonEventArgs
         }
     }
 
+    public class TimeSpaneEventArgs : EventArgs
+    {
+        public readonly TimeSpan value;
+
+        public TimeSpaneEventArgs(TimeSpan i)
+        {
+            value = i;
+        }
+    }
+
     public class GraphStyleEventArgs : EventArgs
     {
         public readonly GraphStyle style;

@@ -8,6 +8,16 @@ namespace EuriborSharp.Interfaces
     interface IMainForm
     {
         /// <summary>
+        /// Occurs when update is requested.
+        /// </summary>
+        event EventHandler<EventArgs> UpdateRequested;
+
+        /// <summary>
+        /// Occurs when update interval changes.
+        /// </summary>
+        event EventHandler<TimeSpaneEventArgs> UpdateIntervalChanged;
+
+        /// <summary>
         /// Occurs when smooth line enabled or disabled.
         /// </summary>
         event EventHandler<BooleanEventArg> LineSmoothChanged;
@@ -46,5 +56,6 @@ namespace EuriborSharp.Interfaces
         void UpdateSeriesStyle(GraphStyle g);
         void UpdateRenderer(Renderer r);
         void UpdateGui(bool xkcdSelected);
+        void UpdateIntervalSelection(double hours);
     }
 }

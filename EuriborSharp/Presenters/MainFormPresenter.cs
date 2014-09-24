@@ -44,6 +44,8 @@ namespace EuriborSharp.Presenters
             _mainForm.GraphStyleChanged += _mainForm_GraphStyleChanged;
             _mainForm.RendererChanged += _mainForm_RendererChanged;
             _mainForm.DotLineSelected += _mainForm_DotLineSelected;
+            _mainForm.UpdateIntervalChanged += _mainForm_UpdateIntervalChanged;
+            _mainForm.UpdateRequested += _mainForm_UpdateRequested;
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -62,6 +64,7 @@ namespace EuriborSharp.Presenters
             _aboutFormPresenter = new AboutFormPresenter();
             _aboutFormPresenter.UpdateFonts(EuriborSharpSettings.Default.XkcdSelected);
 
+            _mainForm.UpdateIntervalSelection(EuriborSharpSettings.Default.UpdateInterval.TotalHours);
             _mainForm.UpdateSmoothSelection(EuriborSharpSettings.Default.SmoothLine);
             _mainForm.UpdateRenderer(EuriborSharpSettings.Default.SelectedRenderer);
             _mainForm.UpdateSeriesStyle(EuriborSharpSettings.Default.SelectedGraphStyle);
@@ -76,20 +79,41 @@ namespace EuriborSharp.Presenters
 #if DEBUG
             _mainForm.AddControl((UserControl) _logControl, "Log");
             _logControl.SetupAutoload(EuriborSharpSettings.Default.Autoload);
-            _logControl.UpdateAddress(EuriborSharpSettings.Default.EuriborDefaultUrl);
+            _logControl.UpdateAddress(EuriborSharpSettings.Default.EuriborDefaultUrl);            
 
             if (EuriborSharpSettings.Default.Autoload) _downloader.RunWorkerAsync();
 #else
-            _downloader.RunWorkerAsync();
+            if (TheEuribors.NeedUpdatating())
+                _downloader.RunWorkerAsync();
+            else
+                UpdateCompleted();
 #endif
         }
 
-        void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        void _mainForm_UpdateRequested(object sender, EventArgs e)
         {
-            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            _downloader.RunWorkerAsync();
+        }
+
+        static void _mainForm_UpdateIntervalChanged(object sender, TimeSpaneEventArgs e)
+        {
+            EuriborSharpSettings.Default.UpdateInterval = e.value;
+            EuriborSharpSettings.Default.Save();
+        }
+
+        void UpdateCompleted()
+        {
+            _mainForm.UpdateTitle("EuriborSharp - Updatated " + TheEuribors.GetLastUpdateTime().ToShortDateString() +
+                "@" + TheEuribors.GetLastUpdateTime().ToShortTimeString());
             TheEuribors.ParseValues();
             InitGraphs();
             UpdateGraphView();
+        }
+        
+        void _downloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            _mainForm.UpdateTitle("EuriborSharp - Updatated " + DateTime.Now.ToShortDateString() + "@" + DateTime.Now.ToShortTimeString());
+            UpdateCompleted();
         }
 
         void _downloader_DoWork(object sender, DoWorkEventArgs e)

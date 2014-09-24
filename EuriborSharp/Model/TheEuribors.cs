@@ -28,6 +28,22 @@ namespace EuriborSharp.Model
             NewInterestList = new List<NewEuriborClass>();
         }
 
+        /// <summary>
+        /// Checks if downloaded history data is older than UPDATE_INTERVAL_IN_DAYS.
+        /// </summary>
+        /// <returns>Returns true is newest history data is older than UPDATE_INTERVAL_IN_DAYS. Otherwise returns false.</returns>
+        public static bool NeedUpdatating()
+        {
+            var latest = DateTime.Now - File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+
+            return (latest > EuriborSharpSettings.Default.UpdateInterval);
+        }
+
+        public static DateTime GetLastUpdateTime()
+        {
+            return File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+        }
+
         public static void ParseValues()
         {
             try
