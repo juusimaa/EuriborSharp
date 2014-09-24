@@ -43,25 +43,25 @@
             // tableLayoutPanel
             // 
             this.tableLayoutPanel.ColumnCount = 2;
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.21008F));
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.78992F));
             this.tableLayoutPanel.Controls.Add(this.pictureBox, 0, 0);
             this.tableLayoutPanel.Controls.Add(this.titleLabel, 1, 0);
             this.tableLayoutPanel.Controls.Add(this.versionLabel, 1, 1);
-            this.tableLayoutPanel.Controls.Add(this.oxyLinkLabel, 0, 4);
-            this.tableLayoutPanel.Controls.Add(this.componentsLabel, 0, 3);
             this.tableLayoutPanel.Controls.Add(this.copyLabel, 1, 2);
-            this.tableLayoutPanel.Controls.Add(this.moreLinqLinkLabel, 0, 5);
+            this.tableLayoutPanel.Controls.Add(this.componentsLabel, 1, 3);
+            this.tableLayoutPanel.Controls.Add(this.oxyLinkLabel, 1, 4);
+            this.tableLayoutPanel.Controls.Add(this.moreLinqLinkLabel, 1, 5);
             this.tableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel.Name = "tableLayoutPanel";
             this.tableLayoutPanel.RowCount = 6;
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel.Size = new System.Drawing.Size(357, 183);
             this.tableLayoutPanel.TabIndex = 0;
             // 
@@ -72,7 +72,7 @@
             this.pictureBox.Location = new System.Drawing.Point(3, 3);
             this.pictureBox.Name = "pictureBox";
             this.tableLayoutPanel.SetRowSpan(this.pictureBox, 3);
-            this.pictureBox.Size = new System.Drawing.Size(112, 84);
+            this.pictureBox.Size = new System.Drawing.Size(84, 90);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox.TabIndex = 0;
             this.pictureBox.TabStop = false;
@@ -82,7 +82,7 @@
             this.titleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.titleLabel.AutoSize = true;
             this.titleLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleLabel.Location = new System.Drawing.Point(121, 11);
+            this.titleLabel.Location = new System.Drawing.Point(93, 11);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(78, 19);
             this.titleLabel.TabIndex = 3;
@@ -93,7 +93,7 @@
             this.versionLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.versionLabel.AutoSize = true;
             this.versionLabel.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.versionLabel.Location = new System.Drawing.Point(121, 35);
+            this.versionLabel.Location = new System.Drawing.Point(93, 35);
             this.versionLabel.Name = "versionLabel";
             this.versionLabel.Size = new System.Drawing.Size(108, 19);
             this.versionLabel.TabIndex = 4;
@@ -102,9 +102,8 @@
             // oxyLinkLabel
             // 
             this.oxyLinkLabel.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.oxyLinkLabel, 2);
             this.oxyLinkLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.oxyLinkLabel.Location = new System.Drawing.Point(3, 120);
+            this.oxyLinkLabel.Location = new System.Drawing.Point(93, 121);
             this.oxyLinkLabel.Name = "oxyLinkLabel";
             this.oxyLinkLabel.Size = new System.Drawing.Size(78, 15);
             this.oxyLinkLabel.TabIndex = 1;
@@ -115,9 +114,8 @@
             // 
             this.componentsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.componentsLabel.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.componentsLabel, 2);
             this.componentsLabel.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.componentsLabel.Location = new System.Drawing.Point(3, 97);
+            this.componentsLabel.Location = new System.Drawing.Point(93, 101);
             this.componentsLabel.Name = "componentsLabel";
             this.componentsLabel.Size = new System.Drawing.Size(159, 15);
             this.componentsLabel.TabIndex = 2;
@@ -128,7 +126,7 @@
             this.copyLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.copyLabel.AutoSize = true;
             this.copyLabel.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.copyLabel.Location = new System.Drawing.Point(121, 67);
+            this.copyLabel.Location = new System.Drawing.Point(93, 70);
             this.copyLabel.Name = "copyLabel";
             this.copyLabel.Size = new System.Drawing.Size(74, 16);
             this.copyLabel.TabIndex = 5;
@@ -137,8 +135,7 @@
             // moreLinqLinkLabel
             // 
             this.moreLinqLinkLabel.AutoSize = true;
-            this.tableLayoutPanel.SetColumnSpan(this.moreLinqLinkLabel, 2);
-            this.moreLinqLinkLabel.Location = new System.Drawing.Point(3, 150);
+            this.moreLinqLinkLabel.Location = new System.Drawing.Point(93, 143);
             this.moreLinqLinkLabel.Name = "moreLinqLinkLabel";
             this.moreLinqLinkLabel.Size = new System.Drawing.Size(96, 13);
             this.moreLinqLinkLabel.TabIndex = 6;
