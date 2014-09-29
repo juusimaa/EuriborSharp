@@ -375,7 +375,7 @@ namespace EuriborSharp.Views
 
             if (_currentTimePeriod == TimePeriods.Default)
             {
-
+                // TODO
             }
             else
             {
@@ -394,10 +394,25 @@ namespace EuriborSharp.Views
                 if (!newEuriborClasses.Any()) return;
 
                 _xAxis.Minimum = DateTimeAxis.ToDouble(newEuriborClasses.Min(e => e.Date));
-                _xAxis.Maximum = DateTimeAxis.ToDouble(newEuriborClasses.Max(e => e.Date).AddDays(2));
+                _xAxis.Maximum = DateTimeAxis.ToDouble(newEuriborClasses.Max(e => e.Date).AddDays(days / 10));
 
-                _yAxis.Maximum = Convert.ToDouble(newEuriborClasses.MaxBy(e => e.EuriborValue).EuriborValue) + 0.02;
-                _yAxis.Minimum = Convert.ToDouble(newEuriborClasses.MinBy(e => e.EuriborValue).EuriborValue) - 0.02;
+                _yAxis.Maximum = Convert.ToDouble(newEuriborClasses.MaxBy(e => e.EuriborValue).EuriborValue) + (Convert.ToDouble(days) / 1200);
+                _yAxis.Minimum = Convert.ToDouble(newEuriborClasses.MinBy(e => e.EuriborValue).EuriborValue) - (Convert.ToDouble(days) / 1200);
+
+                var last = _euriborLinearSeries.Points.OrderByDescending(e => e.X).First();
+                var lastDate = newEuriborClasses.OrderBy(e => e.Date).Last();
+
+                var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000", CultureInfo.InvariantCulture) +
+                                               "\n(" + lastDate.Date.ToShortDateString() + ")";
+                var pointForAnnotationCurrent = new DataPoint(last.X, last.Y);
+
+                _textAnnotationCurrent.TextPosition = pointForAnnotationCurrent;
+                _textAnnotationCurrent.Text = textForAnnotationCurrent;
+                _textAnnotationCurrent.TextColor = OxyColors.Black;
+                _textAnnotationCurrent.FontSize = 20.0;
+                _textAnnotationCurrent.TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center;
+                _textAnnotationCurrent.TextVerticalAlignment = VerticalAlignment.Top;
+                _textAnnotationCurrent.StrokeThickness = 0;
             }
         }
 

@@ -51,11 +51,11 @@
             this.sixHoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.last30DaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.allValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
@@ -253,6 +253,12 @@
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.viewToolStripMenuItem.Text = "View";
             // 
+            // allValuesToolStripMenuItem
+            // 
+            this.allValuesToolStripMenuItem.Name = "allValuesToolStripMenuItem";
+            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.allValuesToolStripMenuItem.Text = "All values";
+            // 
             // last30DaysToolStripMenuItem
             // 
             this.last30DaysToolStripMenuItem.Name = "last30DaysToolStripMenuItem";
@@ -290,12 +296,6 @@
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(784, 638);
             this.mainTableLayoutPanel.TabIndex = 2;
-            // 
-            // allValuesToolStripMenuItem
-            // 
-            this.allValuesToolStripMenuItem.Name = "allValuesToolStripMenuItem";
-            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.allValuesToolStripMenuItem.Text = "All values";
             // 
             // MainForm
             // 
