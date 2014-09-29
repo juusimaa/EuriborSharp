@@ -23,5 +23,7 @@ namespace EuriborSharp.Interfaces
         /// Updated all plot data series.
         /// </summary>
         void UpdateGraph();
+
+        void View30Days();
     }
 }

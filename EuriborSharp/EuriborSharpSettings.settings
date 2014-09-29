@@ -6,7 +6,7 @@
       <Value Profile="(Default)">http://www.suomenpankki.fi/fi/_layouts/BOF/RSS.ashx/tilastot/Korot/fi</Value>
     </Setting>
     <Setting Name="SmoothLine" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="DotLineSelected" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>

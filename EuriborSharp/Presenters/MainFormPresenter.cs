@@ -46,6 +46,7 @@ namespace EuriborSharp.Presenters
             _mainForm.DotLineSelected += _mainForm_DotLineSelected;
             _mainForm.UpdateIntervalChanged += _mainForm_UpdateIntervalChanged;
             _mainForm.UpdateRequested += _mainForm_UpdateRequested;
+            _mainForm.View30DaysSelected += _mainForm_View30DaysSelected;
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -88,6 +89,16 @@ namespace EuriborSharp.Presenters
             else
                 UpdateCompleted();
 #endif
+        }
+
+        void _mainForm_View30DaysSelected(object sender, EventArgs e)
+        {
+            InitGraphs();
+            _graphControl1Month.View30Days();
+            _graphControl3Month.View30Days();
+            _graphControl6Month.View30Days();
+            _graphControl12Month.View30Days();
+            _graphControlAll.View30Days();
         }
 
         void _mainForm_UpdateRequested(object sender, EventArgs e)

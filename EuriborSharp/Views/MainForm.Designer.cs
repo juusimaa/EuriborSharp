@@ -50,9 +50,12 @@
             this.twelveHoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sixHoursToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.last30DaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.allValuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.mainTableLayoutPanel.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +77,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.lineTypeToolStripMenuItem,
+            this.viewToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -94,7 +98,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -212,7 +216,7 @@
             // 
             this.oneDayToolStripMenuItem.CheckOnClick = true;
             this.oneDayToolStripMenuItem.Name = "oneDayToolStripMenuItem";
-            this.oneDayToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.oneDayToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.oneDayToolStripMenuItem.Text = "&1 day";
             this.oneDayToolStripMenuItem.Click += new System.EventHandler(this.oneDayToolStripMenuItem_Click);
             // 
@@ -220,7 +224,7 @@
             // 
             this.twelveHoursToolStripMenuItem.CheckOnClick = true;
             this.twelveHoursToolStripMenuItem.Name = "twelveHoursToolStripMenuItem";
-            this.twelveHoursToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.twelveHoursToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.twelveHoursToolStripMenuItem.Text = "1&2 hours";
             this.twelveHoursToolStripMenuItem.Click += new System.EventHandler(this.twelveHoursToolStripMenuItem_Click);
             // 
@@ -228,7 +232,7 @@
             // 
             this.sixHoursToolStripMenuItem.CheckOnClick = true;
             this.sixHoursToolStripMenuItem.Name = "sixHoursToolStripMenuItem";
-            this.sixHoursToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sixHoursToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.sixHoursToolStripMenuItem.Text = "&6 hours";
             this.sixHoursToolStripMenuItem.Click += new System.EventHandler(this.sixHoursToolStripMenuItem_Click);
             // 
@@ -239,6 +243,22 @@
             this.updateToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
             this.updateToolStripMenuItem.Text = "U&pdate";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.allValuesToolStripMenuItem,
+            this.last30DaysToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // last30DaysToolStripMenuItem
+            // 
+            this.last30DaysToolStripMenuItem.Name = "last30DaysToolStripMenuItem";
+            this.last30DaysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.last30DaysToolStripMenuItem.Text = "Last 30 days";
+            this.last30DaysToolStripMenuItem.Click += new System.EventHandler(this.last30DaysToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -252,7 +272,7 @@
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -270,6 +290,12 @@
             this.mainTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.mainTableLayoutPanel.Size = new System.Drawing.Size(784, 638);
             this.mainTableLayoutPanel.TabIndex = 2;
+            // 
+            // allValuesToolStripMenuItem
+            // 
+            this.allValuesToolStripMenuItem.Name = "allValuesToolStripMenuItem";
+            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.allValuesToolStripMenuItem.Text = "All values";
             // 
             // MainForm
             // 
@@ -317,6 +343,9 @@
         private System.Windows.Forms.ToolStripMenuItem twelveHoursToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sixHoursToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem last30DaysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem allValuesToolStripMenuItem;
 
     }
 }

@@ -17,6 +17,7 @@ namespace EuriborSharp.Views
         public event EventHandler<TimeSpaneEventArgs> UpdateIntervalChanged;
         public event EventHandler HelpSelected;
         public event EventHandler ExitSelected;
+        public event EventHandler View30DaysSelected;
 
         public MainForm()
         {
@@ -184,6 +185,12 @@ namespace EuriborSharp.Views
         {
             if (UpdateRequested != null)
                 UpdateRequested(this, EventArgs.Empty);
+        }
+
+        private void last30DaysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (View30DaysSelected != null)
+                View30DaysSelected(this, EventArgs.Empty);
         }
     }
 }
