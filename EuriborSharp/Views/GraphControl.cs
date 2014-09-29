@@ -306,9 +306,9 @@ namespace EuriborSharp.Views
             }
         }
 
-        public void View30Days()
+        public void ViewLastDays(int days)
         {
-            AddOnlyLast30PointsToLinearSeries();
+            AddOnlyLastPointsToLinearSeries(days);
         }
 
         public void UpdateGraph(TimePeriods period)
@@ -365,7 +365,7 @@ namespace EuriborSharp.Views
             _categoryAxis.LabelField = "Date";
         }
 
-        private void AddOnlyLast30PointsToLinearSeries()
+        private void AddOnlyLastPointsToLinearSeries(int days)
         {
             _euriborLinearSeries.Points.Clear();
             _combined1mSerie.Points.Clear();
@@ -380,22 +380,24 @@ namespace EuriborSharp.Views
             else
             {
                 var values = TheEuribors.NewInterestList
-                    .Where(e => e.TimePeriod == _currentTimePeriod && e.Date > (DateTime.Now - new TimeSpan(30, 0, 0, 0)))
-                    .Select(item => new DataPoint(DateTimeAxis.ToDouble(item.Date), Convert.ToDouble(item.EuriborValue)));
+                    .Where(e => e.TimePeriod == _currentTimePeriod && e.Date > (DateTime.Now - new TimeSpan(days, 0, 0, 0)));
 
-                var dataPoints = values as IList<DataPoint> ?? values.ToList();
-                foreach (var p in dataPoints)
+                var newEuriborClasses = values as IList<NewEuriborClass> ?? values.ToList();
+                foreach (var p in newEuriborClasses)
                 {
-                    _euriborLinearSeries.Points.Add(p);
+                    var point = new DataPoint(DateTimeAxis.ToDouble(p.Date), Convert.ToDouble(p.EuriborValue));
+                    _euriborLinearSeries.Points.Add(point);
                 }
 
-                if (!dataPoints.Any()) return;
+                _euriborPlotModel.Title = TheEuribors.GetInterestName(_currentTimePeriod) + " from last " + days + " days";
 
-                _xAxis.Minimum = dataPoints.MinBy(v => v.X).X;
-                _xAxis.Maximum = dataPoints.MaxBy(v => v.X).X;
+                if (!newEuriborClasses.Any()) return;
 
-                _yAxis.Maximum = dataPoints.MaxBy(v => v.Y).Y;
-                _yAxis.Minimum = dataPoints.MinBy(v => v.Y).Y;
+                _xAxis.Minimum = DateTimeAxis.ToDouble(newEuriborClasses.Min(e => e.Date));
+                _xAxis.Maximum = DateTimeAxis.ToDouble(newEuriborClasses.Max(e => e.Date).AddDays(2));
+
+                _yAxis.Maximum = Convert.ToDouble(newEuriborClasses.MaxBy(e => e.EuriborValue).EuriborValue) + 0.02;
+                _yAxis.Minimum = Convert.ToDouble(newEuriborClasses.MinBy(e => e.EuriborValue).EuriborValue) - 0.02;
             }
         }
 

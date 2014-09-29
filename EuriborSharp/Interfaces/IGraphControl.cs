@@ -24,6 +24,6 @@ namespace EuriborSharp.Interfaces
         /// </summary>
         void UpdateGraph();
 
-        void View30Days();
+        void ViewLastDays(int days);
     }
 }

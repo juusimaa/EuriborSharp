@@ -94,11 +94,11 @@ namespace EuriborSharp.Presenters
         void _mainForm_View30DaysSelected(object sender, EventArgs e)
         {
             InitGraphs();
-            _graphControl1Month.View30Days();
-            _graphControl3Month.View30Days();
-            _graphControl6Month.View30Days();
-            _graphControl12Month.View30Days();
-            _graphControlAll.View30Days();
+            _graphControl1Month.ViewLastDays(30);
+            _graphControl3Month.ViewLastDays(30);
+            _graphControl6Month.ViewLastDays(30);
+            _graphControl12Month.ViewLastDays(30);
+            _graphControlAll.ViewLastDays(30);
         }
 
         void _mainForm_UpdateRequested(object sender, EventArgs e)
