@@ -133,7 +133,7 @@ namespace EuriborSharp.Presenters
 
             var downloader = new WebClient();
 
-            foreach (var item in TheEuribors.urlList)
+            foreach (var item in TheEuribors.UrlList)
             {
                 if (!File.Exists(item.Key) || item.Key.Contains("2014"))
                 {

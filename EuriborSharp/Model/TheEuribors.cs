@@ -12,8 +12,9 @@ namespace EuriborSharp.Model
     [Serializable]
     public static class TheEuribors
     {
-        public static Dictionary<string, string> urlList = new Dictionary<string, string>
+        public static Dictionary<string, string> UrlList = new Dictionary<string, string>
         {
+            { "hist_EURIBOR_2015.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2015.csv" },
             { "hist_EURIBOR_2014.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv" },
             { "hist_EURIBOR_2013.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2013.csv"},
             { "hist_EURIBOR_2012.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2012.csv"},
@@ -48,7 +49,7 @@ namespace EuriborSharp.Model
         {
             try
             {
-                foreach (var item in urlList)
+                foreach (var item in UrlList)
                 {
                     using (var sr = new StreamReader(item.Key))
                     {
