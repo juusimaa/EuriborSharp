@@ -35,14 +35,14 @@ namespace EuriborSharp.Model
         /// <returns>Returns true is newest history data is older than UPDATE_INTERVAL_IN_DAYS. Otherwise returns false.</returns>
         public static bool NeedUpdatating()
         {
-            var latest = DateTime.Now - File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+            var latest = DateTime.Now - File.GetLastWriteTime("hist_EURIBOR_2015.csv");
 
             return (latest > EuriborSharpSettings.Default.UpdateInterval);
         }
 
         public static DateTime GetLastUpdateTime()
         {
-            return File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+            return File.GetLastWriteTime("hist_EURIBOR_2015.csv");
         }
 
         public static void ParseValues()

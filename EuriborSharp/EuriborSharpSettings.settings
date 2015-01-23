@@ -27,7 +27,7 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EuriborDefaultUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv</Value>
+      <Value Profile="(Default)">http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2015.csv</Value>
     </Setting>
     <Setting Name="UpdateInterval" Type="System.TimeSpan" Scope="User">
       <Value Profile="(Default)">12:00:00</Value>
