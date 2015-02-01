@@ -7,27 +7,27 @@
   </EuriborFile>
   <EuriborFile>
     <Url>http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv</Url>
-    <Filename>hist_EURIBOR_2015.csv</Filename>
+    <Filename>hist_EURIBOR_2014.csv</Filename>
     <Year>2014-01-01T00:00:00</Year>
   </EuriborFile>
   <EuriborFile>
     <Url>http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2013.csv</Url>
-    <Filename>hist_EURIBOR_2015.csv</Filename>
+    <Filename>hist_EURIBOR_2013.csv</Filename>
     <Year>2013-01-01T00:00:00</Year>
   </EuriborFile>
   <EuriborFile>
     <Url>http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2012.csv</Url>
-    <Filename>hist_EURIBOR_2015.csv</Filename>
+    <Filename>hist_EURIBOR_2012.csv</Filename>
     <Year>2012-01-01T00:00:00</Year>
   </EuriborFile>
   <EuriborFile>
     <Url>http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2011.csv</Url>
-    <Filename>hist_EURIBOR_2015.csv</Filename>
+    <Filename>hist_EURIBOR_2011.csv</Filename>
     <Year>2011-01-01T00:00:00</Year>
   </EuriborFile>
   <EuriborFile>
     <Url>http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2010.csv</Url>
-    <Filename>hist_EURIBOR_2015.csv</Filename>
+    <Filename>hist_EURIBOR_2010.csv</Filename>
     <Year>2010-01-01T00:00:00</Year>
   </EuriborFile>
 </ArrayOfEuriborFile>

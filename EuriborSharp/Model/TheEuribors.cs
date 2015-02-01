@@ -13,48 +13,13 @@ namespace EuriborSharp.Model
     [Serializable]
     public static class TheEuribors
     {
-        public static Dictionary<string, string> UrlList = new Dictionary<string, string>
-        {
-            { "hist_EURIBOR_2015.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2015.csv" },
-            { "hist_EURIBOR_2014.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv" },
-            { "hist_EURIBOR_2013.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2013.csv"},
-            { "hist_EURIBOR_2012.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2012.csv"},
-            { "hist_EURIBOR_2011.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2011.csv"},
-            { "hist_EURIBOR_2010.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2010.csv" }
-        };
-
-        public static List<EuriborFile> EuriborFiles = new List<EuriborFile> 
-        {
-            new EuriborFile {
-                Filename = "hist_EURIBOR_2015.csv",
-                Url = @"http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2015.csv",
-                Year = new DateTime(2015,1,1)},
-            new EuriborFile {
-                Filename = "hist_EURIBOR_2015.csv",
-                Url = @"http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv",
-                Year = new DateTime(2014,1,1)},
-            new EuriborFile {
-                Filename = "hist_EURIBOR_2015.csv",
-                Url = @"http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2013.csv",
-                Year = new DateTime(2013,1,1)},
-            new EuriborFile {
-                Filename = "hist_EURIBOR_2015.csv",
-                Url = @"http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2012.csv",
-                Year = new DateTime(2012,1,1)},
-            new EuriborFile {
-                Filename = "hist_EURIBOR_2015.csv",
-                Url = @"http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2011.csv",
-                Year = new DateTime(2011,1,1)},
-            new EuriborFile {
-                Filename = "hist_EURIBOR_2015.csv",
-                Url = @"http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2010.csv",
-                Year = new DateTime(2010,1,1)}
-        };
+        public static List<EuriborFile> EuriborFiles = new List<EuriborFile>();
 
         public static List<NewEuriborClass> NewInterestList { get; private set; }
 
         static TheEuribors()
         {
+            DeserializeList();
             NewInterestList = new List<NewEuriborClass>();
         }
 
@@ -64,6 +29,15 @@ namespace EuriborSharp.Model
             {
                 var ser = new XmlSerializer(typeof(List<EuriborFile>));
                 ser.Serialize(fs, EuriborFiles);                
+            }
+        }
+
+        private static void DeserializeList()
+        {
+            using (var fs = new FileStream("EuriborSources.xml", FileMode.Open, FileAccess.Read))
+            {
+                var ser = new XmlSerializer(typeof(List<EuriborFile>));
+                EuriborFiles = (List<EuriborFile>)ser.Deserialize(fs);
             }
         }
 
@@ -87,9 +61,9 @@ namespace EuriborSharp.Model
         {
             try
             {
-                foreach (var item in UrlList)
+                foreach (var item in EuriborFiles)
                 {
-                    using (var sr = new StreamReader(item.Key))
+                    using (var sr = new StreamReader(item.Filename))
                     {
                         string line;
 
@@ -246,6 +220,6 @@ namespace EuriborSharp.Model
     {
         public string Url { get; set; }
         public string Filename { get; set; }
-        public DateTime Year { get; set; }
+        public DateTime FileYear { get; set; }
     }
 }

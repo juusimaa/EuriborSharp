@@ -147,12 +147,12 @@ namespace EuriborSharp.Presenters
 
             var downloader = new WebClient();
 
-            foreach (var item in TheEuribors.UrlList)
+            foreach (var item in TheEuribors.EuriborFiles)
             {
-                if (!File.Exists(item.Key) || item.Key.Contains("2015"))
+                if (!File.Exists(item.Filename) || item.FileYear.Year == 2015)
                 {
-                    downloader.DownloadFile(new Uri(item.Value), item.Key);
-                    _logControl.AddText("Downloading " + item.Value + Environment.NewLine, true);
+                    downloader.DownloadFile(new Uri(item.Url), item.Filename);
+                    _logControl.AddText("Downloading " + item.Url + Environment.NewLine, true);
                 }
             }
         }
