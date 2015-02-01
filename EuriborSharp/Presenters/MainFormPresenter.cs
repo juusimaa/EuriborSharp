@@ -135,7 +135,7 @@ namespace EuriborSharp.Presenters
 
             foreach (var item in TheEuribors.UrlList)
             {
-                if (!File.Exists(item.Key) || item.Key.Contains("2014"))
+                if (!File.Exists(item.Key) || item.Key.Contains("2015"))
                 {
                     downloader.DownloadFile(new Uri(item.Value), item.Key);
                     _logControl.AddText("Downloading " + item.Value + Environment.NewLine, true);
