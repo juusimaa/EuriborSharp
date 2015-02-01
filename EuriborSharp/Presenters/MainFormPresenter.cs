@@ -10,6 +10,7 @@ using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
+using System.Reflection;
 
 #endregion
 
@@ -33,6 +34,8 @@ namespace EuriborSharp.Presenters
 
         public MainFormPresenter()
         {
+            WriteResourcesToDisk();
+
             _downloader = new BackgroundWorker {WorkerSupportsCancellation = true};
             _downloader.DoWork += _downloader_DoWork;
             _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
@@ -91,6 +94,17 @@ namespace EuriborSharp.Presenters
 #endif
         }
 
+        void WriteResourcesToDisk()
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("EuriborSharp.Resources.EuriborSources.xml"))
+            {
+                using (FileStream fileStream = new FileStream("EuriborSources.xml", FileMode.Create))
+                {
+                    stream.CopyTo(fileStream);
+                }
+            }
+        }
+        
         void _mainForm_View30DaysSelected(object sender, EventArgs e)
         {
             InitGraphs();
