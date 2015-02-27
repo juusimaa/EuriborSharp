@@ -149,7 +149,7 @@ namespace EuriborSharp.Presenters
 
             foreach (var item in TheEuribors.EuriborFiles)
             {
-                if (!File.Exists(item.Filename) || item.FileYear.Year == 2015)
+                if (!File.Exists(item.Filename) || item.Year.Year == DateTime.Now.Year)
                 {
                     downloader.DownloadFile(new Uri(item.Url), item.Filename);
                     _logControl.AddText("Downloading " + item.Url + Environment.NewLine, true);

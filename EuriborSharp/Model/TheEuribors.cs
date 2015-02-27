@@ -220,6 +220,6 @@ namespace EuriborSharp.Model
     {
         public string Url { get; set; }
         public string Filename { get; set; }
-        public DateTime FileYear { get; set; }
+        public DateTime Year { get; set; }
     }
 }
