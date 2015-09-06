@@ -229,6 +229,8 @@ namespace EuriborSharp.Views
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 StringFormat = Resources.X_AXIS_UNIT,
+                PositionAtZeroCrossing = true,
+                AxislineStyle = LineStyle.Solid,
                 FontSize = 20
             };
 
