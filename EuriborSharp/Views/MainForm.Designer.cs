@@ -39,9 +39,6 @@
             this.normalLineStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dotLineStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.smoothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.graphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.lineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.barToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rendererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xkcdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -106,7 +103,6 @@
             // 
             this.lineTypeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.graphToolStripMenuItem,
             this.rendererToolStripMenuItem,
             this.updateIntervalToolStripMenuItem,
             this.updateToolStripMenuItem});
@@ -155,29 +151,6 @@
             this.smoothToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.smoothToolStripMenuItem.Text = "S&mooth";
             this.smoothToolStripMenuItem.Click += new System.EventHandler(this.smoothToolStripMenuItem_Click);
-            // 
-            // graphToolStripMenuItem
-            // 
-            this.graphToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lineToolStripMenuItem,
-            this.barToolStripMenuItem});
-            this.graphToolStripMenuItem.Name = "graphToolStripMenuItem";
-            this.graphToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
-            this.graphToolStripMenuItem.Text = "&Serie style";
-            // 
-            // lineToolStripMenuItem
-            // 
-            this.lineToolStripMenuItem.Name = "lineToolStripMenuItem";
-            this.lineToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.lineToolStripMenuItem.Text = "&Line";
-            this.lineToolStripMenuItem.Click += new System.EventHandler(this.lineToolStripMenuItem_Click);
-            // 
-            // barToolStripMenuItem
-            // 
-            this.barToolStripMenuItem.Name = "barToolStripMenuItem";
-            this.barToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.barToolStripMenuItem.Text = "&Bar";
-            this.barToolStripMenuItem.Click += new System.EventHandler(this.barToolStripMenuItem_Click);
             // 
             // rendererToolStripMenuItem
             // 
@@ -256,13 +229,13 @@
             // allValuesToolStripMenuItem
             // 
             this.allValuesToolStripMenuItem.Name = "allValuesToolStripMenuItem";
-            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.allValuesToolStripMenuItem.Text = "All values";
             // 
             // last30DaysToolStripMenuItem
             // 
             this.last30DaysToolStripMenuItem.Name = "last30DaysToolStripMenuItem";
-            this.last30DaysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.last30DaysToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
             this.last30DaysToolStripMenuItem.Text = "Last 30 days";
             this.last30DaysToolStripMenuItem.Click += new System.EventHandler(this.last30DaysToolStripMenuItem_Click);
             // 
@@ -332,9 +305,6 @@
         private System.Windows.Forms.ToolStripMenuItem normalLineStyleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dotLineStyleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem smoothToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem graphToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem lineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem barToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rendererToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem xkcdToolStripMenuItem;

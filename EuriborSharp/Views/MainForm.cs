@@ -53,8 +53,8 @@ namespace EuriborSharp.Views
 
         public void UpdateSeriesStyle(GraphStyle g)
         {
-            lineToolStripMenuItem.Checked = g == GraphStyle.Line;
-            barToolStripMenuItem.Checked = g == GraphStyle.Bar;
+            //lineToolStripMenuItem.Checked = g == GraphStyle.Line;
+            //barToolStripMenuItem.Checked = g == GraphStyle.Bar;
         }
 
         public void UpdateRenderer(Renderer r)
