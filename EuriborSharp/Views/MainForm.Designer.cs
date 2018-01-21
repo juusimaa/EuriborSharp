@@ -229,13 +229,14 @@
             // allValuesToolStripMenuItem
             // 
             this.allValuesToolStripMenuItem.Name = "allValuesToolStripMenuItem";
-            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.allValuesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.allValuesToolStripMenuItem.Text = "All values";
+            this.allValuesToolStripMenuItem.Click += new System.EventHandler(this.allDaysToolStripMenuItem_Click);
             // 
             // last30DaysToolStripMenuItem
             // 
             this.last30DaysToolStripMenuItem.Name = "last30DaysToolStripMenuItem";
-            this.last30DaysToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.last30DaysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.last30DaysToolStripMenuItem.Text = "Last 30 days";
             this.last30DaysToolStripMenuItem.Click += new System.EventHandler(this.last30DaysToolStripMenuItem_Click);
             // 

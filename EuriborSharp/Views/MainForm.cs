@@ -17,7 +17,7 @@ namespace EuriborSharp.Views
         public event EventHandler<TimeSpaneEventArgs> UpdateIntervalChanged;
         public event EventHandler HelpSelected;
         public event EventHandler ExitSelected;
-        public event EventHandler View30DaysSelected;
+        public event EventHandler<BooleanEventArg> View30DaysSelected;
 
         public MainForm()
         {
@@ -121,12 +121,12 @@ namespace EuriborSharp.Views
 
         private void dotLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DotLineSelected(this, new BooleanEventArg(dotLineStyleToolStripMenuItem.Checked));
+            DotLineSelected(this, new BooleanEventArg(true));
         }
 
         private void normalLineStyleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DotLineSelected(this, new BooleanEventArg(dotLineStyleToolStripMenuItem.Checked));
+            DotLineSelected(this, new BooleanEventArg(false));
         }
 
         private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
@@ -159,8 +159,7 @@ namespace EuriborSharp.Views
             twelveHoursToolStripMenuItem.Checked = false;
             sixHoursToolStripMenuItem.Checked = false;
 
-            if (UpdateIntervalChanged != null)
-                UpdateIntervalChanged(this, new TimeSpaneEventArgs(new TimeSpan(1, 0, 0, 0)));
+            UpdateIntervalChanged?.Invoke(this, new TimeSpaneEventArgs(new TimeSpan(1, 0, 0, 0)));
         }
 
         private void twelveHoursToolStripMenuItem_Click(object sender, EventArgs e)
@@ -168,8 +167,7 @@ namespace EuriborSharp.Views
             oneDayToolStripMenuItem.Checked = false;
             sixHoursToolStripMenuItem.Checked = false;
 
-            if (UpdateIntervalChanged != null)
-                UpdateIntervalChanged(this, new TimeSpaneEventArgs(new TimeSpan(12, 0, 0)));
+            UpdateIntervalChanged?.Invoke(this, new TimeSpaneEventArgs(new TimeSpan(12, 0, 0)));
         }
 
         private void sixHoursToolStripMenuItem_Click(object sender, EventArgs e)
@@ -177,20 +175,22 @@ namespace EuriborSharp.Views
             oneDayToolStripMenuItem.Checked = false;
             twelveHoursToolStripMenuItem.Checked = false;
 
-            if (UpdateIntervalChanged != null)
-                UpdateIntervalChanged(this, new TimeSpaneEventArgs(new TimeSpan(6, 0, 0)));
+            UpdateIntervalChanged?.Invoke(this, new TimeSpaneEventArgs(new TimeSpan(6, 0, 0)));
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (UpdateRequested != null)
-                UpdateRequested(this, EventArgs.Empty);
+            UpdateRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void last30DaysToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (View30DaysSelected != null)
-                View30DaysSelected(this, EventArgs.Empty);
+            View30DaysSelected?.Invoke(this, new BooleanEventArg(true));
+        }
+
+        private void allDaysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            View30DaysSelected?.Invoke(this, new BooleanEventArg(false));
         }
     }
 }
