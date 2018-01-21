@@ -6,26 +6,39 @@ using System.Linq;
 using EuriborSharp.Enums;
 using EuriborSharp.Properties;
 using MoreLinq;
+using System.Xml.Serialization;
 
 namespace EuriborSharp.Model
 {
     [Serializable]
     public static class TheEuribors
     {
-        public static Dictionary<string, string> urlList = new Dictionary<string, string>
-        {
-            { "hist_EURIBOR_2014.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2014.csv" },
-            { "hist_EURIBOR_2013.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2013.csv"},
-            { "hist_EURIBOR_2012.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2012.csv"},
-            { "hist_EURIBOR_2011.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2011.csv"},
-            { "hist_EURIBOR_2010.csv", "http://www.emmi-benchmarks.eu/assets/modules/rateisblue/processed_files/hist_EURIBOR_2010.csv" }
-        }; 
+        public static List<EuriborFile> EuriborFiles = new List<EuriborFile>();
 
         public static List<NewEuriborClass> NewInterestList { get; private set; }
 
         static TheEuribors()
         {
+            DeserializeList();
             NewInterestList = new List<NewEuriborClass>();
+        }
+
+        private static void SerialzeList()
+        {
+            using (var fs = new FileStream("EuriborSources.xml", FileMode.Create, FileAccess.Write))
+            {
+                var ser = new XmlSerializer(typeof(List<EuriborFile>));
+                ser.Serialize(fs, EuriborFiles);                
+            }
+        }
+
+        private static void DeserializeList()
+        {
+            using (var fs = new FileStream("EuriborSources.xml", FileMode.Open, FileAccess.Read))
+            {
+                var ser = new XmlSerializer(typeof(List<EuriborFile>));
+                EuriborFiles = (List<EuriborFile>)ser.Deserialize(fs);
+            }
         }
 
         /// <summary>
@@ -34,23 +47,23 @@ namespace EuriborSharp.Model
         /// <returns>Returns true is newest history data is older than UPDATE_INTERVAL_IN_DAYS. Otherwise returns false.</returns>
         public static bool NeedUpdatating()
         {
-            var latest = DateTime.Now - File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+            var latest = DateTime.Now - File.GetLastWriteTime("hist_EURIBOR_2015.csv");
 
             return (latest > EuriborSharpSettings.Default.UpdateInterval);
         }
 
         public static DateTime GetLastUpdateTime()
         {
-            return File.GetLastWriteTime("hist_EURIBOR_2014.csv");
+            return File.GetLastWriteTime("hist_EURIBOR_2015.csv");
         }
 
         public static void ParseValues()
         {
             try
             {
-                foreach (var item in urlList)
+                foreach (var item in EuriborFiles)
                 {
-                    using (var sr = new StreamReader(item.Key))
+                    using (var sr = new StreamReader(item.Filename))
                     {
                         string line;
 
@@ -63,15 +76,15 @@ namespace EuriborSharp.Model
                         while ((line = sr.ReadLine()) != null)
                         {
                             if (line.StartsWith(","))
-                                dates = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                dates = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("1m"))
-                                oneMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                oneMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("3m"))
-                                threeMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                threeMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("6m"))
-                                sixMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                sixMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                             else if (line.StartsWith("12m"))
-                                twelveMonthValues = line.Split(new[] {','}, StringSplitOptions.RemoveEmptyEntries).ToList();
+                                twelveMonthValues = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
                         }
 
                         // remove first item (label)
@@ -155,8 +168,8 @@ namespace EuriborSharp.Model
                     : NewInterestList.MinBy(r => r.EuriborValue).EuriborValue;
             }
 
-            return NewInterestList.Count == 0 ? 
-                0M : 
+            return NewInterestList.Count == 0 ?
+                0M :
                 NewInterestList.Where(e => e.TimePeriod == periods).MinBy(r => r.EuriborValue).EuriborValue;
         }
 
@@ -201,5 +214,12 @@ namespace EuriborSharp.Model
             Date = d;
             EuriborValue = e;
         }
+    }
+
+    public class EuriborFile
+    {
+        public string Url { get; set; }
+        public string Filename { get; set; }
+        public DateTime Year { get; set; }
     }
 }

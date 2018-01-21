@@ -38,18 +38,23 @@
     <ApplicationIcon>euro-1.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MoreLinq">
-      <HintPath>..\packages\morelinq.1.1.0\lib\net35\MoreLinq.dll</HintPath>
+    <Reference Include="MoreLinq, Version=2.9.21302.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.9.0\lib\net40\MoreLinq.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot">
-      <HintPath>..\packages\OxyPlot.Core.2014.1.444\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
+    <Reference Include="OxyPlot, Version=2014.1.546.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OxyPlot.Core.2014.1.546\lib\portable-net4+sl4+wp71+win8\OxyPlot.dll</HintPath>
     </Reference>
-    <Reference Include="OxyPlot.WindowsForms">
-      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.444\lib\net40\OxyPlot.WindowsForms.dll</HintPath>
+    <Reference Include="OxyPlot.WindowsForms, Version=2014.1.546.0, Culture=neutral, PublicKeyToken=245eacd6b5d2d338, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\OxyPlot.WindowsForms.2014.1.546\lib\net40\OxyPlot.WindowsForms.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -140,11 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="euro-1.ico" />
+    <EmbeddedResource Include="Resources\EuriborSources.xml" />
     <None Include="euro-1.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -18,7 +18,7 @@ namespace EuriborSharp.Presenters
 
             _form.UpdateTitle(AssemblyTitle);
             _form.UpdateCopyright(AssemblyCopyright);
-            _form.UpdateVersion(AssemblyVersion.Major + "." + AssemblyVersion.Minor + " (build " + AssemblyVersion.Build + ")");
+            _form.UpdateVersion(AssemblyVersion.Major + "." + AssemblyVersion.Minor + "." + AssemblyVersion.Build);
 
             _form.ShowDialog();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
@@ -6,6 +7,7 @@ using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Properties;
+using MoreLinq;
 using OxyPlot;
 using OxyPlot.Annotations;
 using OxyPlot.Axes;
@@ -227,6 +229,8 @@ namespace EuriborSharp.Views
                 MajorGridlineStyle = LineStyle.Solid,
                 MinorGridlineStyle = LineStyle.Dot,
                 StringFormat = Resources.X_AXIS_UNIT,
+                PositionAtZeroCrossing = true,
+                AxislineStyle = LineStyle.Solid,
                 FontSize = 20
             };
 
@@ -302,12 +306,11 @@ namespace EuriborSharp.Views
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
 
-            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate());
-            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
-
-            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest()) + INTEREST_MAX_OFFSET;
-            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest()) - INTEREST_MIN_OFFSET;
+        public void ViewLastDays(int days)
+        {
+            AddOnlyLastPointsToLinearSeries(days);
         }
 
         public void UpdateGraph(TimePeriods period)
@@ -323,12 +326,6 @@ namespace EuriborSharp.Views
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate());
-            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
-
-            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(period)) + INTEREST_MAX_OFFSET;
-            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(period)) - INTEREST_MIN_OFFSET;
         }
 
         private void AddPointsToColumnSeries()
@@ -370,6 +367,57 @@ namespace EuriborSharp.Views
             _categoryAxis.LabelField = "Date";
         }
 
+        private void AddOnlyLastPointsToLinearSeries(int days)
+        {
+            _euriborLinearSeries.Points.Clear();
+            _combined1mSerie.Points.Clear();
+            _combined3mSerie.Points.Clear();
+            _combined6mSerie.Points.Clear();
+            _combined12mSerie.Points.Clear();
+
+            if (_currentTimePeriod == TimePeriods.Default)
+            {
+                // TODO
+            }
+            else
+            {
+                var values = TheEuribors.NewInterestList
+                    .Where(e => e.TimePeriod == _currentTimePeriod && e.Date > (DateTime.Now - new TimeSpan(days, 0, 0, 0)));
+
+                var newEuriborClasses = values as IList<NewEuriborClass> ?? values.ToList();
+                foreach (var p in newEuriborClasses)
+                {
+                    var point = new DataPoint(DateTimeAxis.ToDouble(p.Date), Convert.ToDouble(p.EuriborValue));
+                    _euriborLinearSeries.Points.Add(point);
+                }
+
+                _euriborPlotModel.Title = TheEuribors.GetInterestName(_currentTimePeriod) + " from last " + days + " days";
+
+                if (!newEuriborClasses.Any()) return;
+
+                _xAxis.Minimum = DateTimeAxis.ToDouble(newEuriborClasses.Min(e => e.Date));
+                _xAxis.Maximum = DateTimeAxis.ToDouble(newEuriborClasses.Max(e => e.Date).AddDays(days / 10));
+
+                _yAxis.Maximum = Convert.ToDouble(newEuriborClasses.MaxBy(e => e.EuriborValue).EuriborValue) + (Convert.ToDouble(days) / 1200);
+                _yAxis.Minimum = Convert.ToDouble(newEuriborClasses.MinBy(e => e.EuriborValue).EuriborValue) - (Convert.ToDouble(days) / 1200);
+
+                var last = _euriborLinearSeries.Points.OrderByDescending(e => e.X).First();
+                var lastDate = newEuriborClasses.OrderBy(e => e.Date).Last();
+
+                var textForAnnotationCurrent = Resources.TEXT_ANNOTATION_LABEL_CURRENT + last.Y.ToString("0.000", CultureInfo.InvariantCulture) +
+                                               "\n(" + lastDate.Date.ToShortDateString() + ")";
+                var pointForAnnotationCurrent = new DataPoint(last.X, last.Y);
+
+                _textAnnotationCurrent.TextPosition = pointForAnnotationCurrent;
+                _textAnnotationCurrent.Text = textForAnnotationCurrent;
+                _textAnnotationCurrent.TextColor = OxyColors.Black;
+                _textAnnotationCurrent.FontSize = 20.0;
+                _textAnnotationCurrent.TextHorizontalAlignment = OxyPlot.HorizontalAlignment.Center;
+                _textAnnotationCurrent.TextVerticalAlignment = VerticalAlignment.Top;
+                _textAnnotationCurrent.StrokeThickness = 0;
+            }
+        }
+
         private void AddPointsToLinearSeries()
         {
             _euriborLinearSeries.Points.Clear();
@@ -406,6 +454,12 @@ namespace EuriborSharp.Views
             }
 
             if (_euriborLinearSeries.Points.Count == 0) return;
+
+            _xAxis.Minimum = DateTimeAxis.ToDouble(TheEuribors.GetOldestDate());
+            _xAxis.Maximum = DateTimeAxis.ToDouble(TheEuribors.GetNewestDate().AddDays(DATE_AXIS_OFFSET));
+
+            _yAxis.Maximum = Convert.ToDouble(TheEuribors.GetMaximumInterest(_currentTimePeriod)) + INTEREST_MAX_OFFSET;
+            _yAxis.Minimum = Convert.ToDouble(TheEuribors.GetMinimumInterest(_currentTimePeriod)) - INTEREST_MIN_OFFSET;
 
             // Annotations
             var last = _euriborLinearSeries.Points.OrderByDescending(e => e.X).First();

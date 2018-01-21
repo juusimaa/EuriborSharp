@@ -10,6 +10,7 @@ using EuriborSharp.Enums;
 using EuriborSharp.Interfaces;
 using EuriborSharp.Model;
 using EuriborSharp.Views;
+using System.Reflection;
 
 #endregion
 
@@ -33,6 +34,8 @@ namespace EuriborSharp.Presenters
 
         public MainFormPresenter()
         {
+            WriteResourcesToDisk();
+
             _downloader = new BackgroundWorker {WorkerSupportsCancellation = true};
             _downloader.DoWork += _downloader_DoWork;
             _downloader.RunWorkerCompleted += _downloader_RunWorkerCompleted;
@@ -46,6 +49,7 @@ namespace EuriborSharp.Presenters
             _mainForm.DotLineSelected += _mainForm_DotLineSelected;
             _mainForm.UpdateIntervalChanged += _mainForm_UpdateIntervalChanged;
             _mainForm.UpdateRequested += _mainForm_UpdateRequested;
+            _mainForm.View30DaysSelected += _mainForm_View30DaysSelected;           
 
             _logControl = new LogControl();
             _logControl.Init();
@@ -90,6 +94,39 @@ namespace EuriborSharp.Presenters
 #endif
         }
 
+        void WriteResourcesToDisk()
+        {
+            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("EuriborSharp.Resources.EuriborSources.xml"))
+            {
+                using (FileStream fileStream = new FileStream("EuriborSources.xml", FileMode.Create))
+                {
+                    stream.CopyTo(fileStream);
+                }
+            }
+        }
+        
+        void _mainForm_View30DaysSelected(object sender, BooleanEventArg e)
+        {
+            InitGraphs();
+
+            if (e.value)
+            {
+                _graphControl1Month.ViewLastDays(30);
+                _graphControl3Month.ViewLastDays(30);
+                _graphControl6Month.ViewLastDays(30);
+                _graphControl12Month.ViewLastDays(30);
+                _graphControlAll.ViewLastDays(30);
+            }
+            else
+            {
+                _graphControl1Month.UpdateGraph();
+                _graphControl3Month.UpdateGraph();
+                _graphControl6Month.UpdateGraph();
+                _graphControl12Month.UpdateGraph();
+                _graphControlAll.UpdateGraph();
+            }
+        }
+
         void _mainForm_UpdateRequested(object sender, EventArgs e)
         {
             _downloader.RunWorkerAsync();
@@ -122,12 +159,12 @@ namespace EuriborSharp.Presenters
 
             var downloader = new WebClient();
 
-            foreach (var item in TheEuribors.urlList)
+            foreach (var item in TheEuribors.EuriborFiles)
             {
-                if (!File.Exists(item.Key) || item.Key.Contains("2014"))
+                if (!File.Exists(item.Filename) || item.Year.Year == DateTime.Now.Year)
                 {
-                    downloader.DownloadFile(new Uri(item.Value), item.Key);
-                    _logControl.AddText("Downloading " + item.Value + Environment.NewLine, true);
+                    downloader.DownloadFile(new Uri(item.Url), item.Filename);
+                    _logControl.AddText("Downloading " + item.Url + Environment.NewLine, true);
                 }
             }
         }

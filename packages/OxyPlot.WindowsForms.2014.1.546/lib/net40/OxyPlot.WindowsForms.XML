@@ -395,6 +395,16 @@
             The image cache
             </summary>
         </member>
+        <member name="F:OxyPlot.WindowsForms.GraphicsRenderContext.brushes">
+            <summary>
+            The brush cache.
+            </summary>
+        </member>
+        <member name="F:OxyPlot.WindowsForms.GraphicsRenderContext.stringFormat">
+            <summary>
+            The string format.
+            </summary>
+        </member>
         <member name="F:OxyPlot.WindowsForms.GraphicsRenderContext.g">
             <summary>
             The GDI+ drawing surface.
@@ -421,7 +431,7 @@
             <param name="stroke">The stroke color.</param>
             <param name="thickness">The thickness.</param>
         </member>
-        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws the polyline from the specified points.
             </summary>
@@ -432,7 +442,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws the polygon from the specified points. The polygon can have stroke and/or fill.
             </summary>
@@ -517,6 +527,15 @@
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
+        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.CreateFont(System.String,System.Double,System.Drawing.FontStyle)">
+            <summary>
+            Creates a font.
+            </summary>
+            <param name="fontFamily">The font family.</param>
+            <param name="fontSize">Size of the font.</param>
+            <param name="fontStyle">The font style.</param>
+            <returns>A font</returns>
+        </member>
         <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.GetImage(OxyPlot.OxyImage)">
             <summary>
             Loads the image from the specified source.
@@ -531,7 +550,7 @@
             <param name="fill">The fill color.</param>
             <returns>A <see cref="T:System.Drawing.Brush"/>.</returns>
         </member>
-        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.GetCachedPen(OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin)">
+        <member name="M:OxyPlot.WindowsForms.GraphicsRenderContext.CreatePen(OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin)">
             <summary>
             Gets a cached pen.
             </summary>

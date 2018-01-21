@@ -47,6 +47,11 @@ namespace EuriborSharp.Interfaces
         /// </summary>
         event EventHandler ExitSelected;
 
+        /// <summary>
+        /// Occurs when view last 30 days is selected from the menu.
+        /// </summary>
+        event EventHandler<BooleanEventArg> View30DaysSelected;
+
         void Close();
         void Dispose();
         void AddControl(UserControl control, string tabName);

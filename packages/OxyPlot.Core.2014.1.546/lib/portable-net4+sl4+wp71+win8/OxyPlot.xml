@@ -142,12 +142,12 @@
         </member>
         <member name="P:OxyPlot.SelectableElement.Selectable">
             <summary>
-            Gets or sets a value indicating whether this element can be selected.
+            Gets or sets a value indicating whether this element can be selected. The default is <c>true</c>.
             </summary>
         </member>
         <member name="P:OxyPlot.SelectableElement.SelectionMode">
             <summary>
-            Gets or sets the selection mode of items in this element.
+            Gets or sets the selection mode of items in this element. The default is <c>SelectionMode.All</c>.
             </summary>
             <value>The selection mode.</value>
             <remarks>This is only used by the select/unselect functionality, not by the rendering.</remarks>
@@ -288,21 +288,21 @@
         </member>
         <member name="P:OxyPlot.PlotElement.Font">
             <summary>
-            Gets or sets the font.
+            Gets or sets the font. The default is <c>null</c> (use <see cref="P:OxyPlot.PlotModel.DefaultFont"/>.
             </summary>
             <value>The font.</value>
-            <remarks>If the value is <c>null</c>, the parent PlotModel's DefaultFont will be used.</remarks>
+            <remarks>If the value is <c>null</c>, the DefaultFont of the parent PlotModel will be used.</remarks>
         </member>
         <member name="P:OxyPlot.PlotElement.FontSize">
             <summary>
-            Gets or sets the size of the font.
+            Gets or sets the size of the font. The default is <c>double.NaN</c> (use <see cref="P:OxyPlot.PlotModel.DefaultFontSize"/>).
             </summary>
             <value>The size of the font.</value>
-            <remarks>If the value is NaN, the parent PlotModel's DefaultFontSize will be used.</remarks>
+            <remarks>If the value is <c>NaN</c>, the DefaultFontSize of the parent PlotModel will be used.</remarks>
         </member>
         <member name="P:OxyPlot.PlotElement.FontWeight">
             <summary>
-            Gets or sets the font weight.
+            Gets or sets the font weight. The default is <c>FontWeights.Normal</c>.
             </summary>
             <value>The font weight.</value>
         </member>
@@ -313,22 +313,25 @@
         </member>
         <member name="P:OxyPlot.PlotElement.Tag">
             <summary>
-            Gets or sets an arbitrary object value that can be used to store custom information about this plot element.
+            Gets or sets an arbitrary object value that can be used to store custom information about this plot element. The default is <c>null</c>.
             </summary>
-            <value>The intended value. This property has no default value.</value>
+            <value>The intended value.</value>
             <remarks>This property is analogous to Tag properties in other Microsoft programming models. Tag is intended to provide a pre-existing property location where you can store some basic custom information about any PlotElement without requiring you to subclass an element.</remarks>
         </member>
         <member name="P:OxyPlot.PlotElement.TextColor">
             <summary>
-            Gets or sets the color of the text.
+            Gets or sets the color of the text. The default is <c>OxyColors.Automatic</c> (use <see cref="P:OxyPlot.PlotModel.TextColor"/>).
             </summary>
             <value>The color of the text.</value>
-            <remarks>If the value is <c>null</c>, the TextColor of the parent PlotModel will be used.</remarks>
+            <remarks>If the value is <c>OxyColors.Automatic</c>, the TextColor of the parent PlotModel will be used.</remarks>
         </member>
         <member name="P:OxyPlot.PlotElement.ToolTip">
             <summary>
-            Gets or sets the tool tip. The default value is <c>null</c>.
+            Gets or sets the tool tip. The default is <c>null</c>.
             </summary>
+            <value>
+            The tool tip string.
+            </value>
         </member>
         <member name="P:OxyPlot.PlotElement.ActualFont">
             <summary>
@@ -553,6 +556,12 @@
             Gets or sets the shape of the rendered point.
             </summary>
             <value>The shape.</value>
+        </member>
+        <member name="P:OxyPlot.Annotations.PointAnnotation.CustomOutline">
+            <summary>
+            Gets or sets a custom polygon outline for the point marker. Set <see cref="P:OxyPlot.Annotations.PointAnnotation.Shape"/> to <see cref="F:OxyPlot.MarkerType.Custom"/> to use this property.
+            </summary>
+            <value>A polyline. The default is <c>null</c>.</value>
         </member>
         <member name="T:OxyPlot.DelegateViewCommand`1">
             <summary>
@@ -2134,7 +2143,7 @@
         </member>
         <member name="T:OxyPlot.LibraryDoc">
             <summary>
-            The OxyPlot solution provides plotting functionality for Windows store apps, WPF, Windows forms, Silverlight and Mono based applications.
+            The OxyPlot solution provides plotting functionality for Windows store apps, WPF, Windows forms, Silverlight and Xamarin based applications.
             </summary>
         </member>
         <member name="T:OxyPlot.NamespaceDoc">
@@ -3138,6 +3147,13 @@
             <param name="p0">The first point that the new rectangle must contain.</param>
             <param name="p1">The second point that the new rectangle must contain.</param>
         </member>
+        <member name="M:OxyPlot.OxyRect.#ctor(OxyPlot.ScreenPoint,OxyPlot.OxySize)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OxyPlot.OxyRect"/> struct by location and size.
+            </summary>
+            <param name="p0">The location.</param>
+            <param name="size">The size.</param>
+        </member>
         <member name="M:OxyPlot.OxyRect.Create(System.Double,System.Double,System.Double,System.Double)">
             <summary>
             Creates a rectangle from the specified corner coordinates.
@@ -3168,6 +3184,16 @@
             Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
             <returns>A <see cref="T:System.String"/> that represents this instance.</returns>
+        </member>
+        <member name="M:OxyPlot.OxyRect.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="formatProvider">The format provider.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
         </member>
         <member name="P:OxyPlot.OxyRect.Bottom">
             <summary>
@@ -3233,6 +3259,16 @@
             Returns a <see cref="T:System.String"/> that represents this instance.
             </summary>
             <returns>A <see cref="T:System.String"/> that represents this instance.</returns>
+        </member>
+        <member name="M:OxyPlot.OxySize.ToString(System.String,System.IFormatProvider)">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <param name="format">The format.</param>
+            <param name="formatProvider">The format provider.</param>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
         </member>
         <member name="P:OxyPlot.OxySize.Height">
             <summary>
@@ -3410,22 +3446,22 @@
             <param name="s">The point.</param>
             <returns><c>true</c> if the specified point is inside; otherwise, <c>false</c>.</returns>
         </member>
-        <member name="T:OxyPlot.OxyPenLineJoin">
+        <member name="T:OxyPlot.LineJoin">
             <summary>
             Defines how to join line segments.
             </summary>
         </member>
-        <member name="F:OxyPlot.OxyPenLineJoin.Miter">
+        <member name="F:OxyPlot.LineJoin.Miter">
             <summary>
             Line joins use regular angular vertices.
             </summary>
         </member>
-        <member name="F:OxyPlot.OxyPenLineJoin.Round">
+        <member name="F:OxyPlot.LineJoin.Round">
             <summary>
             Line joins use rounded vertices.
             </summary>
         </member>
-        <member name="F:OxyPlot.OxyPenLineJoin.Bevel">
+        <member name="F:OxyPlot.LineJoin.Bevel">
             <summary>
             Line joins use beveled vertices.
             </summary>
@@ -4371,7 +4407,7 @@
             Describes a pen in terms of color, thickness, line style and line join type.
             </summary>
         </member>
-        <member name="M:OxyPlot.OxyPen.#ctor(OxyPlot.OxyColor,System.Double,OxyPlot.LineStyle,OxyPlot.OxyPenLineJoin)">
+        <member name="M:OxyPlot.OxyPen.#ctor(OxyPlot.OxyColor,System.Double,OxyPlot.LineStyle,OxyPlot.LineJoin)">
             <summary>
             Initializes a new instance of the <see cref="T:OxyPlot.OxyPen"/> class.
             </summary>
@@ -4380,7 +4416,7 @@
             <param name="lineStyle">The line style.</param>
             <param name="lineJoin">The line join.</param>
         </member>
-        <member name="M:OxyPlot.OxyPen.Create(OxyPlot.OxyColor,System.Double,OxyPlot.LineStyle,OxyPlot.OxyPenLineJoin)">
+        <member name="M:OxyPlot.OxyPen.Create(OxyPlot.OxyColor,System.Double,OxyPlot.LineStyle,OxyPlot.LineJoin)">
             <summary>
             Creates the specified pen.
             </summary>
@@ -4504,9 +4540,9 @@
             The hidden line style.
             </summary>
         </member>
-        <member name="F:OxyPlot.LineStyle.Undefined">
+        <member name="F:OxyPlot.LineStyle.Automatic">
             <summary>
-            The undefined line style.
+            The automatic line style.
             </summary>
         </member>
         <member name="T:OxyPlot.MathRenderingExtensions">
@@ -4635,7 +4671,7 @@
             <param name="stroke">The stroke color. If set to <c>OxyColors.Undefined</c>, the ellipses will not be stroked.</param>
             <param name="thickness">The stroke thickness (in device independent units, 1/96 inch).</param>
         </member>
-        <member name="M:OxyPlot.IRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.IRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polyline.
             </summary>
@@ -4646,7 +4682,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.IRenderContext.DrawLineSegments(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.IRenderContext.DrawLineSegments(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws line segments defined by points (0,1) (2,3) (4,5) etc.
             This should have better performance than calling DrawLine for each segment.
@@ -4658,7 +4694,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.IRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.IRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polygon.
             </summary>
@@ -4670,7 +4706,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">If set to <c>true</c> the polygon will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.IRenderContext.DrawPolygons(System.Collections.Generic.IList{System.Collections.Generic.IList{OxyPlot.ScreenPoint}},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.IRenderContext.DrawPolygons(System.Collections.Generic.IList{System.Collections.Generic.IList{OxyPlot.ScreenPoint}},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a collection of polygons, where all polygons have the same stroke and fill.
             This performs better than calling DrawPolygon multiple times.
@@ -4797,7 +4833,7 @@
             <param name="stroke">The stroke color.</param>
             <param name="thickness">The stroke thickness.</param>
         </member>
-        <member name="M:OxyPlot.RenderContextBase.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.RenderContextBase.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polyline.
             </summary>
@@ -4808,7 +4844,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.RenderContextBase.DrawLineSegments(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.RenderContextBase.DrawLineSegments(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws multiple line segments defined by points (0,1) (2,3) (4,5) etc.
             This should have better performance than calling DrawLine for each segment.
@@ -4820,7 +4856,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">If set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.RenderContextBase.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.RenderContextBase.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polygon. The polygon can have stroke and/or fill.
             </summary>
@@ -4832,7 +4868,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">If set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.RenderContextBase.DrawPolygons(System.Collections.Generic.IList{System.Collections.Generic.IList{OxyPlot.ScreenPoint}},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.RenderContextBase.DrawPolygons(System.Collections.Generic.IList{System.Collections.Generic.IList{OxyPlot.ScreenPoint}},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a collection of polygons, where all polygons have the same stroke and fill.
             This performs better than calling DrawPolygon multiple times.
@@ -4971,7 +5007,7 @@
             The horizontal/vertical distance to the end points of the stars.
             </summary>
         </member>
-        <member name="M:OxyPlot.RenderingExtensions.DrawClippedLine(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint},System.Double,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean,System.Collections.Generic.List{OxyPlot.ScreenPoint},System.Action{System.Collections.Generic.IList{OxyPlot.ScreenPoint}})">
+        <member name="M:OxyPlot.RenderingExtensions.DrawClippedLine(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint},System.Double,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean,System.Collections.Generic.List{OxyPlot.ScreenPoint},System.Action{System.Collections.Generic.IList{OxyPlot.ScreenPoint}})">
             <summary>
             Draws a clipped polyline through the specified points.
             </summary>
@@ -4987,7 +5023,7 @@
             <param name="outputBuffer">The output buffer.</param>
             <param name="pointsRendered">The points rendered callback.</param>
         </member>
-        <member name="M:OxyPlot.RenderingExtensions.DrawClippedLineSegments(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.RenderingExtensions.DrawClippedLineSegments(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws the clipped line segments.
             </summary>
@@ -5027,7 +5063,7 @@
             <param name="opacity">The opacity.</param>
             <param name="interpolate">interpolate if set to <c>true</c>.</param>
         </member>
-        <member name="M:OxyPlot.RenderingExtensions.DrawClippedPolygon(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint},System.Double,OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,OxyPlot.LineStyle,OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.RenderingExtensions.DrawClippedPolygon(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint},System.Double,OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,OxyPlot.LineStyle,OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws the polygon within the specified clipping rectangle.
             </summary>
@@ -5201,6 +5237,46 @@
             <param name="stroke">The stroke.</param>
             <param name="thickness">The thickness.</param>
         </member>
+        <member name="M:OxyPlot.RenderingExtensions.DrawCircle(OxyPlot.IRenderContext,System.Double,System.Double,System.Double,OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double)">
+            <summary>
+            Draws a circle at the specified position.
+            </summary>
+            <param name="rc">The render context.</param>
+            <param name="x">The center x-coordinate.</param>
+            <param name="y">The center y-coordinate.</param>
+            <param name="r">The radius.</param>
+            <param name="fill">The fill color.</param>
+            <param name="stroke">The stroke color.</param>
+            <param name="thickness">The thickness.</param>
+        </member>
+        <member name="M:OxyPlot.RenderingExtensions.DrawCircle(OxyPlot.IRenderContext,OxyPlot.ScreenPoint,System.Double,OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double)">
+            <summary>
+            Draws a circle at the specified position.
+            </summary>
+            <param name="rc">The render context.</param>
+            <param name="center">The center.</param>
+            <param name="r">The radius.</param>
+            <param name="fill">The fill color.</param>
+            <param name="stroke">The stroke color.</param>
+            <param name="thickness">The thickness.</param>
+        </member>
+        <member name="M:OxyPlot.RenderingExtensions.FillCircle(OxyPlot.IRenderContext,OxyPlot.ScreenPoint,System.Double,OxyPlot.OxyColor)">
+            <summary>
+            Fills a circle at the specified position.
+            </summary>
+            <param name="rc">The render context.</param>
+            <param name="center">The center.</param>
+            <param name="r">The radius.</param>
+            <param name="fill">The fill color.</param>
+        </member>
+        <member name="M:OxyPlot.RenderingExtensions.FillRectangle(OxyPlot.IRenderContext,OxyPlot.OxyRect,OxyPlot.OxyColor)">
+            <summary>
+            Fills a rectangle at the specified position.
+            </summary>
+            <param name="rc">The render context.</param>
+            <param name="rectangle">The rectangle.</param>
+            <param name="fill">The fill color.</param>
+        </member>
         <member name="M:OxyPlot.RenderingExtensions.DrawRectangleAsPolygon(OxyPlot.IRenderContext,OxyPlot.OxyRect,OxyPlot.OxyColor,OxyPlot.OxyColor,OxyPlot.OxyThickness)">
             <summary>
             Draws the rectangle as an aliased polygon.
@@ -5262,7 +5338,7 @@
             </summary>
             <param name="rc">The decorated render context.</param>
         </member>
-        <member name="M:OxyPlot.XkcdRenderingDecorator.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.XkcdRenderingDecorator.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polyline.
             </summary>
@@ -5273,7 +5349,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.XkcdRenderingDecorator.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.XkcdRenderingDecorator.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polygon. The polygon can have stroke and/or fill.
             </summary>
@@ -6057,26 +6133,6 @@
             Projecting square cap. The stroke continues beyond the endpoint of the path for a distance equal to half the line width and is squared off.
             </summary>
         </member>
-        <member name="T:OxyPlot.LineJoin">
-            <summary>
-            Defines the shape that joins two lines or segments.
-            </summary>
-        </member>
-        <member name="F:OxyPlot.LineJoin.Miter">
-            <summary>
-            Miter join. The outer edges of the strokes for the two segments are extended until they meet at an angle, as in a picture frame. If the segments meet at too sharp an angle (as defined by the miter limit parameter—see “Miter Limit,” above), a bevel join is used instead.
-            </summary>
-        </member>
-        <member name="F:OxyPlot.LineJoin.Round">
-            <summary>
-            Round join. An arc of a circle with a diameter equal to the line width is drawn around the point where the two segments meet, connecting the outer edges of the strokes for the two segments. This pieslice-shaped figure is filled in, producing a rounded corner.
-            </summary>
-        </member>
-        <member name="F:OxyPlot.LineJoin.Bevel">
-            <summary>
-            Bevel join. The two segments are finished with butt caps (see “Line Cap Style” on page 216) and the resulting notch beyond the ends of the segments is filled with a triangle.
-            </summary>
-        </member>
         <member name="T:OxyPlot.ColorSpace">
             <summary>
             Defines the color space.
@@ -6387,7 +6443,7 @@
             <param name="stroke">The stroke color.</param>
             <param name="thickness">The thickness.</param>
         </member>
-        <member name="M:OxyPlot.PdfRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.PdfRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polyline.
             </summary>
@@ -6398,7 +6454,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.PdfRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.PdfRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws a polygon. The polygon can have stroke and/or fill.
             </summary>
@@ -6472,9 +6528,9 @@
             <param name="opacity">The opacity.</param>
             <param name="interpolate">Interpolate if set to <c>true</c>.</param>
         </member>
-        <member name="M:OxyPlot.PdfRenderContext.Convert(OxyPlot.OxyPenLineJoin)">
+        <member name="M:OxyPlot.PdfRenderContext.Convert(OxyPlot.LineJoin)">
             <summary>
-            Converts the specified <see cref="T:OxyPlot.OxyPenLineJoin"/> to a <see cref="T:OxyPlot.LineJoin"/>.
+            Converts the specified <see cref="T:OxyPlot.LineJoin"/> to a <see cref="T:OxyPlot.LineJoin"/>.
             </summary>
             <param name="lineJoin">The value to convert.</param>
             <returns>The converted value.</returns>
@@ -7440,31 +7496,6 @@
             </summary>
             <remarks>This class contains internal methods that should be called only from the PlotModel.</remarks>
         </member>
-        <member name="T:OxyPlot.Series.ITrackableSeries">
-            <summary>
-            Provides functionality to return data for a tracker control.
-            </summary>
-            <remarks>The plot view will show a tracker with the current value when moving the mouse over the data.</remarks>
-        </member>
-        <member name="M:OxyPlot.Series.ITrackableSeries.GetNearestPoint(OxyPlot.ScreenPoint,System.Boolean)">
-            <summary>
-            Gets the point on the series that is nearest the specified point.
-            </summary>
-            <param name="point">The point.</param>
-            <param name="interpolate">Interpolate the series if this flag is set to <c>true</c>.</param>
-            <returns>A TrackerHitResult for the current hit.</returns>
-        </member>
-        <member name="P:OxyPlot.Series.ITrackableSeries.TrackerFormatString">
-            <summary>
-            Gets a format string used for the tracker.
-            </summary>
-            <remarks>The fields that can be used in the format string depends on the series.</remarks>
-        </member>
-        <member name="P:OxyPlot.Series.ITrackableSeries.TrackerKey">
-            <summary>
-            Gets the tracker key.
-            </summary>
-        </member>
         <member name="M:OxyPlot.Series.Series.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:OxyPlot.Series.Series"/> class.
@@ -7548,24 +7579,24 @@
         </member>
         <member name="P:OxyPlot.Series.Series.Background">
             <summary>
-            Gets or sets the background color of the series.
+            Gets or sets the background color of the series. The default is <c>OxyColors.Undefined</c>.
             </summary>
             <remarks>This property defines the background color in the area defined by the x and y axes used by this series.</remarks>
         </member>
         <member name="P:OxyPlot.Series.Series.IsVisible">
             <summary>
-            Gets or sets a value indicating whether this series is visible.
+            Gets or sets a value indicating whether this series is visible. The default is <c>true</c>.
             </summary>
         </member>
         <member name="P:OxyPlot.Series.Series.Title">
             <summary>
-            Gets or sets the title of the series.
+            Gets or sets the title of the series. The default is <c>null</c>.
             </summary>
             <value>The title that is shown in the legend of the plot. The default value is <c>null</c>. When the value is <c>null</c>, this series will not be shown in the legend.</value>
         </member>
         <member name="P:OxyPlot.Series.Series.TrackerFormatString">
             <summary>
-            Gets or sets a format string used for the tracker.
+            Gets or sets a format string used for the tracker. The default depends on the series.
             </summary>
             <remarks>
             The arguments for the format string may be different for each type of series. See the documentation.
@@ -7573,7 +7604,7 @@
         </member>
         <member name="P:OxyPlot.Series.Series.TrackerKey">
             <summary>
-            Gets or sets the key for the tracker to use on this series.
+            Gets or sets the key for the tracker to use on this series. The default is <c>null</c>.
             </summary>
             <remarks>
             This key may be used by the plot view to show a custom tracker for the series.
@@ -7602,9 +7633,29 @@
         </member>
         <member name="P:OxyPlot.Series.ItemsSeries.ItemsSource">
             <summary>
-            Gets or sets the items source.
+            Gets or sets the items source. The default is <c>null</c>.
             </summary>
             <value>The items source.</value>
+        </member>
+        <member name="F:OxyPlot.Series.XYAxisSeries.DefaultTrackerFormatString">
+            <summary>
+            The default tracker format string
+            </summary>
+        </member>
+        <member name="F:OxyPlot.Series.XYAxisSeries.DefaultXAxisTitle">
+            <summary>
+            The default x-axis title
+            </summary>
+        </member>
+        <member name="F:OxyPlot.Series.XYAxisSeries.DefaultYAxisTitle">
+            <summary>
+            The default y-axis title
+            </summary>
+        </member>
+        <member name="M:OxyPlot.Series.XYAxisSeries.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:OxyPlot.Series.XYAxisSeries"/> class.
+            </summary>
         </member>
         <member name="M:OxyPlot.Series.XYAxisSeries.GetScreenRectangle">
             <summary>
@@ -7693,6 +7744,7 @@
             <param name="points">The point list.</param>
             <param name="point">The point.</param>
             <returns>A tracker hit result if a point was found.</returns>
+            <remarks>The Text property of the result will not be set, since the formatting depends on the various series.</remarks>
         </member>
         <member name="M:OxyPlot.Series.XYAxisSeries.GetNearestPointInternal(System.Collections.Generic.IEnumerable{OxyPlot.DataPoint},OxyPlot.ScreenPoint)">
             <summary>
@@ -7701,6 +7753,7 @@
             <param name="points">The points (data coordinates).</param>
             <param name="point">The point (screen coordinates).</param>
             <returns>A <see cref="T:OxyPlot.TrackerHitResult"/> if a point was found, <c>null</c> otherwise.</returns>
+            <remarks>The Text property of the result will not be set, since the formatting depends on the various series.</remarks>
         </member>
         <member name="M:OxyPlot.Series.XYAxisSeries.IsValidPoint(OxyPlot.DataPoint)">
             <summary>
@@ -7782,7 +7835,7 @@
         </member>
         <member name="P:OxyPlot.Series.XYAxisSeries.XAxisKey">
             <summary>
-            Gets or sets the x-axis key.
+            Gets or sets the x-axis key. The default is <c>null</c>.
             </summary>
             <value>The x-axis key.</value>
         </member>
@@ -7794,9 +7847,14 @@
         </member>
         <member name="P:OxyPlot.Series.XYAxisSeries.YAxisKey">
             <summary>
-            Gets or sets the y-axis key.
+            Gets or sets the y-axis key. The default is <c>null</c>.
             </summary>
             <value>The y-axis key.</value>
+        </member>
+        <member name="F:OxyPlot.Series.ScatterSeries`1.DefaultColorAxisTitle">
+            <summary>
+            The default color-axis title
+            </summary>
         </member>
         <member name="F:OxyPlot.Series.ScatterSeries`1.points">
             <summary>
@@ -7856,6 +7914,13 @@
             Updates the maximum and minimum values of the series.
             </summary>
         </member>
+        <member name="M:OxyPlot.Series.ScatterSeries`1.RenderPointLabels(OxyPlot.IRenderContext,OxyPlot.OxyRect)">
+            <summary>
+            Renders the point labels.
+            </summary>
+            <param name="rc">The render context.</param>
+            <param name="clippingRect">The clipping rectangle.</param>
+        </member>
         <member name="M:OxyPlot.Series.ScatterSeries`1.InternalUpdateMaxMinValue(System.Collections.Generic.List{`0})">
             <summary>
             Updates the Max/Min limits from the values in the specified point list.
@@ -7902,6 +7967,17 @@
             </summary>
             <value>A list of <see cref="T:OxyPlot.Series.ScatterPoint"/>.</value>
             <remarks>If the <see cref="P:OxyPlot.Series.ItemsSeries.ItemsSource"/> is specified, this list will not be used.</remarks>
+        </member>
+        <member name="P:OxyPlot.Series.ScatterSeries`1.LabelFormatString">
+            <summary>
+            Gets or sets the label format string. The default is <c>null</c> (no labels).
+            </summary>
+            <value>The label format string.</value>
+        </member>
+        <member name="P:OxyPlot.Series.ScatterSeries`1.LabelMargin">
+            <summary>
+            Gets or sets the label margins. The default is <c>6</c>.
+            </summary>
         </member>
         <member name="P:OxyPlot.Series.ScatterSeries`1.Mapping">
             <summary>
@@ -7983,7 +8059,7 @@
             <summary>
             Gets or sets the custom marker outline polygon. Set <see cref="P:OxyPlot.Series.ScatterSeries`1.MarkerType"/> to <see cref="T:MarkerType.Custom"/> to use this.
             </summary>
-            <value>The outline. The default is <c>null</c>.</value>
+            <value>A polyline. The default is <c>null</c>.</value>
         </member>
         <member name="P:OxyPlot.Series.ScatterSeries`1.MarkerSize">
             <summary>
@@ -8021,6 +8097,14 @@
             </summary>
         </member>
         <member name="P:OxyPlot.Series.ScatterSeries`1.ActualPoints">
+            <summary>
+            Gets the actual points.
+            </summary>
+            <value>
+            A read-only list of points.
+            </value>
+        </member>
+        <member name="P:OxyPlot.Series.ScatterSeries`1.ActualPointsList">
             <summary>
             Gets the list of points that should be rendered.
             </summary>
@@ -8111,21 +8195,66 @@
             Gets or sets the minimum size (relative to <see cref="P:OxyPlot.Series.ScatterSeries`1.MarkerSize"/>) of the error bars to be shown. 
             </summary>
         </member>
-        <member name="T:OxyPlot.AxisUtilities">
+        <member name="T:OxyPlot.ArrayExtensions">
             <summary>
-            Provides utility methods for axes.
+            Provides useful extension methods for arrays.
             </summary>
         </member>
-        <member name="M:OxyPlot.AxisUtilities.CreateTickValues(System.Double,System.Double,System.Double,System.Int32)">
+        <member name="M:OxyPlot.ArrayExtensions.Max2D(System.Double[0:,0:])">
             <summary>
-            Creates tick values at the specified interval.
+            Finds the maximum value in the specified 2D array (NaN values not included).
             </summary>
-            <param name="from">The start value.</param>
-            <param name="to">The end value.</param>
-            <param name="step">The interval.</param>
-            <param name="maxTicks">The maximum number of ticks (optional). The default value is 1000.</param>
-            <returns>A sequence of values.</returns>
-            <exception cref="T:System.ArgumentException">Step cannot be zero or negative.;step</exception>
+            <param name="array">The array.</param>
+            <returns>The maximum value.</returns>
+        </member>
+        <member name="M:OxyPlot.ArrayExtensions.Min2D(System.Double[0:,0:],System.Boolean)">
+            <summary>
+            Finds the minimum value in the specified 2D array.
+            </summary>
+            <param name="array">The array.</param>
+            <param name="excludeNaN">Exclude NaN values if set to <c>true</c>.</param>
+            <returns>The minimum value.</returns>
+        </member>
+        <member name="T:OxyPlot.HashCodeBuilder">
+            <summary>
+            Provides functionality to calculate hash codes.
+            </summary>
+        </member>
+        <member name="M:OxyPlot.HashCodeBuilder.GetHashCode(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Calculates a hash code for the specified sequence of items.
+            </summary>
+            <param name="items">A sequence of items.</param>
+            <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
+        </member>
+        <member name="T:OxyPlot.ReflectionPath">
+            <summary>
+            Provides functionality to reflect a path of properties.
+            </summary>
+        </member>
+        <member name="F:OxyPlot.ReflectionPath.items">
+            <summary>
+            The path items.
+            </summary>
+        </member>
+        <member name="F:OxyPlot.ReflectionPath.infos">
+            <summary>
+            The property metadata.
+            </summary>
+        </member>
+        <member name="M:OxyPlot.ReflectionPath.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:OxyPlot.ReflectionPath"/> class.
+            </summary>
+            <param name="path">The reflection path.</param>
+        </member>
+        <member name="M:OxyPlot.ReflectionPath.GetValue(System.Object)">
+            <summary>
+            Gets the value for the specified instance.
+            </summary>
+            <param name="instance">The instance.</param>
+            <returns>The value.</returns>
+            <exception cref="T:System.InvalidOperationException">Could not find property.</exception>
         </member>
         <member name="T:OxyPlot.XmlWriterBase">
             <summary>
@@ -8379,7 +8508,7 @@
         </member>
         <member name="T:OxyPlot.StreamExtensions">
             <summary>
-            Implements <see cref="T:System.IO.Stream"/> extension methods.
+            Provides useful extension methods for streams.
             </summary>
         </member>
         <member name="M:OxyPlot.StreamExtensions.CopyTo(System.IO.Stream,System.IO.Stream)">
@@ -8413,14 +8542,6 @@
             <c>{PropertyName:Formatstring}</c>.
             E.g. if you have a "Value" property in your item's class, use <c>"{Value:0.00}"</c> to output the value with two digits.
             Note that this formatting is using reflection and does not have the same performance as string.Format.</remarks>
-        </member>
-        <member name="M:OxyPlot.StringHelper.CreateValidFileName(System.String,System.String)">
-            <summary>
-            Creates a valid file name.
-            </summary>
-            <param name="title">The title.</param>
-            <param name="extension">The extension.</param>
-            <returns>A file name.</returns>
         </member>
         <member name="T:OxyPlot.FractionHelper">
             <summary>
@@ -8456,12 +8577,12 @@
             <param name="y">The y.</param>
             <returns>The greatest common factor.</returns>
         </member>
-        <member name="T:OxyPlot.ArrayHelper">
+        <member name="T:OxyPlot.ArrayBuilder">
             <summary>
-            Provides utility methods for vector generation.
+            Provides functionality to build arrays.
             </summary>
         </member>
-        <member name="M:OxyPlot.ArrayHelper.CreateVector(System.Double,System.Double,System.Int32)">
+        <member name="M:OxyPlot.ArrayBuilder.CreateVector(System.Double,System.Double,System.Int32)">
             <summary>
             Creates a vector.
             </summary>
@@ -8470,7 +8591,7 @@
             <param name="n">The number of steps.</param>
             <returns>A vector.</returns>
         </member>
-        <member name="M:OxyPlot.ArrayHelper.CreateVector(System.Double,System.Double,System.Double)">
+        <member name="M:OxyPlot.ArrayBuilder.CreateVector(System.Double,System.Double,System.Double)">
             <summary>
             Creates a vector.
             </summary>
@@ -8479,7 +8600,7 @@
             <param name="dx">The step size.</param>
             <returns>A vector.</returns>
         </member>
-        <member name="M:OxyPlot.ArrayHelper.Evaluate(System.Func{System.Double,System.Double,System.Double},System.Double[],System.Double[])">
+        <member name="M:OxyPlot.ArrayBuilder.Evaluate(System.Func{System.Double,System.Double,System.Double},System.Double[],System.Double[])">
             <summary>
             Evaluates the specified function.
             </summary>
@@ -8488,48 +8609,26 @@
             <param name="y">The y values.</param>
             <returns>Array of evaluations. The value of f(x_i,y_j) will be placed at index [i, j].</returns>
         </member>
-        <member name="M:OxyPlot.ArrayHelper.Fill(System.Double[],System.Double)">
+        <member name="M:OxyPlot.ArrayBuilder.Fill(System.Double[],System.Double)">
             <summary>
             Fills the array with the specified value.
             </summary>
-            <param name="array">The array.</param>
+            <param name="array">The array to fill.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:OxyPlot.ArrayHelper.Fill2D(System.Double[0:,0:],System.Double)">
+        <member name="M:OxyPlot.ArrayBuilder.Fill2D(System.Double[0:,0:],System.Double)">
             <summary>
             Fills the two-dimensional array with the specified value.
             </summary>
             <param name="array">The two-dimensional array.</param>
             <param name="value">The value.</param>
         </member>
-        <member name="M:OxyPlot.ArrayHelper.Max2D(System.Double[0:,0:])">
+        <member name="T:OxyPlot.ReflectionExtensions">
             <summary>
-            Finds the maximum value in the specified 2D array (NaN values not included).
-            </summary>
-            <param name="array">The array.</param>
-            <returns>The maximum value.</returns>
-        </member>
-        <member name="M:OxyPlot.ArrayHelper.Min2D(System.Double[0:,0:],System.Boolean)">
-            <summary>
-            Finds the minimum value in the specified 2D array.
-            </summary>
-            <param name="array">The array.</param>
-            <param name="excludeNaN">Exclude NaN values if set to <c>true</c>.</param>
-            <returns>The minimum value.</returns>
-        </member>
-        <member name="M:OxyPlot.ArrayHelper.GetHashCode(System.Collections.Generic.IEnumerable{System.Object})">
-            <summary>
-            Calculates a hash code for the specified sequence of items.
-            </summary>
-            <param name="items">A sequence of items.</param>
-            <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
-        </member>
-        <member name="T:OxyPlot.ReflectionHelper">
-            <summary>
-            Provides utility methods reflection based support methods.
+            Provides extension methods based on reflection.
             </summary>
         </member>
-        <member name="M:OxyPlot.ReflectionHelper.FillList``1(System.Collections.Generic.List{``0},System.Collections.IEnumerable,System.String)">
+        <member name="M:OxyPlot.ReflectionExtensions.AddRange``1(System.Collections.Generic.List{``0},System.Collections.IEnumerable,System.String)">
             <summary>
             Fills a target by the specified property of a source target/enumerable.
             </summary>
@@ -8539,7 +8638,7 @@
             <param name="propertyName">The property name.</param>
             <exception cref="T:System.InvalidOperationException">Could not find property.</exception>
         </member>
-        <member name="M:OxyPlot.ReflectionHelper.FillList(System.Collections.Generic.List{OxyPlot.DataPoint},System.Collections.IEnumerable,System.String,System.String)">
+        <member name="M:OxyPlot.ReflectionExtensions.AddRange(System.Collections.Generic.List{OxyPlot.DataPoint},System.Collections.IEnumerable,System.String,System.String)">
             <summary>
             Adds data points from the specified source to the specified destination.
             </summary>
@@ -9688,7 +9787,7 @@
             <param name="stroke">The stroke color.</param>
             <param name="thickness">The thickness.</param>
         </member>
-        <member name="M:OxyPlot.SvgRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.SvgRenderContext.DrawLine(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws the polyline from the specified points.
             </summary>
@@ -9699,7 +9798,7 @@
             <param name="lineJoin">The line join type.</param>
             <param name="aliased">if set to <c>true</c> the shape will be aliased.</param>
         </member>
-        <member name="M:OxyPlot.SvgRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin,System.Boolean)">
+        <member name="M:OxyPlot.SvgRenderContext.DrawPolygon(System.Collections.Generic.IList{OxyPlot.ScreenPoint},OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin,System.Boolean)">
             <summary>
             Draws the polygon from the specified points. The polygon can have stroke and/or fill.
             </summary>
@@ -9817,7 +9916,7 @@
             Writes the end of the document.
             </summary>
         </member>
-        <member name="M:OxyPlot.SvgWriter.CreateStyle(OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.OxyPenLineJoin)">
+        <member name="M:OxyPlot.SvgWriter.CreateStyle(OxyPlot.OxyColor,OxyPlot.OxyColor,System.Double,System.Double[],OxyPlot.LineJoin)">
             <summary>
             Creates a style.
             </summary>
@@ -10042,7 +10141,7 @@
         </member>
         <member name="T:OxyPlot.Annotations.NamespaceDoc">
             <summary>
-            The OxyPlot.Axes namespace contains the annotations and related types.
+            The OxyPlot.Annotations namespace contains the annotations and related types.
             </summary>
         </member>
         <member name="T:OxyPlot.Annotations.RectangleAnnotation">
@@ -11077,6 +11176,17 @@
             Initializes a new instance of the <see cref="T:OxyPlot.Axes.Axis"/> class.
             </summary>
         </member>
+        <member name="M:OxyPlot.Axes.Axis.CreateTickValues(System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Creates tick values at the specified interval.
+            </summary>
+            <param name="from">The start value.</param>
+            <param name="to">The end value.</param>
+            <param name="step">The interval.</param>
+            <param name="maxTicks">The maximum number of ticks (optional). The default value is 1000.</param>
+            <returns>A sequence of values.</returns>
+            <exception cref="T:System.ArgumentException">Step cannot be zero or negative.;step</exception>
+        </member>
         <member name="M:OxyPlot.Axes.Axis.ToDouble(System.Object)">
             <summary>
             Converts the value of the specified object to a double precision floating point number. DateTime objects are converted using DateTimeAxis.ToDouble and TimeSpan objects are converted using TimeSpanAxis.ToDouble
@@ -11305,6 +11415,13 @@
             <returns>The transformed value.</returns>
             <remarks>If this method is overridden, the <see cref="M:OxyPlot.Axes.Axis.Transform(System.Double)"/> method must also be overridden.
             See <see cref="T:OxyPlot.Axes.LogarithmicAxis"/> for examples on how to implement this.</remarks>
+        </member>
+        <member name="M:OxyPlot.Axes.Axis.FormatValueOverride(System.Double)">
+            <summary>
+            Formats the value to be used on the axis.
+            </summary>
+            <param name="x">The value to format.</param>
+            <returns>The formatted value.</returns>
         </member>
         <member name="M:OxyPlot.Axes.Axis.CalculateActualMaximum">
             <summary>
@@ -11943,18 +12060,18 @@
             <param name="minorStep">The minor step.</param>
             <param name="title">The title.</param>
         </member>
-        <member name="M:OxyPlot.Axes.LinearAxis.FormatValue(System.Double)">
-            <summary>
-            Formats the value to be used on the axis.
-            </summary>
-            <param name="x">The value.</param>
-            <returns>The formatted value.</returns>
-        </member>
         <member name="M:OxyPlot.Axes.LinearAxis.IsXyAxis">
             <summary>
             Determines whether the axis is used for X/Y values.
             </summary>
             <returns><c>true</c> if it is an XY axis; otherwise, <c>false</c> .</returns>
+        </member>
+        <member name="M:OxyPlot.Axes.LinearAxis.FormatValueOverride(System.Double)">
+            <summary>
+            Formats the value to be used on the axis.
+            </summary>
+            <param name="x">The value to format.</param>
+            <returns>The formatted value.</returns>
         </member>
         <member name="P:OxyPlot.Axes.LinearAxis.FormatAsFractions">
             <summary>
@@ -12314,13 +12431,6 @@
             <param name="title">The title.</param>
             <param name="categories">The categories.</param>
         </member>
-        <member name="M:OxyPlot.Axes.CategoryAxis.FormatValue(System.Double)">
-            <summary>
-            Formats the value to be used on the axis.
-            </summary>
-            <param name="x">The value.</param>
-            <returns>The formatted value.</returns>
-        </member>
         <member name="M:OxyPlot.Axes.CategoryAxis.GetMaxWidth">
             <summary>
             Gets the maximum width of all category labels.
@@ -12446,6 +12556,13 @@
             Resets the current values.
             </summary>
             <remarks>The current values may be modified during update of max/min and rendering.</remarks>
+        </member>
+        <member name="M:OxyPlot.Axes.CategoryAxis.FormatValueOverride(System.Double)">
+            <summary>
+            Formats the value to be used on the axis.
+            </summary>
+            <param name="x">The value to format.</param>
+            <returns>The formatted value.</returns>
         </member>
         <member name="M:OxyPlot.Axes.CategoryAxis.UpdateLabels(System.Collections.Generic.IEnumerable{OxyPlot.Series.Series})">
             <summary>
@@ -12787,13 +12904,6 @@
             <param name="value">The date/time structure.</param>
             <returns>The number of days after the time origin.</returns>
         </member>
-        <member name="M:OxyPlot.Axes.DateTimeAxis.FormatValue(System.Double)">
-            <summary>
-            Formats the specified value by the axis' ActualStringFormat.
-            </summary>
-            <param name="x">The x.</param>
-            <returns>The formatted DateTime value</returns>
-        </member>
         <member name="M:OxyPlot.Axes.DateTimeAxis.GetTickValues(System.Collections.Generic.IList{System.Double}@,System.Collections.Generic.IList{System.Double}@,System.Collections.Generic.IList{System.Double}@)">
             <summary>
             Gets the tick values.
@@ -12815,6 +12925,13 @@
             Updates the intervals.
             </summary>
             <param name="plotArea">The plot area.</param>
+        </member>
+        <member name="M:OxyPlot.Axes.DateTimeAxis.FormatValueOverride(System.Double)">
+            <summary>
+            Formats the value to be used on the axis.
+            </summary>
+            <param name="x">The value to format.</param>
+            <returns>The formatted value.</returns>
         </member>
         <member name="M:OxyPlot.Axes.DateTimeAxis.CalculateActualInterval(System.Double,System.Double)">
             <summary>
@@ -13068,19 +13185,19 @@
             <param name="value">The value.</param>
             <returns>A time span.</returns>
         </member>
-        <member name="M:OxyPlot.Axes.TimeSpanAxis.FormatValue(System.Double)">
-            <summary>
-            Formats the value.
-            </summary>
-            <param name="x">The x.</param>
-            <returns>The format value.</returns>
-        </member>
         <member name="M:OxyPlot.Axes.TimeSpanAxis.GetValue(System.Double)">
             <summary>
             Gets the value from an axis coordinate, converts from double to the correct data type if necessary. e.g. DateTimeAxis returns the DateTime and CategoryAxis returns category strings.
             </summary>
             <param name="x">The coordinate.</param>
             <returns>The value.</returns>
+        </member>
+        <member name="M:OxyPlot.Axes.TimeSpanAxis.FormatValueOverride(System.Double)">
+            <summary>
+            Formats the value to be used on the axis.
+            </summary>
+            <param name="x">The value to format.</param>
+            <returns>The formatted value.</returns>
         </member>
         <member name="M:OxyPlot.Axes.TimeSpanAxis.CalculateActualInterval(System.Double,System.Double)">
             <summary>
@@ -13377,13 +13494,14 @@
             <param name="axis">The axis.</param>
             <param name="titlePosition">The title position.</param>
         </member>
-        <member name="M:OxyPlot.Axes.HorizontalAndVerticalAxisRenderer.RenderMajorItems(OxyPlot.Axes.Axis,System.Double,System.Double)">
+        <member name="M:OxyPlot.Axes.HorizontalAndVerticalAxisRenderer.RenderMajorItems(OxyPlot.Axes.Axis,System.Double,System.Double,System.Boolean)">
             <summary>
             Renders the major items.
             </summary>
             <param name="axis">The axis.</param>
             <param name="axisPosition">The axis position.</param>
             <param name="titlePosition">The title position.</param>
+            <param name="drawAxisLine">Draw the axis line if set to <c>true</c>.</param>
         </member>
         <member name="M:OxyPlot.Axes.HorizontalAndVerticalAxisRenderer.RenderMinorItems(OxyPlot.Axes.Axis,System.Double)">
             <summary>
@@ -13433,9 +13551,9 @@
             <remarks>This is used as DataContext for the TrackerControl.
             The TrackerControl is visible when the user use the left mouse button to "track" points on the series.</remarks>
         </member>
-        <member name="F:OxyPlot.TrackerHitResult.DefaultFormatString">
+        <member name="M:OxyPlot.TrackerHitResult.#ctor">
             <summary>
-            The default format string.
+            Initializes a new instance of the <see cref="T:OxyPlot.TrackerHitResult"/> class.
             </summary>
         </member>
         <member name="M:OxyPlot.TrackerHitResult.#ctor(OxyPlot.Series.Series,OxyPlot.DataPoint,OxyPlot.ScreenPoint,System.Object,System.Double,System.String)">
@@ -13498,12 +13616,12 @@
         </member>
         <member name="P:OxyPlot.TrackerHitResult.XAxis">
             <summary>
-            Gets or sets the X axis.
+            Gets the X axis.
             </summary>
         </member>
         <member name="P:OxyPlot.TrackerHitResult.YAxis">
             <summary>
-            Gets or sets the Y axis.
+            Gets the Y axis.
             </summary>
         </member>
         <member name="T:OxyPlot.TrackerManipulator">
@@ -13546,11 +13664,11 @@
             </summary>
             <param name="e">The <see cref="T:OxyPlot.OxyMouseEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:OxyPlot.TrackerManipulator.GetNearestHit(OxyPlot.Series.ITrackableSeries,OxyPlot.ScreenPoint,System.Boolean,System.Boolean)">
+        <member name="M:OxyPlot.TrackerManipulator.GetNearestHit(OxyPlot.Series.Series,OxyPlot.ScreenPoint,System.Boolean,System.Boolean)">
             <summary>
             Gets the nearest tracker hit.
             </summary>
-            <param name="s">The series.</param>
+            <param name="series">The series.</param>
             <param name="point">The point.</param>
             <param name="snap">Snap to points.</param>
             <param name="pointsOnly">Check points only (no interpolation).</param>
@@ -13971,6 +14089,16 @@
             Base class for series where the items are categorized.
             </summary>
         </member>
+        <member name="F:OxyPlot.Series.CategorizedSeries.DefaultCategoryAxisTitle">
+            <summary>
+            The default category axis title
+            </summary>
+        </member>
+        <member name="F:OxyPlot.Series.CategorizedSeries.DefaultValueAxisTitle">
+            <summary>
+            The default value axis title
+            </summary>
+        </member>
         <member name="M:OxyPlot.Series.CategorizedSeries.GetBarWidth">
             <summary>
             Gets or sets the width/height of the columns/bars (as a fraction of the available space).
@@ -14013,6 +14141,11 @@
             Gets the stack group.
             </summary>
             <value>The stack group.</value>
+        </member>
+        <member name="F:OxyPlot.Series.BarSeriesBase.DefaultTrackerFormatString">
+            <summary>
+            The default tracker format string
+            </summary>
         </member>
         <member name="F:OxyPlot.Series.BarSeriesBase.defaultFillColor">
             <summary>
@@ -14604,6 +14737,12 @@
             <value>The type of the outliers.</value>
             <remarks>MarkerType.Custom is currently not supported.</remarks>
         </member>
+        <member name="P:OxyPlot.Series.BoxPlotSeries.OutlierOutline">
+            <summary>
+            Gets or sets the a custom polygon outline for the outlier markers. Set <see cref="P:OxyPlot.Series.BoxPlotSeries.OutlierType"/> to <see cref="F:OxyPlot.MarkerType.Custom"/> to use this property.
+            </summary>
+            <value>A polyline. The default is <c>null</c>.</value>
+        </member>
         <member name="P:OxyPlot.Series.BoxPlotSeries.ShowBox">
             <summary>
             Gets or sets a value indicating whether to show the boxes.
@@ -14650,6 +14789,11 @@
         <member name="T:OxyPlot.Series.HeatMapSeries">
             <summary>
             Represents a heat map.
+            </summary>
+        </member>
+        <member name="F:OxyPlot.Series.HeatMapSeries.DefaultColorAxisTitle">
+            <summary>
+            The default color-axis title
             </summary>
         </member>
         <member name="F:OxyPlot.Series.HeatMapSeries.dataHash">
@@ -17261,11 +17405,6 @@
             Specifies if the itemsSourcePoints list can be modified.
             </summary>
         </member>
-        <member name="M:OxyPlot.Series.DataPointSeries.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:OxyPlot.Series.DataPointSeries"/> class.
-            </summary>
-        </member>
         <member name="M:OxyPlot.Series.DataPointSeries.GetNearestPoint(OxyPlot.ScreenPoint,System.Boolean)">
             <summary>
             Gets the point on the series that is nearest the specified point.
@@ -17308,34 +17447,28 @@
         </member>
         <member name="P:OxyPlot.Series.DataPointSeries.DataFieldX">
             <summary>
-            Gets or sets the data field X.
+            Gets or sets the data field X. The default is <c>null</c>.
             </summary>
             <value>The data field X.</value>
         </member>
         <member name="P:OxyPlot.Series.DataPointSeries.DataFieldY">
             <summary>
-            Gets or sets the data field Y.
+            Gets or sets the data field Y. The default is <c>null</c>.
             </summary>
             <value>The data field Y.</value>
         </member>
         <member name="P:OxyPlot.Series.DataPointSeries.Mapping">
             <summary>
-            Gets or sets the mapping delegate.
-            Example: series1.Mapping = item => new DataPoint(((MyType)item).Time,((MyType)item).Value);
+            Gets or sets the delegate used to map from <see cref="P:OxyPlot.Series.ItemsSeries.ItemsSource"/> to the <see cref="P:OxyPlot.Series.DataPointSeries.ActualPoints"/>. The default is <c>null</c>.
             </summary>
             <value>The mapping.</value>
+            <remarks>Example: series1.Mapping = item =&gt; new DataPoint(((MyType)item).Time,((MyType)item).Value);</remarks>
         </member>
         <member name="P:OxyPlot.Series.DataPointSeries.Points">
             <summary>
             Gets the list of points.
             </summary>
             <value>A list of <see cref="T:OxyPlot.DataPoint"/>.</value>
-        </member>
-        <member name="P:OxyPlot.Series.DataPointSeries.Smooth">
-            <summary>
-            Gets or sets a value indicating whether this <see cref="T:OxyPlot.Series.DataPointSeries"/> is smooth.
-            </summary>
-            <value><c>true</c> if smooth; otherwise, <c>false</c>.</value>
         </member>
         <member name="P:OxyPlot.Series.DataPointSeries.ActualPoints">
             <summary>
@@ -17464,16 +17597,15 @@
             <param name="rc">The render context.</param>
             <param name="clippingRect">The clipping rectangle.</param>
         </member>
-        <member name="M:OxyPlot.Series.LineSeries.RenderLegendOnLine(OxyPlot.IRenderContext,OxyPlot.OxyRect)">
+        <member name="M:OxyPlot.Series.LineSeries.RenderLegendOnLine(OxyPlot.IRenderContext)">
             <summary>
             Renders a legend on the line.
             </summary>
             <param name="rc">The render context.</param>
-            <param name="clippingRect">The clipping rectangle.</param>
         </member>
         <member name="M:OxyPlot.Series.LineSeries.RenderLineAndMarkers(OxyPlot.IRenderContext,OxyPlot.OxyRect,System.Collections.Generic.IList{OxyPlot.ScreenPoint})">
             <summary>
-            Renders the transformed points as a line (smoothed if <see cref="P:OxyPlot.Series.DataPointSeries.Smooth"/> is <c>true</c>) and markers (if <see cref="P:OxyPlot.Series.LineSeries.MarkerType"/> is not <c>None</c>).
+            Renders the transformed points as a line (smoothed if <see cref="P:OxyPlot.Series.LineSeries.Smooth"/> is <c>true</c>) and markers (if <see cref="P:OxyPlot.Series.LineSeries.MarkerType"/> is not <c>None</c>).
             </summary>
             <param name="rc">The render context.</param>
             <param name="clippingRect">The clipping rectangle.</param>
@@ -17500,23 +17632,23 @@
         </member>
         <member name="P:OxyPlot.Series.LineSeries.BrokenLineColor">
             <summary>
-            Gets or sets the color of the broken line segments.
+            Gets or sets the color of the broken line segments. The default is <see cref="F:OxyPlot.OxyColors.Undefined"/>. Set it to <see cref="F:OxyPlot.OxyColors.Automatic"/> if it should follow the <see cref="P:OxyPlot.Series.LineSeries.Color"/>.
             </summary>
             <remarks>Add <c>DataPoint.Undefined</c> in the Points collection to create breaks in the line.</remarks>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.BrokenLineStyle">
             <summary>
-            Gets or sets the broken line style.
+            Gets or sets the broken line style. The default is <see cref="F:OxyPlot.LineStyle.Solid"/>.
             </summary>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.BrokenLineThickness">
             <summary>
-            Gets or sets the broken line thickness.
+            Gets or sets the broken line thickness. The default is <c>0</c> (no line).
             </summary>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.Dashes">
             <summary>
-            Gets or sets the dash array for the rendered line (overrides <see cref="P:OxyPlot.Series.LineSeries.LineStyle"/>).
+            Gets or sets the dash array for the rendered line (overrides <see cref="P:OxyPlot.Series.LineSeries.LineStyle"/>). The default is <c>null</c>.
             </summary>
             <value>The dash array.</value>
             <remarks>If this is not <c>null</c> it overrides the <see cref="P:OxyPlot.Series.LineSeries.LineStyle"/> property.</remarks>
@@ -17532,73 +17664,72 @@
         </member>
         <member name="P:OxyPlot.Series.LineSeries.LabelFormatString">
             <summary>
-            Gets or sets the label format string.
+            Gets or sets the label format string. The default is <c>null</c> (no labels).
             </summary>
             <value>The label format string.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.LabelMargin">
             <summary>
-            Gets or sets the label margins.
+            Gets or sets the label margins. The default is <c>6</c>.
             </summary>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.LineJoin">
             <summary>
-            Gets or sets the line join.
+            Gets or sets the line join. The default is <see cref="F:OxyPlot.LineJoin.Bevel"/>.
             </summary>
             <value>The line join.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.LineStyle">
             <summary>
-            Gets or sets the line style.
+            Gets or sets the line style. The default is <see cref="F:OxyPlot.LineStyle.Automatic"/>.
             </summary>
             <value>The line style.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.LineLegendPosition">
             <summary>
-            Gets or sets a value specifying the position of a legend rendered on the line.
+            Gets or sets a value specifying the position of a legend rendered on the line. The default is <c>LineLegendPosition.None</c>.
             </summary>
             <value>A value specifying the position of the legend.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerFill">
             <summary>
-            Gets or sets the marker fill color.
+            Gets or sets the marker fill color. The default is <see cref="F:OxyPlot.OxyColors.Automatic"/>.
             </summary>
             <value>The marker fill.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerOutline">
             <summary>
-            Gets or sets the marker outline polygon.
-            If this property is set, the MarkerType will not be used.
+            Gets or sets the a custom polygon outline for the markers. Set <see cref="P:OxyPlot.Series.LineSeries.MarkerType"/> to <see cref="F:OxyPlot.MarkerType.Custom"/> to use this property. The default is <c>null</c>.
             </summary>
-            <value>The marker outline.</value>
+            <value>A polyline.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerResolution">
             <summary>
-            Gets or sets the marker resolution.
+            Gets or sets the marker resolution. The default is <c>0</c>.
             </summary>
             <value>The marker resolution.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerSize">
             <summary>
-            Gets or sets the size of the marker.
+            Gets or sets the size of the marker. The default is <c>3</c>.
             </summary>
             <value>The size of the marker.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerStroke">
             <summary>
-            Gets or sets the marker stroke.
+            Gets or sets the marker stroke. The default is <c>OxyColors.Automatic</c>.
             </summary>
             <value>The marker stroke.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerStrokeThickness">
             <summary>
-            Gets or sets the marker stroke thickness.
+            Gets or sets the marker stroke thickness. The default is <c>2</c>.
             </summary>
             <value>The marker stroke thickness.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.MarkerType">
             <summary>
-            Gets or sets the type of the marker.
+            Gets or sets the type of the marker. The default is <c>MarkerType.None</c>.
             </summary>
             <value>The type of the marker.</value>
             <remarks>If MarkerType.Custom is used, the MarkerOutline property must be specified.</remarks>
@@ -17607,9 +17738,15 @@
             <summary>
             Gets or sets the minimum length of the segment.
             Increasing this number will increase performance,
-            but make the curve less accurate.
+            but make the curve less accurate. The default is <c>2</c>.
             </summary>
             <value>The minimum length of the segment.</value>
+        </member>
+        <member name="P:OxyPlot.Series.LineSeries.Smooth">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:OxyPlot.Series.DataPointSeries"/> is smooth.
+            </summary>
+            <value><c>true</c> if smooth; otherwise, <c>false</c>.</value>
         </member>
         <member name="P:OxyPlot.Series.LineSeries.StrokeThickness">
             <summary>
